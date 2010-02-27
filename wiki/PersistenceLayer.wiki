@@ -1,0 +1,13 @@
+= Persistence Layer =
+
+<img src='http://yuml.me/e44274f.jpg'>
+
+=== http://yuml.me class diagram code ===
+
+{{{
+[Word]*<->*[Synset]
+[Synset]1<->*[Connection]
+[Synset]1<->*[Connection]
+[Synset]1->1[Article]
+[Article]1<->*[LocalizedArticle]
+}}}
