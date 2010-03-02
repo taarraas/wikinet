@@ -1,9 +1,10 @@
 package wikinet.persistence.domain;
 
-import wikinet.persistence.domain.LocalizedArticle;
+import org.hibernate.annotations.CollectionOfElements;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author shyiko
@@ -13,20 +14,26 @@ import java.util.List;
 public class Article {
 
     @Id
-    private int id;
+    @GeneratedValue
+    private long id;
+
     @Column(nullable = false)
     private String word;
+
     private String disambiguation;
+
     @Column(nullable = false)
     private String link;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<LocalizedArticle> localizedArticles; 
 
-    public int getId() {
+    @Embedded
+    @CollectionOfElements
+    private Set<LocalizedArticle> localizedArticles = new HashSet<LocalizedArticle>();
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -52,5 +59,50 @@ public class Article {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public Set<LocalizedArticle> getLocalizedArticles() {
+        return localizedArticles;
+    }
+
+    public void addLocalizedArticles(LocalizedArticle localizedArticle) {
+        this.localizedArticles.add(localizedArticle);
+    }
+
+    public void removeLocalizedArticles(LocalizedArticle localizedArticle) {
+        this.localizedArticles.remove(localizedArticle);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Article article = (Article) o;
+
+        if (disambiguation != null ? !disambiguation.equals(article.disambiguation) : article.disambiguation != null)
+            return false;
+        if (!link.equals(article.link)) return false;
+        if (!word.equals(article.word)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = word.hashCode();
+        result = 31 * result + (disambiguation != null ? disambiguation.hashCode() : 0);
+        result = 31 * result + link.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", word='" + word + '\'' +
+                ", disambiguation='" + disambiguation + '\'' +
+                ", link='" + link + '\'' +
+                '}';
     }
 }

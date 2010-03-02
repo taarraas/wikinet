@@ -6,10 +6,24 @@ import java.io.Serializable;
  * @author shyiko
  * @since Feb 27, 2010
  */
-class ConnectionPK implements Serializable {
+public class ConnectionPK implements Serializable {
 
-    private Synset firstSynset;
-    private Synset secondSynset;
+    private long firstSynsetId;
+
+    private long secondSynsetId;
+
+    public ConnectionPK() {
+    }
+
+    public ConnectionPK(long firstSynsetId, long secondSynsetId) {
+        this.firstSynsetId = firstSynsetId;
+        this.secondSynsetId = secondSynsetId;
+    }
+
+    public ConnectionPK(Synset firstSynset, Synset secondSynset) {
+        this.firstSynsetId = firstSynset.getId();
+        this.secondSynsetId = secondSynset.getId();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -18,8 +32,8 @@ class ConnectionPK implements Serializable {
 
         ConnectionPK that = (ConnectionPK) o;
 
-        if ((firstSynset.equals(that.firstSynset) && secondSynset.equals(that.secondSynset)) ||
-            (firstSynset.equals(that.secondSynset) && secondSynset.equals(that.firstSynset)))
+        if ((firstSynsetId == that.firstSynsetId && secondSynsetId == that.secondSynsetId) ||
+            (firstSynsetId == that.secondSynsetId && secondSynsetId == that.firstSynsetId))
             return true;
 
         return false;
@@ -27,8 +41,10 @@ class ConnectionPK implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = firstSynset.hashCode();
-        result = 31 * result + secondSynset.hashCode();
+        long _firstSynsetId = Math.min(this.firstSynsetId, this.secondSynsetId);
+        long _secondSynsetId = Math.max(this.firstSynsetId, this.secondSynsetId);;
+        int result = (int) (_firstSynsetId ^ (_firstSynsetId >>> 32));
+        result = 31 * result + (int) (_secondSynsetId ^ (_secondSynsetId >>> 32));
         return result;
     }
 }
