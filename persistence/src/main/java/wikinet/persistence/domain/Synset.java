@@ -30,6 +30,9 @@ public class Synset {
     @OneToOne
     private Article article;
 
+    private String offset;
+    private String lexFileNum;
+
     public long getId() {
         return id;
     }
@@ -76,6 +79,22 @@ public class Synset {
         this.article = article;
     }
 
+    public String getOffset() {
+        return offset;
+    }
+
+    public void setOffset(String offset) {
+        this.offset = offset;
+    }
+
+    public String getLexFileNum() {
+        return lexFileNum;
+    }
+
+    public void setLexFileNum(String lexFileNum) {
+        this.lexFileNum = lexFileNum;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,7 +103,9 @@ public class Synset {
         Synset synset = (Synset) o;
 
         if (id != synset.id) return false;
-        if (!description.equals(synset.description)) return false;
+        if (description != null ? !description.equals(synset.description) : synset.description != null) return false;
+        if (lexFileNum != null ? !lexFileNum.equals(synset.lexFileNum) : synset.lexFileNum != null) return false;
+        if (offset != null ? !offset.equals(synset.offset) : synset.offset != null) return false;
         if (type != synset.type) return false;
 
         return true;
@@ -93,8 +114,10 @@ public class Synset {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + description.hashCode();
-        result = 31 * result + type.hashCode();
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (offset != null ? offset.hashCode() : 0);
+        result = 31 * result + (lexFileNum != null ? lexFileNum.hashCode() : 0);
         return result;
     }
 
@@ -104,6 +127,8 @@ public class Synset {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", type=" + type +
+                ", offset='" + offset + '\'' +
+                ", lexFileNum='" + lexFileNum + '\'' +
                 '}';
     }
 }

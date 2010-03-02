@@ -65,7 +65,7 @@ public class ConnectionDaoImplTest extends AbstractTransactionalTestNGSpringCont
         connectionDao.save(connection2);
     }
 
-//    @Test
+    @Test
     public void testConnectedSynsetsSearch() {
         Synset first = getNewSavedSynset("word1");
         Synset second = getNewSavedSynset("word2");

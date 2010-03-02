@@ -23,19 +23,11 @@ public class ConnectionDaoImpl extends GenericDaoImpl<Connection, ConnectionPK> 
 
     @Override
     public List<Synset> getConnectedSynsets(Synset synset) {
-        return null;
-/*
-        getSession().createSQLQuery().
-        getHibernateTemplate().
-*/
-/*
-        query = "select c1.firstSynset.id from Connection c1 where c1.secondSynset.id = :synsetId union " +
-                "select c2.secondSynset.id from Connection c2 where c2.firstSynset.id = :synsetId")
-*/
-
-/*
-        return getHibernateTemplate().findByNamedQueryAndNamedParam("Connection.findAllConnectedSynsets",
-                "synsetId", synset.getId());
-*/
+        String query = String.format(
+                "SELECT * FROM Synset x WHERE x.id IN (" +
+                "SELECT s.id FROM Connection c INNER JOIN Synset s ON c.ssid = s.id WHERE c.fsid = %1$s " +
+                "UNION SELECT s.id FROM Connection c INNER JOIN Synset s ON c.fsid = s.id WHERE c.ssid = %1$s " +
+                ")", synset.getId());
+        return getSession().createSQLQuery(query).addEntity(Synset.class).list();
     }
 }
