@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@NamedQueries({
+        @NamedQuery(name = "Synset.getConnected",
+                    query = "select c.secondSynset from Connection c where c.firstSynsetId = :synsetId")
+})
+
 /**
  * @author shyiko
  * @since Feb 27, 2010
