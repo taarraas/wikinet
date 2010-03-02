@@ -7,5 +7,5 @@ import wikinet.persistence.domain.Word;
  * @author shyiko
  * @since Feb 28, 2010
  */
-public class WordDaoImpl extends GenericDaoImpl<Word, Long> implements WordDao {
+public class WordDaoImpl extends GenericDaoImpl<Word, String> implements WordDao {
 }

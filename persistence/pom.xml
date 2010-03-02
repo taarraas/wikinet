@@ -20,6 +20,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.9</version>
+        </dependency>
         <!-- Database dependencies -->
         <dependency>
             <groupId>postgresql</groupId>
@@ -48,17 +53,23 @@
             <version>5.9</version>
             <scope>test</scope>
         </dependency>
-        <!-- Spring dependencies -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring</artifactId>
-            <version>${springVersion}</version>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.1</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${springVersion}</version>
             <scope>test</scope>
+        </dependency>
+        <!-- Spring dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+            <version>${springVersion}</version>
         </dependency>
         <!-- Hibernate dependencies -->
         <dependency>

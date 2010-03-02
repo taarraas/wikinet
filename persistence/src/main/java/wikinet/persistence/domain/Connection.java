@@ -13,14 +13,22 @@ import javax.persistence.*;
 public class Connection {
 
     @Id
-    @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name="firstSynset", referencedColumnName="id"),
-        @JoinColumn(name="secondSynset", referencedColumnName="id")
-    })
-    private Synset firstSynset;
+    @Column(name = "fsid", insertable = false, updatable = false)
+    private long firstSynsetId;
+
     @Id
+    @Column(name = "ssid", insertable = false, updatable = false)
+    private long secondSynsetId;
+
+    @ManyToOne
+    @JoinColumn(name = "fsid")
+    private Synset firstSynset;
+
+    @ManyToOne
+    @JoinColumn(name = "ssid")
     private Synset secondSynset;
+
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ConnectionType connectionType;
 
@@ -30,6 +38,7 @@ public class Connection {
 
     public void setFirstSynset(Synset firstSynset) {
         this.firstSynset = firstSynset;
+        this.firstSynsetId = firstSynset.getId();
     }
 
     public Synset getSecondSynset() {
@@ -38,6 +47,7 @@ public class Connection {
 
     public void setSecondSynset(Synset secondSynset) {
         this.secondSynset = secondSynset;
+        this.secondSynsetId = secondSynset.getId();
     }
 
     public ConnectionType getConnectionType() {
@@ -46,5 +56,36 @@ public class Connection {
 
     public void setConnectionType(ConnectionType connectionType) {
         this.connectionType = connectionType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Connection that = (Connection) o;
+
+        if (firstSynsetId != that.firstSynsetId) return false;
+        if (secondSynsetId != that.secondSynsetId) return false;
+        if (connectionType != that.connectionType) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (firstSynsetId ^ (firstSynsetId >>> 32));
+        result = 31 * result + (int) (secondSynsetId ^ (secondSynsetId >>> 32));
+        result = 31 * result + connectionType.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Connection{" +
+                "firstSynsetId=" + firstSynsetId +
+                ", secondSynsetId=" + secondSynsetId +
+                ", connectionType=" + connectionType +
+                '}';
     }
 }

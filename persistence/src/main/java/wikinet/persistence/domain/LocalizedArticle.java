@@ -2,43 +2,23 @@ package wikinet.persistence.domain;
 
 import wikinet.persistence.model.Locale;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * @author shyiko
  * @since Feb 27, 2010
  */
-@Entity
+@Embeddable
 public class LocalizedArticle {
 
-    @Id
-    private int id;
-    @ManyToOne(optional = false)
-    private Article article;
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Locale locale;
+
     @Column(nullable = false)
     private String word;
+
     private String disambiguation;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
-    }
 
     public Locale getLocale() {
         return locale;
@@ -62,5 +42,37 @@ public class LocalizedArticle {
 
     public void setDisambiguation(String disambiguation) {
         this.disambiguation = disambiguation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LocalizedArticle that = (LocalizedArticle) o;
+
+        if (disambiguation != null ? !disambiguation.equals(that.disambiguation) : that.disambiguation != null)
+            return false;
+        if (locale != that.locale) return false;
+        if (!word.equals(that.word)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = locale.hashCode();
+        result = 31 * result + word.hashCode();
+        result = 31 * result + (disambiguation != null ? disambiguation.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "LocalizedArticle{" +
+                "locale=" + locale +
+                ", word='" + word + '\'' +
+                ", disambiguation='" + disambiguation + '\'' +
+                '}';
     }
 }

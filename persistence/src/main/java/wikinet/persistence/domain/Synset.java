@@ -3,7 +3,8 @@ package wikinet.persistence.domain;
 import wikinet.persistence.model.SynsetType;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author shyiko
@@ -14,24 +15,26 @@ public class Synset {
 
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
+
     @Column(nullable = false)
     private String description;
+
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private SynsetType type;
-    @Column(nullable = false)
-    @ManyToMany(mappedBy = "synsets")
-    private List<Word> words;
-    @OneToMany(mappedBy = "id")
-    private List<Connection> connections;
-    @OneToOne(optional = false)
+
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    private Set<Word> words = new HashSet<Word>();
+
+    @OneToOne
     private Article article;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -51,20 +54,18 @@ public class Synset {
         this.type = type;
     }
 
-    public List<Word> getWords() {
+    public Set<Word> getWords() {
         return words;
     }
 
-    public void setWords(List<Word> words) {
-        this.words = words;
+    public void addWord(Word word) {
+        this.words.add(word);
+        word.getSynsets().add(this);
     }
 
-    public List<Connection> getConnections() {
-        return connections;
-    }
-
-    public void setConnections(List<Connection> connections) {
-        this.connections = connections;
+    public void removeWord(Word word) {
+        this.words.remove(word);
+        word.getSynsets().remove(this);
     }
 
     public Article getArticle() {
@@ -73,5 +74,36 @@ public class Synset {
 
     public void setArticle(Article article) {
         this.article = article;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Synset synset = (Synset) o;
+
+        if (id != synset.id) return false;
+        if (!description.equals(synset.description)) return false;
+        if (type != synset.type) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + description.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Synset{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", type=" + type +
+                '}';
     }
 }
