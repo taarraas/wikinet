@@ -32,6 +32,9 @@ public class Connection {
     @Column(nullable = false)
     private ConnectionType connectionType;
 
+    private Integer wordsFrom;
+    private Integer wordsTo;
+
     public Synset getFirstSynset() {
         return firstSynset;
     }
@@ -58,6 +61,22 @@ public class Connection {
         this.connectionType = connectionType;
     }
 
+    public Integer getWordsFrom() {
+        return wordsFrom;
+    }
+
+    public void setWordsFrom(Integer wordsFrom) {
+        this.wordsFrom = wordsFrom;
+    }
+
+    public Integer getWordsTo() {
+        return wordsTo;
+    }
+
+    public void setWordsTo(Integer wordsTo) {
+        this.wordsTo = wordsTo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,6 +87,8 @@ public class Connection {
         if (firstSynsetId != that.firstSynsetId) return false;
         if (secondSynsetId != that.secondSynsetId) return false;
         if (connectionType != that.connectionType) return false;
+        if (wordsFrom != null ? !wordsFrom.equals(that.wordsFrom) : that.wordsFrom != null) return false;
+        if (wordsTo != null ? !wordsTo.equals(that.wordsTo) : that.wordsTo != null) return false;
 
         return true;
     }
@@ -77,15 +98,8 @@ public class Connection {
         int result = (int) (firstSynsetId ^ (firstSynsetId >>> 32));
         result = 31 * result + (int) (secondSynsetId ^ (secondSynsetId >>> 32));
         result = 31 * result + connectionType.hashCode();
+        result = 31 * result + (wordsFrom != null ? wordsFrom.hashCode() : 0);
+        result = 31 * result + (wordsTo != null ? wordsTo.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Connection{" +
-                "firstSynsetId=" + firstSynsetId +
-                ", secondSynsetId=" + secondSynsetId +
-                ", connectionType=" + connectionType +
-                '}';
     }
 }
