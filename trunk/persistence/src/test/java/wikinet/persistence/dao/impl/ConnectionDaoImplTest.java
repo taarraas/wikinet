@@ -41,7 +41,7 @@ public class ConnectionDaoImplTest extends AbstractTransactionalTestNGSpringCont
         Synset first = getNewSavedSynset("word1");
         Synset second = getNewSavedSynset("word2");
         Connection connection = new Connection();
-        connection.setConnectionType(ConnectionType.DEFAULT);
+        connection.setConnectionType(ConnectionType.ATTRIBUTE);
         connection.setFirstSynset(first);
         connection.setSecondSynset(second);
         connectionDao.save(connection);
@@ -54,12 +54,12 @@ public class ConnectionDaoImplTest extends AbstractTransactionalTestNGSpringCont
         Synset first = getNewSavedSynset("word1");
         Synset second = getNewSavedSynset("word2");
         Connection connection = new Connection();
-        connection.setConnectionType(ConnectionType.DEFAULT);
+        connection.setConnectionType(ConnectionType.ATTRIBUTE);
         connection.setFirstSynset(first);
         connection.setSecondSynset(second);
         connectionDao.save(connection);
         Connection connection2 = new Connection();
-        connection2.setConnectionType(ConnectionType.DEFAULT);
+        connection2.setConnectionType(ConnectionType.ATTRIBUTE);
         connection2.setFirstSynset(second);
         connection2.setSecondSynset(first);
         connectionDao.save(connection2);
@@ -70,21 +70,19 @@ public class ConnectionDaoImplTest extends AbstractTransactionalTestNGSpringCont
         Synset first = getNewSavedSynset("word1");
         Synset second = getNewSavedSynset("word2");
         Connection connection = new Connection();
-        connection.setConnectionType(ConnectionType.DEFAULT);
+        connection.setConnectionType(ConnectionType.ATTRIBUTE);
         connection.setFirstSynset(first);
         connection.setSecondSynset(second);
         connectionDao.save(connection);
         Synset third = getNewSavedSynset("word3");
         Connection connection2 = new Connection();
-        connection2.setConnectionType(ConnectionType.DEFAULT);
+        connection2.setConnectionType(ConnectionType.ATTRIBUTE);
         connection2.setFirstSynset(third);
         connection2.setSecondSynset(first);
         connectionDao.save(connection2);
-        System.out.println(Arrays.toString(connectionDao.findAll().toArray()));
-        System.out.println(first);
-        List<Synset> connectedSynsets = connectionDao.getConnectedSynsets(first);
+        List<Synset> connectedSynsets = synsetDao.getConnected(first);
         System.out.println(Arrays.toString(connectedSynsets.toArray()));
-        assertEquals(connectedSynsets.size(), 2);
+        assertEquals(connectedSynsets.size(), 1);
     }
 
     private Synset getNewSavedSynset(String sword) {
