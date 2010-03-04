@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="dao-suite" verbose="1">
+
+    <test name="all">
+        <classes>
+            <class name="wikinet.db.dao.impl.ArticleDaoImplTest"/>
+            <class name="wikinet.db.dao.impl.SynsetDaoImplTest"/>
+            <class name="wikinet.db.dao.impl.WordDaoImplTest"/>
+            <class name="wikinet.db.dao.impl.ConnectionDaoImplTest"/>
+        </classes>
+    </test>
+</suite>
