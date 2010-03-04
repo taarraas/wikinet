@@ -13,7 +13,8 @@
     <inceptionYear>2010</inceptionYear>
 
     <modules>
-        <module>persistence</module>
+        <module>data-tier</module>
+        <module>wordnet2db</module>
     </modules>
 
 </project>

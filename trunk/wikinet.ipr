@@ -62,8 +62,9 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/persistence/persistence.iml" filepath="$PROJECT_DIR$/persistence/persistence.iml" />
+      <module fileurl="file://$PROJECT_DIR$/persistence/data-tier.iml" filepath="$PROJECT_DIR$/persistence/data-tier.iml" />
       <module fileurl="file://$PROJECT_DIR$/wikinet.iml" filepath="$PROJECT_DIR$/wikinet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wordnet2db/wordnet2db.iml" filepath="$PROJECT_DIR$/wordnet2db/wordnet2db.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
