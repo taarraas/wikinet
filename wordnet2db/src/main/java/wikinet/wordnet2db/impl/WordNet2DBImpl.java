@@ -41,14 +41,14 @@ public class WordNet2DBImpl implements WordNet2DB {
         return w;
     }
     void saveSynset(Synset synset, List<String> words) {
-        Synset syns=synsetDao.findByOffset(synset.getOffset());
+        /*Synset syns=synsetDao.findByOffset(synset.getOffset());
         synset.setId(syns.getId());
         List<Word> wordlist=new LinkedList<Word>();
         for (String string : words) {
             wordlist.add(saveWord(string));
         }
         synset.setWords(wordlist);
-        synsetDao.save(synset);
+        synsetDao.save(synset);*/
     }
     void addConnection(Synset from, String synset_offset, String pointer_symbol, String word) {
 
