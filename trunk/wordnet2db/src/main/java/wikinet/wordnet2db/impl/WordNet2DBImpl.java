@@ -12,11 +12,11 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
 import org.springframework.beans.factory.annotation.Autowired;
-import wikinet.persistence.dao.SynsetDao;
-import wikinet.persistence.dao.WordDao;
-import wikinet.persistence.domain.Synset;
-import wikinet.persistence.domain.Word;
-import wikinet.persistence.model.SynsetType;
+import wikinet.db.dao.SynsetDao;
+import wikinet.db.dao.WordDao;
+import wikinet.db.domain.Synset;
+import wikinet.db.domain.Word;
+import wikinet.db.model.SynsetType;
 import wikinet.wordnet2db.WordNet2DB;
 
 /**

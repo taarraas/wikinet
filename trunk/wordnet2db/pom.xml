@@ -89,7 +89,7 @@
         </dependency>
         <dependency>
             <groupId>code.google.com</groupId>
-            <artifactId>wikinet-persistence</artifactId>
+            <artifactId>data-tier</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

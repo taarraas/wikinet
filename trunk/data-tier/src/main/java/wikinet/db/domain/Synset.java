@@ -79,6 +79,10 @@ public class Synset {
         return article;
     }
 
+    public void setOffset(String offset) {
+        
+    }
+
     public void setArticle(Article article) {
         this.article = article;
     }
