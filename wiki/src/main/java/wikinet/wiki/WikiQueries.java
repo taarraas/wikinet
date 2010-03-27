@@ -19,26 +19,35 @@ public interface WikiQueries {
      * @param word
      * @return
      */
-    Collection<String> disambiguate(String word);
+    public Collection<String> disambiguate(String word);
 
     /**
      * Returns categories for article
      * @param article
      * @return
      */
-    Collection<String> getCategories(String article);
+    public Collection<String> getCategories(String article);
 
     /**
      * Returns first paragraph of article
      * @param article
      * @return
      */
-    String getDescription(String article);
+    public String getDescription(String article);
 
     /**
      *
      * @param article
      * @return pairs of language and name of article
      */
-    Map<String, String> translate(String article);
+    public Map<String, String> translate(String article);
+
+    /**
+     * There are many ways to find the article in wikipedia.
+     * For example, http://en.wikipedia.org/wiki/Rofl display article "Lol" and (Redirected from Rofl)
+     * This method returns all words, which redirects to given article.
+     * @param article
+     * @return
+     */
+    public Collection<String> getRedirectWords(String article);
 }
