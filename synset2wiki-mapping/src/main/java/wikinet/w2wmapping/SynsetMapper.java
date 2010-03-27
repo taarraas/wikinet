@@ -5,10 +5,8 @@
 
 package wikinet.w2wmapping;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+import wikinet.wiki.WikiQueries;
 
 /**
  *
@@ -21,6 +19,12 @@ public abstract class SynsetMapper {
     public void setMinimalTrust(double minimallevel, double minimaldifference) {
         this.minimallevel = minimallevel;
         this.minimaldifference = minimaldifference;
+    }
+
+    SynsetArticleVoter voter;
+
+    public SynsetMapper(SynsetArticleVoter voter) {
+        this.voter = voter;
     }
 
     /**
@@ -62,6 +66,25 @@ public abstract class SynsetMapper {
      * @return sorted collection of pairs article name and it's mark. The first one is with best mark
      */
     public Collection<Map.Entry<String, Double>> getBestArticles(long synsetId) {
-        Collection<String> wordsOfSynset;
+        Collection<String> wordsOfSynset = null; // TODO
+        WikiQueries wikiQueries = null;     // TODO
+        Set<String> articles=new TreeSet<String>();
+        for (String string : wordsOfSynset) {
+            articles.addAll(wikiQueries.disambiguate(string));
+        }
+        TreeSet<Map.Entry<String, Double>> ret = new TreeSet<Map.Entry<String, Double>>(new Comparator<Map.Entry<String, Double>>() {
+            @Override
+            public int compare(Map.Entry<String, Double> o1, Map.Entry<String, Double> o2) {
+                if (o1.getValue()==o2.getValue()) {
+                    return o1.getKey().compareTo(o2.getKey());
+                }
+                return (o1.getValue()<o2.getValue())?-1:1;
+            }
+        });
+        for (String string : articles) {
+            ret.add(new AbstractMap.SimpleEntry<String, Double>(string,
+                    voter.getVote(synsetId, string)));
+        }
+        return ret;
     }
 }
