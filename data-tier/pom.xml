@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
 
     <artifactId>data-tier</artifactId>
-
+    <name>Access to DB</name>
     <properties>
         <hibernateVersion>3.2.1.ga</hibernateVersion>
         <springVersion>2.5.6</springVersion>
