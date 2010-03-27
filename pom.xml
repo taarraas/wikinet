@@ -8,6 +8,7 @@
     <artifactId>wikinet</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
+    <name>wikinet project</name>
     <description>WordNet extending through Wikipedia</description>
     <url>http://code.google.com/p/wikinet</url>
     <inceptionYear>2010</inceptionYear>
@@ -20,6 +21,10 @@
     <modules>
         <module>data-tier</module>
         <module>wordnet2db</module>
+        <module>wiki</module>
+        <module>synset2wiki-mapping</module>
+        <module>wordnet-extending</module>
+        <module>clusterring</module>
     </modules>
 
 </project>
