@@ -41,17 +41,28 @@ public class WordNet2DBImpl implements WordNet2DB {
         return w;
     }
     void saveSynset(Synset synset, List<String> words) {
-        /*Synset syns=synsetDao.findByOffset(synset.getOffset());
+        Synset syns=synsetDao.findById(synset.getId());
         synset.setId(syns.getId());
         List<Word> wordlist=new LinkedList<Word>();
         for (String string : words) {
             wordlist.add(saveWord(string));
         }
-        synset.setWords(wordlist);
-        synsetDao.save(synset);*/
+        //synset.setWords(wordlist); //uncoment after realizing
+        synsetDao.save(synset);
     }
-    void addConnection(Synset from, String synset_offset, String pointer_symbol, String word) {
 
+    /**
+     * add connection between from and to. toWord must be null and will be processed later.
+     * if there is no synset with id idTo, then create it with no data
+     * @param from
+     * @param idTo
+     * @param pointer_symbol
+     * @param fromWordNo
+     * @param toWordNo
+     * @param fromWord
+     */
+    void addConnection(Synset from, long idTo, String pointer_symbol, int fromWordNo, int toWordNo, String fromWord) {
+        //TODO
     }
     SynsetType getTypeByLetter(String letter) {
             switch (letter.charAt(0)) {
@@ -84,7 +95,7 @@ public class WordNet2DBImpl implements WordNet2DB {
             }
             String[] el=str.split(" ");
             Synset synset = new Synset();
-            synset.setOffset(el[0]);
+            synset.setId(Integer.parseInt(el[0], 10));
             synset.setLexFileNum(el[1]);
             synset.setType(getTypeByLetter(el[2]));
 
@@ -103,8 +114,11 @@ public class WordNet2DBImpl implements WordNet2DB {
                         synset_offset_tar=el[basep+2+i*4],
                         pos=el[basep+3+i*4],
                         source_target=el[basep+4+i*4];
-                int no=Integer.valueOf(source_target.substring(0, 2), 16);
-                addConnection(synset, synset_offset_tar, pointer_symbol, no==0?null:words.get(no-1));
+                int nosource=Integer.valueOf(source_target.substring(0, 2), 16),
+                        nodestination=Integer.valueOf(source_target.substring(2), 16);
+
+                addConnection(synset, Integer.parseInt(synset_offset_tar,10),
+                        pointer_symbol, nosource, nodestination, nosource==0?null:words.get(nosource-1));
             }
         }
 
