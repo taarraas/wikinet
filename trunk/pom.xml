@@ -24,7 +24,8 @@
         <module>wiki</module>
         <module>synset2wiki-mapping</module>
         <module>wordnet-extending</module>
-        <module>clusterring</module>
+        <module>clusterring-client</module>
+        <module>clusterring-server</module>
     </modules>
 
 </project>
