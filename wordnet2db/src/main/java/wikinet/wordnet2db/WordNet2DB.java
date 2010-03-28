@@ -8,6 +8,6 @@ import java.io.IOException;
  */
 public interface WordNet2DB {
 
-    void importIt(String pathToWordnet) throws IOException;
-    
+    void importFile(String pathToWordnet) throws IOException;
+
 }
