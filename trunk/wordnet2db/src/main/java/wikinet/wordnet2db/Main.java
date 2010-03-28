@@ -15,7 +15,7 @@ public class Main {
         }
 
         WordNet2DB wordDao = (WordNet2DB) ContextFactory.getContext().getBean("wordNet2DB");
-        wordDao.importIt(args[0]);
+        wordDao.importFile(args[0]);
     }
 
 }

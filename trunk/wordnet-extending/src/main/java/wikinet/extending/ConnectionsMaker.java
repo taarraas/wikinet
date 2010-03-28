@@ -1,16 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package wikinet.extending;
 
 import wikinet.db.domain.Synset;
+import wikinet.wiki.ArticleReference;
 
 /**
- *
- * @author taras
+ * @author taras, shyiko
  */
 public interface ConnectionsMaker {
-    public void addConnections(Synset synset, String article);
+    public void addConnections(Synset synset, ArticleReference article);
 }
