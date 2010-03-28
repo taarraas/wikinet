@@ -12,7 +12,7 @@ public class ConnectionPK implements Serializable {
 
     private long secondSynsetId;
 
-    public ConnectionPK() {
+    protected ConnectionPK() {
     }
 
     public ConnectionPK(long firstSynsetId, long secondSynsetId) {

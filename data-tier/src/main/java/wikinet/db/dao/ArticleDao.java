@@ -7,10 +7,7 @@ import wikinet.db.domain.Article;
  * @since Feb 28, 2010
  */
 public interface ArticleDao extends GenericDao<Article, Long> {
-    /**
-     * 
-     * @param article in form "Title[disambiguation]"
-     * @return
-     */
-    Article getArticle(String article);
+
+    Article getArticle(String word, String disambiguation);
+
 }

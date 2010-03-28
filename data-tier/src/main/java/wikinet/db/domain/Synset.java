@@ -1,9 +1,13 @@
 package wikinet.db.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.IndexColumn;
 import wikinet.db.model.SynsetType;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 @NamedQueries({
@@ -19,8 +23,10 @@ import java.util.Set;
 public class Synset {
 
     @Id
-    @GeneratedValue
+    @GenericGenerator(name = "SynsetIdGenerator", strategy = "wikinet.db.domain.SynsetIdGenerator")
+    @GeneratedValue(generator = "SynsetIdGenerator")
     private long id;
+    transient long idPreInit;
 
     @Column(nullable = false)
     private String description;
@@ -29,62 +35,76 @@ public class Synset {
     @Column(nullable = false)
     private SynsetType type;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    private Set<Word> words = new HashSet<Word>();
+    @ManyToMany
+    @IndexColumn(name = "wordOrder", base = 1)
+    @JoinTable(
+            name = "SynsetWord",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "word")}
+    )
+    private List<Word> words = new LinkedList<Word>();
 
-    @OneToOne
-    private Article article;
+    @ManyToMany
+    private Set<Article> articles = new HashSet<Article>();
 
     private String lexFileNum;
 
-    public long getId() {
-        return id;
+    protected Synset() {
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public Synset(String description, SynsetType type) {
+        this.description = description;
+        this.type = type;
+    }
+
+    public Synset(long id, String description, SynsetType type) {
+        this.idPreInit = id;
+        this.description = description;
+        this.type = type;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public SynsetType getType() {
         return type;
     }
 
-    public void setType(SynsetType type) {
-        this.type = type;
-    }
-
-    public Set<Word> getWords() {
-        return words;
+    public List<Word> getWords() {
+        return this.words;
     }
 
     public void addWord(Word word) {
         this.words.add(word);
-        word.getSynsets().add(this);
     }
 
     public void removeWord(Word word) {
         this.words.remove(word);
-        word.getSynsets().remove(this);
     }
 
-    public Article getArticle() {
-        return article;
+    public void setWords(List<Word> words) {
+        this.words = words;
     }
 
-    public void setOffset(String offset) {
-        
+    public Set<Article> getArticles() {
+        return articles;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void addArticle(Article article) {
+        this.articles.add(article);
+    }
+
+    public void removeArticle(Article article) {
+        this.articles.remove(article);
+    }
+
+    public void setArticle(Set<Article> articles) {
+        this.articles = articles;
     }
 
     public String getLexFileNum() {

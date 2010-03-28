@@ -24,8 +24,7 @@ public class WordDaoImplTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test
     public void testSave() {
-        Word word = new Word();
-        word.setWord("word");
+        Word word = new Word("word");
         wordDao.save(word);
         Word foundWord = wordDao.findById("word");
         assertEquals(foundWord, word);
@@ -33,11 +32,9 @@ public class WordDaoImplTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test
     public void testMultipleSave() {
-        Word word1 = new Word();
-        word1.setWord("word1");
+        Word word1 = new Word("word1");
         wordDao.save(word1);
-        Word word2 = new Word();
-        word2.setWord("word2");
+        Word word2 = new Word("word2");
         wordDao.save(word2);
         List<Word> list = wordDao.findAll();
         assertEquals(list.size(), 2);
@@ -45,8 +42,7 @@ public class WordDaoImplTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test
     public void testRemove() {
-        Word word = new Word();
-        word.setWord("word");
+        Word word = new Word("word");
         wordDao.save(word);
         wordDao.delete(word);
         Word foundWord = wordDao.findById("word");

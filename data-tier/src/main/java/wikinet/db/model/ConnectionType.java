@@ -24,4 +24,12 @@ public enum ConnectionType {
     public String toString() {
         return text;
     }
+
+    public static ConnectionType parse(String text) {
+        for (ConnectionType connectionType : values()) {
+            if (connectionType.text.equals(text))
+                return connectionType;
+        }
+        return null;
+    }
 }
