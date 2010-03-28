@@ -18,7 +18,7 @@ import javax.persistence.EntityExistsException;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.*;
 
 /**
  * @author shyiko
@@ -38,12 +38,9 @@ public class ConnectionDaoImplTest extends AbstractTransactionalTestNGSpringCont
 
     @Test
     public void testSave() {
-        Synset first = getNewSavedSynset("word1");
-        Synset second = getNewSavedSynset("word2");
-        Connection connection = new Connection();
-        connection.setConnectionType(ConnectionType.ATTRIBUTE);
-        connection.setFirstSynset(first);
-        connection.setSecondSynset(second);
+        Synset first = getNewSavedSynset(1L, "word1");
+        Synset second = getNewSavedSynset(2L, "word2");
+        Connection connection = new Connection(first, second, ConnectionType.ATTRIBUTE);
         connectionDao.save(connection);
         Connection foundConnection = connectionDao.findById(new ConnectionPK(first, second));
         assertEquals(foundConnection, connection);
@@ -51,47 +48,31 @@ public class ConnectionDaoImplTest extends AbstractTransactionalTestNGSpringCont
 
     @Test(expectedExceptions = {EntityExistsException.class})
     public void testExceptionOnSaveReverseDuplicate() {
-        Synset first = getNewSavedSynset("word1");
-        Synset second = getNewSavedSynset("word2");
-        Connection connection = new Connection();
-        connection.setConnectionType(ConnectionType.ATTRIBUTE);
-        connection.setFirstSynset(first);
-        connection.setSecondSynset(second);
+        Synset first = getNewSavedSynset(1L, "word1");
+        Synset second = getNewSavedSynset(2L, "word2");
+        Connection connection = new Connection(first, second, ConnectionType.ATTRIBUTE);
         connectionDao.save(connection);
-        Connection connection2 = new Connection();
-        connection2.setConnectionType(ConnectionType.ATTRIBUTE);
-        connection2.setFirstSynset(second);
-        connection2.setSecondSynset(first);
+        Connection connection2 = new Connection(second, first, ConnectionType.ATTRIBUTE);
         connectionDao.save(connection2);
     }
 
     @Test
     public void testConnectedSynsetsSearch() {
-        Synset first = getNewSavedSynset("word1");
-        Synset second = getNewSavedSynset("word2");
-        Connection connection = new Connection();
-        connection.setConnectionType(ConnectionType.ATTRIBUTE);
-        connection.setFirstSynset(first);
-        connection.setSecondSynset(second);
+        Synset first = getNewSavedSynset(1L, "word1");
+        Synset second = getNewSavedSynset(2L, "word2");
+        Connection connection = new Connection(first, second, ConnectionType.ATTRIBUTE);
         connectionDao.save(connection);
-        Synset third = getNewSavedSynset("word3");
-        Connection connection2 = new Connection();
-        connection2.setConnectionType(ConnectionType.ATTRIBUTE);
-        connection2.setFirstSynset(third);
-        connection2.setSecondSynset(first);
+        Synset third = getNewSavedSynset(3L, "word3");
+        Connection connection2 = new Connection(third, first, ConnectionType.ATTRIBUTE);
         connectionDao.save(connection2);
         List<Synset> connectedSynsets = synsetDao.getConnected(first);
-        System.out.println(Arrays.toString(connectedSynsets.toArray()));
         assertEquals(connectedSynsets.size(), 1);
     }
 
-    private Synset getNewSavedSynset(String sword) {
-        Word word = new Word();
-        word.setWord(sword);
+    private Synset getNewSavedSynset(long id, String sword) {
+        Word word = new Word(sword);
         wordDao.save(word);
-        Synset synset = new Synset();
-        synset.setDescription("synset description " + sword);
-        synset.setType(SynsetType.NOUN);
+        Synset synset = new Synset(id, "desc " + sword, SynsetType.NOUN);
         synset.addWord(word);
         synsetDao.save(synset);
         return synset;

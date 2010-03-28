@@ -10,7 +10,15 @@ import java.util.Set;
  * @author shyiko
  * @since Feb 27, 2010
  */
+@NamedQueries(value = {
+        @NamedQuery(name = "Article.getByWordAndDisambiguation", 
+        query = "select a from Article a where a.word = :word and a.disambiguation = :disambiguation")
+})
+
 @Entity
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"word", "disambiguation"})
+})
 public class Article {
 
     @Id
@@ -29,20 +37,23 @@ public class Article {
     @CollectionOfElements
     private Set<LocalizedArticle> localizedArticles = new HashSet<LocalizedArticle>();
 
+    @ManyToMany(mappedBy = "articles")
+    private Set<Synset> synsets = new HashSet<Synset>();
+
+    protected Article() {
+    }
+
+    public Article(String word, String link) {
+        this.word = word;
+        this.link = link;
+    }
+
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getWord() {
         return word;
-    }
-
-    public void setWord(String word) {
-        this.word = word;
     }
 
     public String getDisambiguation() {
@@ -57,10 +68,6 @@ public class Article {
         return link;
     }
 
-    public void setLink(String link) {
-        this.link = link;
-    }
-
     public Set<LocalizedArticle> getLocalizedArticles() {
         return localizedArticles;
     }
@@ -71,6 +78,14 @@ public class Article {
 
     public void removeLocalizedArticles(LocalizedArticle localizedArticle) {
         this.localizedArticles.remove(localizedArticle);
+    }
+
+    public void setLocalizedArticles(Set<LocalizedArticle> localizedArticles) {
+        this.localizedArticles = localizedArticles;
+    }
+
+    public Set<Synset> getSynsets() {
+        return synsets;
     }
 
     @Override

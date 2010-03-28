@@ -1,8 +1,6 @@
 package wikinet.db.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,15 +14,18 @@ public class Word {
     @Id
     private String word;
 
-    @ManyToMany(mappedBy = "words")
+    @OneToMany(mappedBy = "words")
     private Set<Synset> synsets = new HashSet<Synset>();
+
+    protected Word() {
+    }
+
+    public Word(String word) {
+        this.word = word;
+    }
 
     public String getWord() {
         return word;
-    }
-
-    public void setWord(String word) {
-        this.word = word;
     }
 
     public Set<Synset> getSynsets() {

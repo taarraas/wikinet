@@ -40,30 +40,27 @@ public class Connection {
     private Integer wordsFrom;
     private Integer wordsTo;
 
-    public Synset getFirstSynset() {
-        return firstSynset;
+    protected Connection() {
     }
 
-    public void setFirstSynset(Synset firstSynset) {
+    public Connection(Synset firstSynset, Synset secondSynset, ConnectionType connectionType) {
         this.firstSynset = firstSynset;
         this.firstSynsetId = firstSynset.getId();
+        this.secondSynset = secondSynset;
+        this.secondSynsetId = secondSynset.getId();
+        this.connectionType = connectionType;
+    }
+
+    public Synset getFirstSynset() {
+        return firstSynset;
     }
 
     public Synset getSecondSynset() {
         return secondSynset;
     }
 
-    public void setSecondSynset(Synset secondSynset) {
-        this.secondSynset = secondSynset;
-        this.secondSynsetId = secondSynset.getId();
-    }
-
     public ConnectionType getConnectionType() {
         return connectionType;
-    }
-
-    public void setConnectionType(ConnectionType connectionType) {
-        this.connectionType = connectionType;
     }
 
     public Integer getWordsFrom() {
@@ -106,5 +103,16 @@ public class Connection {
         result = 31 * result + (wordsFrom != null ? wordsFrom.hashCode() : 0);
         result = 31 * result + (wordsTo != null ? wordsTo.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Connection{" +
+                "firstSynsetId=" + firstSynsetId +
+                ", secondSynsetId=" + secondSynsetId +
+                ", connectionType=" + connectionType +
+                ", wordsFrom=" + wordsFrom +
+                ", wordsTo=" + wordsTo +
+                '}';
     }
 }

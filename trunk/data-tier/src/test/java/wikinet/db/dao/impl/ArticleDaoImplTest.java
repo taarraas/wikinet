@@ -13,7 +13,9 @@ import wikinet.db.model.Locale;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
+
 
 /**
  * @author shyiko
@@ -27,54 +29,54 @@ public class ArticleDaoImplTest extends AbstractTransactionalTestNGSpringContext
 
     @Test
     public void testSave() {
-        Article article = new Article();
-        article.setId(1L);
-        article.setWord("word");
+        Article article = new Article("word", "link");
         article.setDisambiguation("disambiguation");
-        article.setLink("link");
         articleDao.save(article);
-        Article foundArticle = articleDao.findById(1L);
+        Article foundArticle = articleDao.findById(article.getId());
+        assertEquals(foundArticle, article);
+    }
+
+    @Test
+    public void testSaveWithLocalizedArticle() {
+        LocalizedArticle localizedArticle = new LocalizedArticle(Locale.RUS, "word");
+        Article article = new Article("word", "link");
+        article.setDisambiguation("disambiguation");
+        article.addLocalizedArticles(localizedArticle);
+        articleDao.save(article);
+        Article foundArticle = articleDao.findById(article.getId());
+        assertEquals(foundArticle.getLocalizedArticles().size(), 1);
         assertEquals(foundArticle, article);
     }
 
     @Test(expectedExceptions = {DataIntegrityViolationException.class})
     public void testExceptionOnSaveWithoutWord() {
-        Article article = new Article();
+        Article article = new Article(null, "link");
         article.setDisambiguation("disambiguation");
-        article.setLink("link");
         articleDao.save(article);
     }
 
     @Test
     public void testSaveWithoutDisambiguation() {
-        Article article = new Article();
-        article.setId(1L);
-        article.setWord("word");
-        article.setLink("link");
+        Article article = new Article("word", "link");
         articleDao.save(article);
-        Article foundArticle = articleDao.findById(1L);
+        Article foundArticle = articleDao.findById(article.getId());
         assertEquals(foundArticle, article);
     }
 
     @Test(expectedExceptions = {DataIntegrityViolationException.class})
     public void testExceptionOnSaveWithoutLink() {
-        Article article = new Article();
-        article.setWord("word");
+        Article article = new Article("word", null);
         article.setDisambiguation("disambiguation");
         articleDao.save(article);
     }
 
     @Test
     public void testMultipleSave() {
-        Article article1 = new Article();
-        article1.setWord("word1");
+        Article article1 = new Article("word1", "link");
         article1.setDisambiguation("disambiguation");
-        article1.setLink("link");
         articleDao.save(article1);
-        Article article2 = new Article();
-        article2.setWord("word2");
+        Article article2 = new Article("word2", "link");
         article2.setDisambiguation("disambiguation");
-        article2.setLink("link");
         articleDao.save(article2);
         List<Article> list = articleDao.findAll();
         assertEquals(list.size(), 2);
@@ -82,19 +84,25 @@ public class ArticleDaoImplTest extends AbstractTransactionalTestNGSpringContext
 
     @Test
     public void testRemove() {
-        LocalizedArticle localizedArticle = new LocalizedArticle();
-        localizedArticle.setLocale(Locale.RUS);
-        localizedArticle.setWord("word");
-        Article article = new Article();
-        article.setId(1L);
-        article.setWord("word");
+        LocalizedArticle localizedArticle = new LocalizedArticle(Locale.RUS, "word");
+        Article article = new Article("word", "link");
         article.setDisambiguation("disambiguation");
-        article.setLink("link");
         article.addLocalizedArticles(localizedArticle);
         articleDao.save(article);
         articleDao.delete(article);
-        Article foundArticle = articleDao.findById(1L);
+        Article foundArticle = articleDao.findById(article.getId());
         assertNull(foundArticle);
+    }
+
+    @Test
+    public void testGetArticle() {
+        Article article = new Article("word", "link");
+        article.setDisambiguation("disambiguation");
+        articleDao.save(article);
+        Article art = articleDao.getArticle("word", "disambiguation2");
+        assertNull(art);
+        art = articleDao.getArticle("word", "disambiguation");
+        assertNotNull(art);
     }
 
 }

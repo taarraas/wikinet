@@ -20,20 +20,20 @@ public class LocalizedArticle {
 
     private String disambiguation;
 
+    protected LocalizedArticle() {
+    }
+
+    public LocalizedArticle(Locale locale, String word) {
+        this.locale = locale;
+        this.word = word;
+    }
+
     public Locale getLocale() {
         return locale;
     }
 
-    public void setLocale(Locale locale) {
-        this.locale = locale;
-    }
-
     public String getWord() {
         return word;
-    }
-
-    public void setWord(String word) {
-        this.word = word;
     }
 
     public String getDisambiguation() {
