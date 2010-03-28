@@ -99,7 +99,7 @@ public abstract class SynsetMapper {
 
             @Override
             public int compare(ArticleReference o1, ArticleReference o2) {
-                return map.get(o1).compareTo(map.get(o2));
+                return -1 * map.get(o1).compareTo(map.get(o2));
             }
 
         }.setMap(map));

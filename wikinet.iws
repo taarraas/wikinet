@@ -40,46 +40,9 @@
     </TreeState>
   </component>
   <component name="ChangeListManager" verified="true">
-    <list default="true" readonly="true" id="a9921a50-2ff2-48da-9564-a00245444ba0" name="Default" comment="pom.xml java version fix">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/impl/CategoriesConnections.java" afterPath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/impl/CategoriesConnections.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src/test/java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src/test" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wikinet.ipr" afterPath="$PROJECT_DIR$/wikinet.ipr" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordnet2db/wordnet2db.iml" afterPath="$PROJECT_DIR$/wordnet2db/wordnet2db.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/ExtendWordnet.java" afterPath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/ExtendWordnet.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src/main/java/wikinet/mapping/impl/LinksVoter.java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters/impl/LinksVoter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/ArticleReference.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/impl/WordNet2DBImpl.java" afterPath="$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/impl/WordNet2DBImpl.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src/main/java/wikinet" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src/main/java/wikinet/mapping/impl/DescriptionVoter.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki/wiki.iml" afterPath="$PROJECT_DIR$/wiki/wiki.iml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src/main" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/WikiQueries.java" afterPath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/WikiDao.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters/impl/DescriptionVoter.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src/main/java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters/impl" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src/main/java/wikinet/mapping/SynsetMapper.java" afterPath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/SynsetMapper.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/WordNet2DB.java" afterPath="$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/WordNet2DB.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src/main/java/wikinet/mapping/SynsetArticleVoter.java" afterPath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters/SynsetArticleVoter.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/synset2wiki-mapping.iml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wikinet.iml" afterPath="$PROJECT_DIR$/wikinet.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/impl/DescriptionIsAConnection.java" afterPath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/impl/DescriptionIsAConnection.java" />
+    <list default="true" readonly="true" id="a9921a50-2ff2-48da-9564-a00245444ba0" name="Default" comment="march 28 sunday evening">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wikinet.iws" afterPath="$PROJECT_DIR$/wikinet.iws" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src/main/java/wikinet/mapping/impl/GeneralVoter.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/pom.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src/main/resources" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/Main.java" afterPath="$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/Main.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordnet-extending/wordnet-extending.iml" afterPath="$PROJECT_DIR$/wordnet-extending/wordnet-extending.iml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src/main/resources/spring-w2db-mudule.xml" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/MappingUtils.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src/main/java/wikinet/mapping" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/ConnectionsMaker.java" afterPath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/ConnectionsMaker.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/synset2wiki-mapping/src/main/java/wikinet/mapping/impl" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/SynsetMapper.java" afterPath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/SynsetMapper.java" />
     </list>
     <ignored path="wikinet.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -143,10 +106,28 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ExtendWordnet.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ExtendWordnet.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/ExtendWordnet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="0" selection-start="2013" selection-end="2013" vertical-scroll-proportion="0.764622">
+            <state line="65" column="0" selection-start="2013" selection-end="2013" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wiki/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="0" selection-start="709" selection-end="709" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArticleReference.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/ArticleReference.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="13" selection-start="85" selection-end="85" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -155,7 +136,16 @@
       <file leaf-file-name="WikiDao.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/WikiDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="12" selection-start="1045" selection-end="1045" vertical-scroll-proportion="0.0">
+            <state line="8" column="17" selection-start="125" selection-end="125" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data-tier/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="27" selection-start="295" selection-end="302" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -188,28 +178,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SynsetMapper.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="SynsetMapper.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/SynsetMapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="29" selection-start="568" selection-end="568" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LinksVoter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters/impl/LinksVoter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="59" selection-start="1350" selection-end="1350" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DescriptionVoter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters/impl/DescriptionVoter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="0" selection-start="1314" selection-end="1314" vertical-scroll-proportion="0.0">
+            <state line="16" column="34" selection-start="414" selection-end="426" vertical-scroll-proportion="0.34985423">
               <folding />
             </state>
           </provider>
@@ -219,15 +191,6 @@
         <entry file="file://$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/MappingUtils.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="24" column="25" selection-start="601" selection-end="601" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SynsetArticleVoter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters/SynsetArticleVoter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="0" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -254,11 +217,11 @@
         <option value="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/impl/ConnectionDaoImpl.java" />
         <option value="$PROJECT_DIR$/synset2wiki-mapping/src/main/java/wikinet/mapping/SynsetArticleVoter.java" />
         <option value="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/impl/MappingUtils.java" />
-        <option value="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/SynsetMapper.java" />
         <option value="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/ConnectionsMaker.java" />
         <option value="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/impl/CategoriesConnections.java" />
         <option value="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/impl/DescriptionIsAConnection.java" />
         <option value="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/ExtendWordnet.java" />
+        <option value="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/SynsetMapper.java" />
       </list>
     </option>
   </component>
@@ -350,10 +313,6 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -440,48 +399,6 @@
               <option name="myItemId" value="wikinet" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extending" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wikinet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wikinet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordnet-extending" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wikinet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extending" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="impl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -512,10 +429,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -568,6 +481,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="wiki" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data-tier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data-tier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -998,7 +943,7 @@
     <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
     <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="data-tier: &#10;synset id generator implemented&#10;connection &lt;-&gt; article relation changed to m:n&#10;synset relation with word now is ordered&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="march 28 sunday evening" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1019,6 +964,7 @@
     <MESSAGE value="wordnet2db module added" />
     <MESSAGE value="pom.xml java version fix" />
     <MESSAGE value="data-tier: &#10;synset id generator implemented&#10;connection &lt;-&gt; article relation changed to m:n&#10;synset relation with word now is ordered&#10;" />
+    <MESSAGE value="march 28 sunday evening" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1028,20 +974,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/ArticleDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="17" selection-start="126" selection-end="126" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/impl/ArticleDaoImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="47" selection-start="360" selection-end="360" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/ConnectionDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="21" selection-start="308" selection-end="308" vertical-scroll-proportion="0.0">
@@ -1059,20 +991,6 @@
     <entry file="jar://$PROJECT_DIR$/../../../jdk/jdk1.6.0_17/src.zip!/java/util/TreeMap.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="107" column="67" selection-start="4800" selection-end="4800" vertical-scroll-proportion="-18.28">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/ArticleReference.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="13" selection-start="85" selection-end="85" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/WikiDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="12" selection-start="1045" selection-end="1045" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1105,13 +1023,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/SynsetMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="29" selection-start="568" selection-end="568" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/impl/CategoriesConnections.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="62" selection-start="392" selection-end="392" vertical-scroll-proportion="0.0">
@@ -1135,7 +1046,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/ExtendWordnet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="0" selection-start="2013" selection-end="2013" vertical-scroll-proportion="0.764622">
+        <state line="65" column="0" selection-start="2013" selection-end="2013" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/ArticleReference.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="13" selection-start="85" selection-end="85" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wiki/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="0" selection-start="709" selection-end="709" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data-tier/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="27" selection-start="295" selection-end="302" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/WikiDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="17" selection-start="125" selection-end="125" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/SynsetMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="34" selection-start="414" selection-end="426" vertical-scroll-proportion="0.34985423">
           <folding />
         </state>
       </provider>
