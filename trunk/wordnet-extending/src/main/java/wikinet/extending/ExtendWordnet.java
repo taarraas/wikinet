@@ -9,7 +9,7 @@ import wikinet.db.domain.Synset;
 import wikinet.db.domain.Word;
 import wikinet.db.model.SynsetType;
 import wikinet.wiki.ArticleReference;
-import wikinet.wiki.WikiDao;
+import wikinet.wiki.dao.WikiDao;
 
 import java.util.Collection;
 import java.util.LinkedList;

@@ -7,7 +7,7 @@ import wikinet.db.domain.Synset;
 import wikinet.db.domain.Word;
 import wikinet.mapping.voters.SynsetArticleVoter;
 import wikinet.wiki.ArticleReference;
-import wikinet.wiki.WikiDao;
+import wikinet.wiki.dao.WikiDao;
 
 import java.util.*;
 

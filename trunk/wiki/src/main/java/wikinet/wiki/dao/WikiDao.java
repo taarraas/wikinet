@@ -1,4 +1,6 @@
-package wikinet.wiki;
+package wikinet.wiki.dao;
+
+import wikinet.wiki.ArticleReference;
 
 import java.util.Collection;
 import java.util.Map;
