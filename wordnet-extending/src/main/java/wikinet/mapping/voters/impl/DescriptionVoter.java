@@ -6,7 +6,7 @@ import wikinet.db.domain.Synset;
 import wikinet.mapping.MappingUtils;
 import wikinet.mapping.voters.SynsetArticleVoter;
 import wikinet.wiki.ArticleReference;
-import wikinet.wiki.WikiDao;
+import wikinet.wiki.dao.WikiDao;
 
 import java.util.Set;
 
