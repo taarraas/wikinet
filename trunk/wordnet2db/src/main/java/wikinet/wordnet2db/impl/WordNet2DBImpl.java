@@ -41,17 +41,18 @@ public class WordNet2DBImpl implements WordNet2DB {
     }
 
     private void saveSynset(Synset synset, List<String> words) {
-//        Synset syns = synsetDao.findById(synset.getId());
         List<Word> wordlist = new LinkedList<Word>();
         for (String string : words) {
             wordlist.add(saveWord(string));
         }
-        //synset.setWords(wordlist); //uncoment after realizing
+        synset.setWords(wordlist);
         synsetDao.save(synset);
     }
 
-    private void addConnection(Synset from, Synset to, String pointer_symbol, int fromWordNo, int toWordNo) {
-        Connection connection = new Connection(from, to, ConnectionType.parse(pointer_symbol));
+    private void addConnection(long from, long to, String pointer_symbol, int fromWordNo, int toWordNo) {
+        Connection connection = new Connection(synsetDao.findById(from),
+                synsetDao.findById(to),
+                ConnectionType.parse(pointer_symbol));
         connection.setWordsFrom(fromWordNo);
         connection.setWordsTo(toWordNo);
         connectionDao.save(connection);
@@ -80,7 +81,7 @@ public class WordNet2DBImpl implements WordNet2DB {
         }
     }
 
-    private void parse(String pathToData) throws IOException {
+    private void parseSynsets(String pathToData) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(pathToData));
         String str;
         while ((str = br.readLine()) != null) {
@@ -88,16 +89,27 @@ public class WordNet2DBImpl implements WordNet2DB {
                 continue;
             }
             String[] el = str.split(" ");
-            Synset synset = new Synset(Integer.parseInt(el[0], 10), str.split("|")[1], getTypeByLetter(el[2]));
+            Synset synset = new Synset(Long.parseLong(el[0], 10),  str.split("\\|")[1], getTypeByLetter(el[2]));
             synset.setLexFileNum(el[1]);
 
-            int w_cnt = Integer.getInteger(el[3], 16);
+            int w_cnt = Integer.parseInt(el[3], 16);
             List<String> words = new LinkedList<String>();
             for (int i = 0; i < w_cnt; i++) {
                 words.add(el[4 + i * 2]);
             }
             saveSynset(synset, words);
-
+        }
+    }
+    private void parseConnections(String pathToData) throws IOException {
+             BufferedReader br = new BufferedReader(new FileReader(pathToData));
+        String str;
+        while ((str = br.readLine()) != null) {
+            if (str.startsWith("  ")) {
+                continue;
+            }
+            String[] el = str.split(" ");
+            long curSynset=Long.parseLong(el[0], 10);
+            int w_cnt = Integer.getInteger(el[3], 16);
             int basep = 4 + w_cnt * 2;
             int p_cnt = Integer.getInteger(el[basep], 10);
             for (int i = 0; i < p_cnt; i++) {
@@ -108,21 +120,20 @@ public class WordNet2DBImpl implements WordNet2DB {
                 int nosource = Integer.valueOf(source_target.substring(0, 2), 16),
                         nodestination = Integer.valueOf(source_target.substring(2), 16);
 
-/*
-                addConnection(synset, Integer.parseInt(synset_offset_tar, 10),
-                        pointer_symbol, nosource, nodestination, nosource == 0 ? null : words.get(nosource - 1));
-*/
+                addConnection(curSynset, Integer.parseInt(synset_offset_tar, 10),
+                        pointer_symbol, nosource, nodestination);
             }
         }
-
     }
-
+    private static final String[] FILELIST={"data.adj", "data.adv", "data.noun", "data.verb"};
     @Override
     public void importFile(String pathToWordnet) throws IOException {
-        parse(pathToWordnet + "data.adj");
-        parse(pathToWordnet + "data.adv");
-        parse(pathToWordnet + "data.noun");
-        parse(pathToWordnet + "data.verb");
+        for (String string : FILELIST) {
+            parseSynsets(pathToWordnet + string);
+        }
+        for (String string : FILELIST) {
+            parseConnections(pathToWordnet + string);
+        }
     }
 
 }
