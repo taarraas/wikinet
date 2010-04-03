@@ -91,6 +91,14 @@
             <artifactId>data-tier</artifactId>
             <version>1.0</version>
         </dependency>
+        <!-- Stanford's libraries dependencies -->
+        <dependency>
+            <groupId>stanford</groupId>
+            <artifactId>stanford-postagger</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/../libs/stanford-postagger.jar</systemPath>
+        </dependency>
     </dependencies>
     
     <build>
