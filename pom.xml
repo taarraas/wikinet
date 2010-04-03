@@ -12,7 +12,101 @@
     <description>WordNet extending through Wikipedia</description>
     <url>http://code.google.com/p/wikinet</url>
     <inceptionYear>2010</inceptionYear>
-
+<repositories>
+        <repository>
+            <id>codehaus</id>
+            <url>http://repository.codehaus.org</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>jboss</id>
+            <url>http://repository.jboss.com/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>apache-incubating</id>
+            <url>http://people.apache.org/repo/m2-incubating-repository</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>sun-repo-2</id>
+            <url>http://download.java.net/maven/2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>googlecode</id>
+            <url>http://google-maven-repository.googlecode.com/svn/repository</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>gwt-maven</id>
+            <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>     
+        <repository>
+            <id>java.net</id>
+            <url>https://maven-repository.dev.java.net/repository</url>
+            <layout>legacy</layout>
+            <releases>
+                <enabled>true</enabled>
+                <!-- <updatePolicy>never</updatePolicy> -->
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+           <id>gwt-ext</id>
+           <!--Needed only for GWT-Ext, not for GXT-->
+           <url>http://www.gwt-ext.com/maven2</url>
+           <releases>
+               <enabled>true</enabled>
+           </releases>
+           <snapshots>
+               <enabled>false</enabled>
+           </snapshots>
+        </repository>
+    </repositories>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.java.version>1.6</project.java.version>
@@ -22,10 +116,7 @@
         <module>data-tier</module>
         <module>wordnet2db</module>
         <module>wiki</module>
-        <module>synset2wiki-mapping</module>
         <module>wordnet-extending</module>
-        <module>clusterring-client</module>
-        <module>clusterring-server</module>
     </modules>
 
 </project>
