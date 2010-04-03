@@ -15,16 +15,15 @@ import wikinet.db.model.ConnectionType;
 import wikinet.db.model.SynsetType;
 
 import javax.persistence.EntityExistsException;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * @author shyiko
  * @since Feb 28, 2010
  */
-@ContextConfiguration(locations = {"classpath:spring-module-test.xml"})
+@ContextConfiguration(locations = {"classpath:spring-dao-module-test.xml"})
 public class ConnectionDaoImplTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Autowired

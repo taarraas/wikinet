@@ -1,6 +1,5 @@
 package wikinet.wordnet2db.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.db.dao.ConnectionDao;
 import wikinet.db.dao.SynsetDao;
 import wikinet.db.dao.WordDao;
@@ -22,14 +21,35 @@ import java.util.List;
  */
 public class WordNet2DBImpl implements WordNet2DB {
 
-    @Autowired
+    private static final String[] FILELIST={"data.adj", "data.adv", "data.noun", "data.verb"};
+
     private SynsetDao synsetDao;
 
-    @Autowired
     private WordDao wordDao;
-
-    @Autowired
+    
     private ConnectionDao connectionDao;
+
+    public void setSynsetDao(SynsetDao synsetDao) {
+        this.synsetDao = synsetDao;
+    }
+
+    public void setWordDao(WordDao wordDao) {
+        this.wordDao = wordDao;
+    }
+
+    public void setConnectionDao(ConnectionDao connectionDao) {
+        this.connectionDao = connectionDao;
+    }
+
+    @Override
+    public void importFile(String pathToWordnet) throws IOException {
+        for (String string : FILELIST) {
+            parseSynsets(pathToWordnet + string);
+        }
+        for (String string : FILELIST) {
+            parseConnections(pathToWordnet + string);
+        }
+    }
 
     private Word saveWord(String word) {
         Word w;
@@ -100,6 +120,7 @@ public class WordNet2DBImpl implements WordNet2DB {
             saveSynset(synset, words);
         }
     }
+
     private void parseConnections(String pathToData) throws IOException {
              BufferedReader br = new BufferedReader(new FileReader(pathToData));
         String str;
@@ -123,16 +144,6 @@ public class WordNet2DBImpl implements WordNet2DB {
                 addConnection(curSynset, Integer.parseInt(synset_offset_tar, 10),
                         pointer_symbol, nosource, nodestination);
             }
-        }
-    }
-    private static final String[] FILELIST={"data.adj", "data.adv", "data.noun", "data.verb"};
-    @Override
-    public void importFile(String pathToWordnet) throws IOException {
-        for (String string : FILELIST) {
-            parseSynsets(pathToWordnet + string);
-        }
-        for (String string : FILELIST) {
-            parseConnections(pathToWordnet + string);
         }
     }
 

@@ -1,15 +1,16 @@
 package wikinet.wiki.parser.impl;
 
+import org.apache.log4j.Logger;
 import org.hibernate.lob.ClobImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.wiki.dao.CategoryDao;
 import wikinet.wiki.dao.LocalizedPageDao;
 import wikinet.wiki.dao.PageDao;
 import wikinet.wiki.domain.Category;
-import wikinet.wiki.domain.LocalizedPage;
 import wikinet.wiki.domain.Page;
 import wikinet.wiki.parser.PageBuilder;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -21,11 +22,14 @@ import java.util.regex.Pattern;
  */
 public class PageBuilderImpl implements PageBuilder {
 
+    private static Logger logger = Logger.getLogger(PageBuilderImpl.class);
+
     private PageDao pageDao;
     private CategoryDao categoryDao;
     private LocalizedPageDao localizedPageDao;
 
     private static final Pattern patternRed = Pattern.compile("[{][{](for|redirect).*?[}][}]");
+    private static final Pattern patternAll = Pattern.compile("[{][{].*?[}][}]");
 
     @Autowired
     public PageBuilderImpl(PageDao pageDao, CategoryDao categoryDao) {
@@ -90,20 +94,20 @@ public class PageBuilderImpl implements PageBuilder {
 */
 
     private Set<String> findRedirections(String text) {
-        Set<String> set = new HashSet<String>();
-        Matcher matcher = patternRed.matcher(text);
-        while (matcher.find()) {
-            String match = matcher.group();
-            match = match.substring(match.lastIndexOf("|"));
-            match = match.substring(1, match.indexOf("}}"));
-            match = match.trim();
-            set.add(match);
-        }
-        return set;
+        return findAllLinks(patternRed, text);
     }
 
     private Set<String> findFooters(String text) {
-        throw new UnsupportedOperationException();
+        String begin = "&lt;!--FOOTERS--&gt;";
+        int footerPos = text.lastIndexOf(begin);
+        String end = "&lt;!--CATEGORIES--&gt;";
+        int categoriesPos = text.lastIndexOf(end);
+        if (footerPos > categoriesPos) {
+            logger.warn("Couldn't determine footer block position. Skipping footers...");
+            return Collections.emptySet();
+        }
+        text = text.substring(footerPos + begin.length(), categoriesPos);
+        return findAllLinks(patternAll, text);
     }
 
     private Set<String> findCategories(String text) {
@@ -112,6 +116,19 @@ public class PageBuilderImpl implements PageBuilder {
 
     private Set<String> findLocalizedPages(String text) {
         throw new UnsupportedOperationException();
+    }
+
+    private Set<String> findAllLinks(Pattern pattern, String text) {
+        Set<String> set = new HashSet<String>();
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            String match = matcher.group();
+            match = match.substring(match.lastIndexOf("|"));
+            match = match.substring(1, match.indexOf("}}"));
+            match = match.trim();
+            set.add(match);
+        }
+        return set;
     }
 
     private String getClean(String text) {

@@ -9,8 +9,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class ContextFactory {
 
-    private static final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[]
-            {"spring-module.xml", "spring-w2db-mudule.xml"});
+    private static final ClassPathXmlApplicationContext context =
+            new ClassPathXmlApplicationContext("spring-w2db-mudule.xml");
 
     private ContextFactory() {}
     

@@ -54,7 +54,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean id="genericDao" class="wikinet.db.dao.impl.GenericDaoImpl" abstract="true">
+    <bean id="genericDao" class="wikinet.db.dao.impl.GenericDaoImpl" abstract="true" >
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
