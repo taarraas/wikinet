@@ -20,7 +20,7 @@ import static org.testng.Assert.assertNotNull;
  * @author shyiko
  * @since Feb 28, 2010
  */
-@ContextConfiguration(locations = {"classpath:spring-module-test.xml"})
+@ContextConfiguration(locations = {"classpath:spring-dao-module-test.xml"})
 public class SynsetDaoImplTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Autowired

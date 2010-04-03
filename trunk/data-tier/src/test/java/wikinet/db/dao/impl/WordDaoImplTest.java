@@ -16,7 +16,7 @@ import static org.testng.Assert.assertNull;
  * @author shyiko
  * @since Feb 28, 2010
  */
-@ContextConfiguration(locations = {"classpath:spring-module-test.xml"})
+@ContextConfiguration(locations = {"classpath:spring-dao-module-test.xml"})
 public class WordDaoImplTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Autowired

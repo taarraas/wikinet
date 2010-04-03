@@ -8,11 +8,17 @@
     <artifactId>wikinet</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
-    <name>wikinet project</name>
+    <name>wikinet</name>
     <description>WordNet extending through Wikipedia</description>
     <url>http://code.google.com/p/wikinet</url>
     <inceptionYear>2010</inceptionYear>
-<repositories>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.java.version>1.6</project.java.version>
+    </properties>
+    
+    <repositories>
         <repository>
             <id>codehaus</id>
             <url>http://repository.codehaus.org</url>
@@ -73,44 +79,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <id>gwt-maven</id>
-            <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>     
-        <repository>
-            <id>java.net</id>
-            <url>https://maven-repository.dev.java.net/repository</url>
-            <layout>legacy</layout>
-            <releases>
-                <enabled>true</enabled>
-                <!-- <updatePolicy>never</updatePolicy> -->
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-           <id>gwt-ext</id>
-           <!--Needed only for GWT-Ext, not for GXT-->
-           <url>http://www.gwt-ext.com/maven2</url>
-           <releases>
-               <enabled>true</enabled>
-           </releases>
-           <snapshots>
-               <enabled>false</enabled>
-           </snapshots>
-        </repository>
     </repositories>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.java.version>1.6</project.java.version>
-    </properties>    
 
     <modules>
         <module>data-tier</module>
