@@ -106,6 +106,28 @@ public class WordNet2DBImpl implements WordNet2DB {
             }
         }
     }
+    private int getSegByLetter(String letter) {
+        switch (letter.charAt(0)) {
+            case 'n': {
+                return 0;
+            }
+            case 'v': {
+                return 1;
+            }
+            case 'a': {
+                return 2;
+            }
+            case 's': {
+                return 2;
+            }
+            case 'r': {
+                return 3;
+            }
+            default: {
+                return -1;
+            }
+        }
+    }
 
     private void parseSynsets(String pathToData) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(pathToData));
@@ -115,7 +137,8 @@ public class WordNet2DBImpl implements WordNet2DB {
                 continue;
             }
             String[] el = str.split(" ");
-            Synset synset = new Synset(Long.parseLong(el[0], 10), str.split("\\|")[1], getTypeByLetter(el[2]));
+            long key=Long.parseLong(el[0], 10) + 100000000 * getSegByLetter(el[2]);
+            Synset synset = new Synset(key, str.split("\\|")[1], getTypeByLetter(el[2]));
             synset.setLexFileNum(el[1]);
 
             int w_cnt = Integer.parseInt(el[3], 16);
