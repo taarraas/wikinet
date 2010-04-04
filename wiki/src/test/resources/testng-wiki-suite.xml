@@ -4,8 +4,11 @@
 
     <test name="all">
         <classes>
-            <class name="wikinet.wiki.WikiXMLParserTest"/>
+            <class name="wikinet.wiki.dao.impl.CategoryDaoImplTest"/>
+            <class name="wikinet.wiki.dao.impl.LocalizedPageDaoImplTest"/>
             <class name="wikinet.wiki.dao.impl.PageDaoImplTest"/>
+            <class name="wikinet.wiki.parser.impl.WikiXMLParserTest"/>
+            <class name="wikinet.wiki.parser.impl.PageBuilderImplTest"/>
         </classes>
     </test>
 </suite>
