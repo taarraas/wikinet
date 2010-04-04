@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.Test;
-import wikinet.db.Utils;
 import wikinet.db.dao.SynsetDao;
 import wikinet.db.dao.WordDao;
 import wikinet.db.domain.Synset;
@@ -42,7 +41,7 @@ public class SynsetDaoImplTest extends AbstractTransactionalTestNGSpringContextT
         synsetDao.save(synset);
         Synset foundSynset = synsetDao.findById(synset.getId());
         assertNotNull(foundSynset);
-        assertEquals(Utils.getInstance().getStringFromClob(foundSynset.getDescription()), "desc");
+        assertEquals(foundSynset.getDescription(), "desc");
         assertEquals(foundSynset.getWords().size(), 2);
         foundSynset.removeWord(word2);
         synsetDao.save(foundSynset);
