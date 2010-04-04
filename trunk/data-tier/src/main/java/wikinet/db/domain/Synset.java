@@ -1,5 +1,6 @@
 package wikinet.db.domain;
 
+import com.mysql.jdbc.SQLError;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.lob.ClobImpl;
@@ -7,6 +8,7 @@ import wikinet.db.model.SynsetType;
 
 import javax.persistence.*;
 import java.sql.Clob;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,8 +72,13 @@ public class Synset {
         return id;
     }
 
-    public Clob getDescription() {
-        return description;
+    public String getDescription() {
+        try {
+            return description.getSubString(0, (int)description.length());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public SynsetType getType() {
