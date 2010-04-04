@@ -2,7 +2,9 @@ package wikinet.mapping;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * @author shyiko
@@ -32,6 +34,30 @@ public class MappingUtils {
                 common.add(s);
         }
         return common;
+    }
+    /**
+     * Intersect fuzzy sets
+     * @param a
+     * @param b
+     * @return
+     */
+    public Map<String, Double> intersect(Map<String, Double> a, Map<String, Double> b) {
+        Map<String, Double> common = new TreeMap<String, Double>();
+        for (Map.Entry<String, Double> entry : a.entrySet()) {
+            if (b.containsKey(entry.getKey())) {
+                common.put(entry.getKey(),
+                        Math.min(entry.getValue(), b.get(entry.getKey())));
+            }
+        }
+        return common;
+    }
+
+    public double sizeOfSet(Map<String, Double> a) {
+        double size=0;
+        for (Map.Entry<String, Double> entry : a.entrySet()) {
+            size += entry.getValue();
+        }
+        return size;
     }
 
 
