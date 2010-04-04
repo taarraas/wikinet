@@ -1,5 +1,6 @@
 package wikinet.db.dao.impl;
 
+import org.hibernate.lob.ClobImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
@@ -71,7 +72,7 @@ public class ConnectionDaoImplTest extends AbstractTransactionalTestNGSpringCont
     private Synset getNewSavedSynset(long id, String sword) {
         Word word = new Word(sword);
         wordDao.save(word);
-        Synset synset = new Synset(id, "desc " + sword, SynsetType.NOUN);
+        Synset synset = new Synset(id, new ClobImpl("desc " + sword), SynsetType.NOUN);
         synset.addWord(word);
         synsetDao.save(synset);
         return synset;

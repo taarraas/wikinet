@@ -7,9 +7,10 @@
         <groupId>code.google.com</groupId>
         <version>1.0</version>
     </parent>
-    <artifactId>wordnet-extending</artifactId>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
+
+    <artifactId>wordnet-extending</artifactId>
 
     <properties>
         <hibernateVersion>3.2.1.ga</hibernateVersion>

@@ -24,17 +24,17 @@ public class PageBuilderImpl implements PageBuilder {
 
     private static Logger logger = Logger.getLogger(PageBuilderImpl.class);
 
-    private PageDao pageDao;
-    private CategoryDao categoryDao;
-    private LocalizedPageDao localizedPageDao;
-
     private static final Pattern patternRed = Pattern.compile("[{][{](for|redirect).*?[}][}]");
     private static final Pattern patternAll = Pattern.compile("[{][{].*?[}][}]");
 
     @Autowired
-    public PageBuilderImpl(PageDao pageDao, CategoryDao categoryDao) {
-        this.pageDao = pageDao;
-    }
+    private PageDao pageDao;
+
+    @Autowired
+    private CategoryDao categoryDao;
+
+    @Autowired
+    private LocalizedPageDao localizedPageDao;
 
     @Override
     public void importPage(String title, String text) {

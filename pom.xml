@@ -16,6 +16,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.java.version>1.6</project.java.version>
+        <hibernateVersion>3.2.1.ga</hibernateVersion>
+        <springVersion>2.5.6</springVersion>
     </properties>
     
     <repositories>
@@ -82,10 +84,12 @@
     </repositories>
 
     <modules>
+        <module>common</module>
         <module>data-tier</module>
         <module>wordnet2db</module>
         <module>wiki</module>
         <module>wordnet-extending</module>
+        <module>common</module>
     </modules>
 
 </project>

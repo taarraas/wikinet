@@ -40,11 +40,14 @@
     <orderEntry type="library" exported="" name="Maven: jboss:javassist:3.3.ga" level="project" />
     <orderEntry type="library" exported="" name="Maven: jboss:jboss-archive-browsing:5.0.0alpha-200607201-119" level="project" />
     <orderEntry type="module" module-name="data-tier" exported="" />
+    <orderEntry type="library" exported="" name="Maven: mysql:mysql-connector-java:5.1.12" level="project" />
+    <orderEntry type="module" module-name="common" exported="" />
     <orderEntry type="module" module-name="wiki" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.apache.ant:ant:1.7.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.apache.ant:ant-launcher:1.7.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: commons-io:commons-io:1.4" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.mockito:mockito-all:1.7" level="project" />
+    <orderEntry type="library" name="Maven: stanford:stanford-postagger:1.0" level="project" />
   </component>
 </module>
 

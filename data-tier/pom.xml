@@ -7,14 +7,10 @@
         <groupId>code.google.com</groupId>
         <version>1.0</version>
     </parent>
-    <artifactId>data-tier</artifactId>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
 
-    <properties>
-        <hibernateVersion>3.2.1.ga</hibernateVersion>
-        <springVersion>2.5.6</springVersion>
-    </properties>
+    <artifactId>data-tier</artifactId>
 
     <dependencies>
         <dependency>
@@ -27,11 +23,6 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.12</version>
-        </dependency>
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>8.3-603.jdbc4</version>
         </dependency>
         <dependency>
             <groupId>commons-dbcp</groupId>
@@ -90,6 +81,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernateVersion}</version>
+        </dependency>
+        <!-- Project's modules dependencies -->
+        <dependency>
+            <groupId>code.google.com</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 

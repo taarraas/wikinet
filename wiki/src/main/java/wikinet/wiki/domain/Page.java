@@ -2,6 +2,8 @@ package wikinet.wiki.domain;
 
 import javax.persistence.*;
 import java.sql.Clob;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +18,7 @@ public class Page {
      * Text between &lt;title&gt;&lt;/title&gt;
      */
     @Id
-    private String title;
+    private String title = "default";
 
     /**
      * First paragraph of text between tags &lt;text&gt;&lt;/text&gt;
@@ -36,8 +38,11 @@ public class Page {
      * {{redirect|Anarchists}}.<br>
      * Last parts stands for links.
      */
-    @OneToMany
-    private Set<Page> redirects;
+    @ManyToMany
+    @JoinTable(name = "Page_Redirect",
+        joinColumns = @JoinColumn(name = "page_title", referencedColumnName = "title"),
+        inverseJoinColumns = @JoinColumn(name = "redirect_page_title", referencedColumnName = "title"))
+    private Set<Page> redirects = new HashSet<Page>();
 
     /**
      * All linked pages being gotten from<br>
@@ -45,8 +50,11 @@ public class Page {
      * {{Philosophy topics}}<br>
      * ...
      */
-    @OneToMany
-    private Set<Page> footers;
+    @ManyToMany
+    @JoinTable(name = "Page_Footer",
+        joinColumns = @JoinColumn(name = "page_title", referencedColumnName = "title"),
+        inverseJoinColumns = @JoinColumn(name = "footer_page_title", referencedColumnName = "title"))
+    private Set<Page> footers = new HashSet<Page>();
 
     /**
      * Page linked categories being gotten from<br>
@@ -55,7 +63,7 @@ public class Page {
      * ...
      */
     @ManyToMany
-    private List<Category> categories;
+    private List<Category> categories = new LinkedList<Category>();
 
     /**
      * Pages in other languages being gotten from<br>
@@ -64,18 +72,21 @@ public class Page {
      * ...
      */
     @OneToMany
-    private List<LocalizedPage> localizedPages;
+    private List<LocalizedPage> localizedPages = new LinkedList<LocalizedPage>();
+
+    protected Page() {
+    }
 
     public Page(String title) {
         this.title = title;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getParagraph() {

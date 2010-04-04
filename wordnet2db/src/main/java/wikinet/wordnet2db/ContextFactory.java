@@ -15,6 +15,7 @@ public class ContextFactory {
     private ContextFactory() {}
     
     public static AbstractRefreshableConfigApplicationContext getContext() {
+        // return context.getAutowireCapableBeanFactory()
         return context;
     }
 

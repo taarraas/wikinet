@@ -7,10 +7,11 @@
         <groupId>code.google.com</groupId>
         <version>1.0</version>
     </parent>
-    <artifactId>wiki</artifactId>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
 
+    <artifactId>wiki</artifactId>
+    
     <properties>
         <hibernateVersion>3.2.1.ga</hibernateVersion>
         <springVersion>2.5.6</springVersion>
@@ -34,9 +35,9 @@
         </dependency>
         <!-- Database dependencies -->
         <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>8.3-603.jdbc4</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.5</version>
         </dependency>
         <dependency>
             <groupId>commons-dbcp</groupId>
@@ -104,7 +105,7 @@
         <!-- Project's modules dependencies -->
         <dependency>
             <groupId>code.google.com</groupId>
-            <artifactId>data-tier</artifactId>
+            <artifactId>common</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

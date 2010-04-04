@@ -5,6 +5,7 @@ import org.hibernate.annotations.IndexColumn;
 import wikinet.db.model.SynsetType;
 
 import javax.persistence.*;
+import java.sql.Clob;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,7 +30,8 @@ public class Synset {
     transient long idPreInit;
 
     @Column(nullable = false)
-    private String description;
+    @Basic(fetch = FetchType.LAZY)
+    private Clob description;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -52,12 +54,12 @@ public class Synset {
     protected Synset() {
     }
 
-    public Synset(String description, SynsetType type) {
+    public Synset(Clob description, SynsetType type) {
         this.description = description;
         this.type = type;
     }
 
-    public Synset(long id, String description, SynsetType type) {
+    public Synset(long id, Clob description, SynsetType type) {
         this.idPreInit = id;
         this.description = description;
         this.type = type;
@@ -67,7 +69,7 @@ public class Synset {
         return id;
     }
 
-    public String getDescription() {
+    public Clob getDescription() {
         return description;
     }
 
@@ -123,7 +125,6 @@ public class Synset {
         Synset synset = (Synset) o;
 
         if (id != synset.id) return false;
-        if (description != null ? !description.equals(synset.description) : synset.description != null) return false;
         if (lexFileNum != null ? !lexFileNum.equals(synset.lexFileNum) : synset.lexFileNum != null) return false;
         if (type != synset.type) return false;
 
@@ -133,7 +134,6 @@ public class Synset {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (lexFileNum != null ? lexFileNum.hashCode() : 0);
         return result;
@@ -143,7 +143,6 @@ public class Synset {
     public String toString() {
         return "Synset{" +
                 "id=" + id +
-                ", description='" + description + '\'' +
                 ", type=" + type +
                 ", lexFileNum='" + lexFileNum + '\'' +
                 '}';
