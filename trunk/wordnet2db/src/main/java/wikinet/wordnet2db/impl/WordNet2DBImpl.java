@@ -58,6 +58,7 @@ public class WordNet2DBImpl implements WordNet2DB {
         return word.replace('_', ' ');
     }
     private Word saveWord(String word) {
+        word = normaliseWord(word);
         Word w;
         if ((w = wordDao.findById(word)) == null) {
             w = new Word(word);
