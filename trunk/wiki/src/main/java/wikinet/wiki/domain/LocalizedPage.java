@@ -2,9 +2,7 @@ package wikinet.wiki.domain;
 
 import wikinet.db.model.Locale;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @author shyiko
@@ -16,6 +14,7 @@ public class LocalizedPage {
     @Id
     private String title;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Locale locale;
 
