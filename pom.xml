@@ -89,7 +89,6 @@
         <module>wordnet2db</module>
         <module>wiki</module>
         <module>wordnet-extending</module>
-        <module>common</module>
     </modules>
 
 </project>
