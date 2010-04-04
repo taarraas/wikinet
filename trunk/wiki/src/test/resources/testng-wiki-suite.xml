@@ -5,6 +5,7 @@
     <test name="all">
         <classes>
             <class name="wikinet.wiki.WikiXMLParserTest"/>
+            <class name="wikinet.wiki.dao.impl.PageDaoImplTest"/>
         </classes>
     </test>
 </suite>

@@ -7,9 +7,10 @@
         <groupId>code.google.com</groupId>
         <version>1.0</version>
     </parent>
-    <artifactId>wordnet2db</artifactId>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
+
+    <artifactId>wordnet2db</artifactId>
 
     <properties>
         <hibernateVersion>3.2.1.ga</hibernateVersion>

@@ -19,6 +19,9 @@ public class LocalizedPage {
     @Column(nullable = false)
     private Locale locale;
 
+    protected LocalizedPage() {
+    }
+
     public LocalizedPage(String title, Locale locale) {
         this.title = title;
         this.locale = locale;
