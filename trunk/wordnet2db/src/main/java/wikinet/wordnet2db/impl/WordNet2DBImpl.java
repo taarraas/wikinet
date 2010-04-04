@@ -1,5 +1,7 @@
 package wikinet.wordnet2db.impl;
 
+import com.mysql.jdbc.Clob;
+import com.mysql.jdbc.JDBC4NClob;
 import wikinet.db.dao.ConnectionDao;
 import wikinet.db.dao.SynsetDao;
 import wikinet.db.dao.WordDao;
@@ -15,6 +17,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import org.hibernate.lob.ClobImpl;
 
 /**
  * @author taras, shyiko
@@ -47,10 +50,13 @@ public class WordNet2DBImpl implements WordNet2DB {
             parseSynsets(pathToWordnet + string);
         }
         for (String string : FILELIST) {
-            parseConnections(pathToWordnet + string);
+            //parseConnections(pathToWordnet + string);
         }
     }
 
+    private String normaliseWord(String word) {
+        return word.replace('_', ' ');
+    }
     private Word saveWord(String word) {
         Word w;
         if ((w = wordDao.findById(word)) == null) {
@@ -109,7 +115,7 @@ public class WordNet2DBImpl implements WordNet2DB {
                 continue;
             }
             String[] el = str.split(" ");
-            Synset synset = new Synset(Long.parseLong(el[0], 10),  str.split("\\|")[1], getTypeByLetter(el[2]));
+            Synset synset = new Synset(Long.parseLong(el[0], 10), str.split("\\|")[1], getTypeByLetter(el[2]));
             synset.setLexFileNum(el[1]);
 
             int w_cnt = Integer.parseInt(el[3], 16);
