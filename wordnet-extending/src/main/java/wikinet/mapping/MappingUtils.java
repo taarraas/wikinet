@@ -1,6 +1,7 @@
 package wikinet.mapping;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -20,14 +21,14 @@ public class MappingUtils {
         return words;
     }
 
-    public Set<String> union(Set<String> a, Set<String> b) {
+    public Set<String> union(Collection<String> a, Collection<String> b) {
         Set<String> common = new HashSet<String>();
         common.addAll(a);
         common.addAll(b);
         return common;
     }
 
-    public Set<String> intersect(Set<String> a, Set<String> b) {
+    public Set<String> intersect(Collection<String> a, Collection<String> b) {
         Set<String> common = new HashSet<String>();
         for (String s : a) {
             if (b.contains(s))
