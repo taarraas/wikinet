@@ -47,10 +47,10 @@ public class WordNet2DBImpl implements WordNet2DB {
     @Override
     public void importFile(String pathToWordnet) throws IOException {
         for (String string : FILELIST) {
-            parseSynsets(pathToWordnet + string);
+//            parseSynsets(pathToWordnet + string);
         }
         for (String string : FILELIST) {
-            //parseConnections(pathToWordnet + string);
+            parseConnections(pathToWordnet + string);
         }
     }
 
@@ -159,20 +159,20 @@ public class WordNet2DBImpl implements WordNet2DB {
                 continue;
             }
             String[] el = str.split(" ");
-            long curSynset=Long.parseLong(el[0], 10);
-            int w_cnt = Integer.getInteger(el[3], 16);
+            long key=Long.parseLong(el[0], 10) + 100000000 * getSegByLetter(el[2]);
+            int w_cnt = Integer.parseInt(el[3], 16);
             int basep = 4 + w_cnt * 2;
-            int p_cnt = Integer.getInteger(el[basep], 10);
+            int p_cnt = Integer.parseInt(el[basep], 10);
             for (int i = 0; i < p_cnt; i++) {
                 String pointer_symbol = el[basep + 1 + i * 4],
                         synset_offset_tar = el[basep + 2 + i * 4],
                         pos = el[basep + 3 + i * 4],
                         source_target = el[basep + 4 + i * 4];
-                int nosource = Integer.valueOf(source_target.substring(0, 2), 16),
-                        nodestination = Integer.valueOf(source_target.substring(2), 16);
-
-                addConnection(curSynset, Integer.parseInt(synset_offset_tar, 10),
-                        pointer_symbol, nosource, nodestination);
+                int nosource = Integer.parseInt(source_target.substring(0, 2), 16),
+                        nodestination = Integer.parseInt(source_target.substring(2), 16);
+                long keyTo=Long.parseLong(synset_offset_tar, 10)
+                        + 100000000 * getSegByLetter(pos);
+                addConnection(key, keyTo, pointer_symbol, nosource, nodestination);
             }
         }
     }
