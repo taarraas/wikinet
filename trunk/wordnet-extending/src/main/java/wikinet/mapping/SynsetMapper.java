@@ -110,8 +110,11 @@ public abstract class SynsetMapper {
     private double getOverallVote(long synsetId, ArticleReference article) {
         double total = 0.0;
         for (SynsetArticleVoter voter : voters) {
-            total += voter.getVote(synsetId, article);
+            total = Math.max(voter.getVote(synsetId, article), total);
+            if (total >= 1) {
+                return 1;
+            }
         }
-        return total / voters.size();
+        return total;
     }
 }
