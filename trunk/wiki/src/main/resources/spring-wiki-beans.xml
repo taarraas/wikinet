@@ -32,6 +32,7 @@
         <property name="annotatedClasses">
             <list>
                 <value>wikinet.wiki.domain.Page</value>
+                <value>wikinet.wiki.domain.LinkedPage</value>
                 <value>wikinet.wiki.domain.LocalizedPage</value>
                 <value>wikinet.wiki.domain.Category</value>
             </list>

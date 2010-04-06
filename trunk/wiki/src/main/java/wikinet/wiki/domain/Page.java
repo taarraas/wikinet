@@ -1,5 +1,8 @@
 package wikinet.wiki.domain;
 
+import org.hibernate.lob.ClobImpl;
+import wikinet.db.Utils;
+
 import javax.persistence.*;
 import java.sql.Clob;
 import java.util.HashSet;
@@ -18,7 +21,7 @@ public class Page {
      * Text between &lt;title&gt;&lt;/title&gt;
      */
     @Id
-    private String title = "default";
+    private String title;
 
     /**
      * First paragraph of text between tags &lt;text&gt;&lt;/text&gt;
@@ -32,13 +35,9 @@ public class Page {
     private Clob text;
 
     /**
-     * All linked pages being gotten from<br>
-     * {{for|the anthology of anarchist writings|Anarchism: A Documentary History of Libertarian Ideas}}<br>
-     * {{redirect|Anarchist|the fictional character|Anarchist (comics)}}<br>
-     * {{redirect|Anarchists}}.<br>
-     * Last parts stands for links.
+     * All pages that redirect to this one
      */
-    @ManyToMany
+    @OneToMany
     @JoinTable(name = "Page_Redirect",
         joinColumns = @JoinColumn(name = "page_title", referencedColumnName = "title"),
         inverseJoinColumns = @JoinColumn(name = "redirect_page_title", referencedColumnName = "title"))
@@ -46,30 +45,21 @@ public class Page {
 
     /**
      * All linked pages being gotten from<br>
-     * &lt;!--FOOTERS--&gt;<br>
-     * {{Philosophy topics}}<br>
-     * ...
      */
-    @ManyToMany
-    @JoinTable(name = "Page_Footer",
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "Page_LinkedPage",
         joinColumns = @JoinColumn(name = "page_title", referencedColumnName = "title"),
-        inverseJoinColumns = @JoinColumn(name = "footer_page_title", referencedColumnName = "title"))
-    private Set<Page> footers = new HashSet<Page>();
+        inverseJoinColumns = @JoinColumn(name = "linked_page_title", referencedColumnName = "id"))
+    private Set<LinkedPage> linkedPages = new HashSet<LinkedPage>();
 
     /**
-     * Page linked categories being gotten from<br>
-     * &lt;!--CATEGORIES--&gt;<br>
-     * [[Category:Anarchism]]<br>
-     * ...
+     * Page categories
      */
     @ManyToMany
     private List<Category> categories = new LinkedList<Category>();
 
     /**
-     * Pages in other languages being gotten from<br>
-     * &lt;!--LANGUAGES--&gt;<br>
-     * [[pl:Anarchizm]]<br>
-     * ...
+     * Same page but in some other language
      */
     @OneToMany
     private List<LocalizedPage> localizedPages = new LinkedList<LocalizedPage>();
@@ -97,20 +87,20 @@ public class Page {
         this.paragraph = paragraph;
     }
 
-    public Clob getText() {
-        return text;
+    public String getText() {
+        return Utils.getInstance().getStringFromClob(text);
     }
 
-    public void setText(Clob text) {
-        this.text = text;
+    public void setText(String text) {
+        this.text = new ClobImpl(text);
     }
 
     public void addRedirect(Page redirect) {
         this.redirects.add(redirect);
     }
 
-    public void addFooter(Page footer) {
-        this.footers.add(footer);
+    public void addLinkedPage(LinkedPage page) {
+        this.linkedPages.add(page);
     }
 
     public void addCategory(Category category) {
@@ -125,8 +115,8 @@ public class Page {
         return redirects;
     }
 
-    public Set<Page> getFooters() {
-        return footers;
+    public Set<LinkedPage> getLinkedPages() {
+        return linkedPages;
     }
 
     public List<Category> getCategories() {

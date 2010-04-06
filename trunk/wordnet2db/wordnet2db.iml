@@ -42,7 +42,6 @@
     <orderEntry type="module" module-name="data-tier" exported="" />
     <orderEntry type="library" exported="" name="Maven: mysql:mysql-connector-java:5.1.12" level="project" />
     <orderEntry type="module" module-name="common" exported="" />
-    <orderEntry type="library" name="Maven: stanford:stanford-postagger:1.0" level="project" />
   </component>
 </module>
 

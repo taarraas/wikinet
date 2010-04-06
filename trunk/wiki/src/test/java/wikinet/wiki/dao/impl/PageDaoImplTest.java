@@ -1,17 +1,16 @@
 package wikinet.wiki.dao.impl;
 
-import org.hibernate.lob.ClobImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import wikinet.db.Utils;
 import wikinet.db.model.Locale;
 import wikinet.wiki.dao.CategoryDao;
 import wikinet.wiki.dao.LocalizedPageDao;
 import wikinet.wiki.dao.PageDao;
 import wikinet.wiki.domain.Category;
+import wikinet.wiki.domain.LinkedPage;
 import wikinet.wiki.domain.LocalizedPage;
 import wikinet.wiki.domain.Page;
 
@@ -37,20 +36,17 @@ public class PageDaoImplTest extends AbstractTransactionalTestNGSpringContextTes
     public void testSave() throws Exception {
         Page page = new Page("title");
         page.setParagraph("paragraph");
-        page.setText(new ClobImpl("big_text"));
+        page.setText("big_text");
         pageDao.save(page);
         Page byId = pageDao.findById("title");
         Assert.assertNotNull(byId);
         Assert.assertEquals(byId.getParagraph(), "paragraph");
-        String text = Utils.getInstance().getStringFromClob(byId.getText());
-        Assert.assertEquals(text, "big_text");
+        Assert.assertEquals(byId.getText(), "big_text");
         Assert.assertEquals(pageDao.findAll().size(), 1);
     }
 
     @Test
     public void testComplexSave() throws Exception {
-        Page footerPage = new Page("footer");
-        pageDao.save(footerPage);
         Page redirectPage = new Page("redirect");
         pageDao.save(redirectPage);
         LocalizedPage localizedPage = new LocalizedPage("localized", Locale.POL);
@@ -58,15 +54,20 @@ public class PageDaoImplTest extends AbstractTransactionalTestNGSpringContextTes
         Category category = new Category("category");
         categoryDao.save(category);
         Page page = new Page("title");
-        page.addFooter(footerPage);
+        Page lp = new Page("lp");
+        pageDao.save(lp);
+        page.addLinkedPage(new LinkedPage(1, 2, lp));
         page.addRedirect(redirectPage);
         page.addLocalizedPage(localizedPage);
         page.addCategory(category);
         pageDao.save(page);
         Page foundPage = pageDao.findById("title");
         Assert.assertNotNull(foundPage);
-        Assert.assertEquals(foundPage.getFooters().size(), 1);
-        Assert.assertEquals(foundPage.getFooters().iterator().next().getTitle(), "footer");
+        Assert.assertEquals(foundPage.getLinkedPages().size(), 1);
+        LinkedPage flp = foundPage.getLinkedPages().iterator().next();
+        Assert.assertEquals(flp.getStartPos(), 1);
+        Assert.assertEquals(flp.getLength(), 2);
+        Assert.assertEquals(flp.getPage().getTitle(), lp.getTitle());
         Assert.assertEquals(foundPage.getRedirects().size(), 1);
         Assert.assertEquals(foundPage.getRedirects().iterator().next().getTitle(), "redirect");
         List<LocalizedPage> localizedPages = foundPage.getLocalizedPages();
@@ -81,7 +82,7 @@ public class PageDaoImplTest extends AbstractTransactionalTestNGSpringContextTes
         Assert.assertEquals(categoryDao.findAll().size(), 1);
 
         pageDao.delete(page);
-        pageDao.delete(footerPage);
+        pageDao.delete(lp);
         pageDao.delete(redirectPage);        
         Assert.assertEquals(pageDao.findAll().size(), 0);
     }
