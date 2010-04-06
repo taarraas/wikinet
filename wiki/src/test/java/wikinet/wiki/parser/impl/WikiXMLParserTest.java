@@ -17,7 +17,7 @@ public class WikiXMLParserTest {
         PageBuilder pageBuilderMock = mock(PageBuilder.class);
 
         WikiXMLParser wikiXMLParser = new WikiXMLParserImpl(pageBuilderMock);
-        wikiXMLParser.importFile("wiki/src/test/resources/wiki-dump.xml.bz2");
+        wikiXMLParser.importFile("src/test/resources/wiki-dump.xml.bz2");
 
         verify(pageBuilderMock).importPage(eq("AccessibleComputing"), eq("#REDIRECT [[Computer accessibility]] {{R from CamelCase}}"));
     }

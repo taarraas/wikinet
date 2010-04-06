@@ -10,14 +10,4 @@ import wikinet.wiki.domain.Page;
  */
 public class PageDaoImpl extends GenericDaoImpl<Page, String> implements PageDao {
 
-    @Override
-    public Page findById(String id) {
-        return super.findById(id.toLowerCase());
-    }
-
-    @Override
-    public void save(Page obj) {
-        obj.setTitle(obj.getTitle().toLowerCase());
-        super.save(obj);
-    }
 }

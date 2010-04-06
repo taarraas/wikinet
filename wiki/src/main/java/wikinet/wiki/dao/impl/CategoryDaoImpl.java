@@ -9,5 +9,6 @@ import wikinet.wiki.domain.Category;
  * @since Mar 30, 2010
  */
 public class CategoryDaoImpl extends GenericDaoImpl<Category, String> implements CategoryDao {
+
 }
 

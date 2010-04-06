@@ -5,5 +5,16 @@ package wikinet.db.model;
  * @since Feb 27, 2010
  */
 public enum Locale {
-    RUS, UKR, POL
+    RUS("ru"), UKR("uk"), POL("pl");
+
+    private String text;
+
+    Locale(String text) {
+        this.text = text;
+    }
+
+    public String getText() {
+        return text;
+    }
+    
 }

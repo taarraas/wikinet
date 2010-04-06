@@ -79,7 +79,7 @@ public class WikiXMLParserImpl implements WikiXMLParser {
                 inputStream.close();
             }
         }
-
+        //todo: check whether categories graph has cycles  
     }
 
     public void importFile(String fileName) throws Exception {

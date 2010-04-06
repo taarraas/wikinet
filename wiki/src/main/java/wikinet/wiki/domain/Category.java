@@ -1,9 +1,6 @@
 package wikinet.wiki.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -16,7 +13,10 @@ public class Category {
     @Id
     private String name;
 
-    @OneToOne
+    @ManyToOne
+    @JoinTable(name = "Category_Parent",
+        joinColumns = @JoinColumn(name = "category_name", referencedColumnName = "name"),
+        inverseJoinColumns = @JoinColumn(name = "parent_category_name", referencedColumnName = "name"))
     private Category parent;
 
     @ManyToMany(mappedBy = "categories")
@@ -32,4 +32,13 @@ public class Category {
     public String getName() {
         return name;
     }
+
+    public Category getParent() {
+        return parent;
+    }
+
+    public void setParent(Category parent) {
+        this.parent = parent;
+    }
+    
 }
