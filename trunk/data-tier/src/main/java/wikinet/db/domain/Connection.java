@@ -25,6 +25,10 @@ public class Connection {
     @Column(name = "ssid", insertable = false, updatable = false)
     private long secondSynsetId;
 
+    @Id
+    @Enumerated(EnumType.STRING)
+    private ConnectionType connectionType;
+
     @ManyToOne
     @JoinColumn(name = "fsid")
     private Synset firstSynset;
@@ -32,10 +36,6 @@ public class Connection {
     @ManyToOne
     @JoinColumn(name = "ssid")
     private Synset secondSynset;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ConnectionType connectionType;
 
     private Integer wordsFrom;
     private Integer wordsTo;

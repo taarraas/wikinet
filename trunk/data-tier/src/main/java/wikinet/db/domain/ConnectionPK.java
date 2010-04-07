@@ -1,5 +1,7 @@
 package wikinet.db.domain;
 
+import wikinet.db.model.ConnectionType;
+
 import java.io.Serializable;
 
 /**
@@ -12,17 +14,21 @@ public class ConnectionPK implements Serializable {
 
     private long secondSynsetId;
 
+    private ConnectionType connectionType;
+
     protected ConnectionPK() {
     }
 
-    public ConnectionPK(long firstSynsetId, long secondSynsetId) {
+    public ConnectionPK(long firstSynsetId, long secondSynsetId, ConnectionType connectionType) {
         this.firstSynsetId = firstSynsetId;
         this.secondSynsetId = secondSynsetId;
+        this.connectionType = connectionType;
     }
 
-    public ConnectionPK(Synset firstSynset, Synset secondSynset) {
+    public ConnectionPK(Synset firstSynset, Synset secondSynset, ConnectionType connectionType) {
         this.firstSynsetId = firstSynset.getId();
         this.secondSynsetId = secondSynset.getId();
+        this.connectionType = connectionType;
     }
 
     @Override
@@ -32,19 +38,18 @@ public class ConnectionPK implements Serializable {
 
         ConnectionPK that = (ConnectionPK) o;
 
-        if ((firstSynsetId == that.firstSynsetId && secondSynsetId == that.secondSynsetId) ||
-            (firstSynsetId == that.secondSynsetId && secondSynsetId == that.firstSynsetId))
-            return true;
+        if (firstSynsetId != that.firstSynsetId) return false;
+        if (secondSynsetId != that.secondSynsetId) return false;
+        if (connectionType != that.connectionType) return false;
 
-        return false;
+        return true;
     }
 
     @Override
     public int hashCode() {
-        long _firstSynsetId = Math.min(this.firstSynsetId, this.secondSynsetId);
-        long _secondSynsetId = Math.max(this.firstSynsetId, this.secondSynsetId);;
-        int result = (int) (_firstSynsetId ^ (_firstSynsetId >>> 32));
-        result = 31 * result + (int) (_secondSynsetId ^ (_secondSynsetId >>> 32));
+        int result = (int) (firstSynsetId ^ (firstSynsetId >>> 32));
+        result = 31 * result + (int) (secondSynsetId ^ (secondSynsetId >>> 32));
+        result = 31 * result + connectionType.hashCode();
         return result;
     }
 }

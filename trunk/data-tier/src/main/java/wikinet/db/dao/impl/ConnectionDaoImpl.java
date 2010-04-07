@@ -5,7 +5,6 @@ import wikinet.db.domain.Connection;
 import wikinet.db.domain.ConnectionPK;
 import wikinet.db.domain.Synset;
 
-import javax.persistence.EntityExistsException;
 import java.util.List;
 
 /**
@@ -13,13 +12,6 @@ import java.util.List;
  * @since Feb 28, 2010
  */
 public class ConnectionDaoImpl extends GenericDaoImpl<Connection, ConnectionPK> implements ConnectionDao {
-
-    @Override
-    public void save(Connection obj) {
-        if (this.findById(new ConnectionPK(obj.getSecondSynset(), obj.getFirstSynset())) != null)
-            throw new EntityExistsException();
-        super.save(obj);
-    }
 
     @Override
     public List<Connection> getConnections(Synset from, Synset to) {

@@ -14,7 +14,6 @@ import wikinet.db.domain.Word;
 import wikinet.db.model.ConnectionType;
 import wikinet.db.model.SynsetType;
 
-import javax.persistence.EntityExistsException;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
@@ -41,18 +40,8 @@ public class ConnectionDaoImplTest extends AbstractTransactionalTestNGSpringCont
         Synset second = getNewSavedSynset(2L, "word2");
         Connection connection = new Connection(first, second, ConnectionType.ATTRIBUTE);
         connectionDao.save(connection);
-        Connection foundConnection = connectionDao.findById(new ConnectionPK(first, second));
+        Connection foundConnection = connectionDao.findById(new ConnectionPK(first, second, ConnectionType.ATTRIBUTE));
         assertEquals(foundConnection, connection);
-    }
-
-    @Test(expectedExceptions = {EntityExistsException.class})
-    public void testExceptionOnSaveReverseDuplicate() {
-        Synset first = getNewSavedSynset(1L, "word1");
-        Synset second = getNewSavedSynset(2L, "word2");
-        Connection connection = new Connection(first, second, ConnectionType.ATTRIBUTE);
-        connectionDao.save(connection);
-        Connection connection2 = new Connection(second, first, ConnectionType.ATTRIBUTE);
-        connectionDao.save(connection2);
     }
 
     @Test
