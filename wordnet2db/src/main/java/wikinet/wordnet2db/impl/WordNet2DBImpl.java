@@ -24,7 +24,7 @@ import org.hibernate.lob.ClobImpl;
  */
 public class WordNet2DBImpl implements WordNet2DB {
 
-    private static final String[] FILELIST={"data.adj", "data.adv", "data.noun", "data.verb"};
+    private static final String[] FILELIST={"data.noun", "data.adj", "data.adv", "data.verb"};
 
     private SynsetDao synsetDao;
 
@@ -90,7 +90,7 @@ public class WordNet2DBImpl implements WordNet2DB {
             case 'n': {
                 return SynsetType.NOUN;
             }
-            case 'v': {
+            case 'v': { 
                 return SynsetType.VERB;
             }
             case 'a': {
