@@ -47,7 +47,7 @@ public class WordNet2DBImpl implements WordNet2DB {
     @Override
     public void importFile(String pathToWordnet) throws IOException {
         for (String string : FILELIST) {
-//            parseSynsets(pathToWordnet + string);
+            parseSynsets(pathToWordnet + string);
         }
         for (String string : FILELIST) {
             parseConnections(pathToWordnet + string);
