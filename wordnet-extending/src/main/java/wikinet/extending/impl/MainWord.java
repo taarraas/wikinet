@@ -3,7 +3,10 @@ package wikinet.extending.impl;
 import edu.stanford.nlp.ling.*;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import java.io.StringReader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import linguistics.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.db.dao.SynsetDao;
 import wikinet.db.domain.Synset;
@@ -17,15 +20,17 @@ import wikinet.wiki.dao.WikiDao;
  *
  * @author taras, shyiko
  */
-public class DescriptionIsAConnection implements ConnectionsMaker {
+public class MainWord {
     @Autowired
     private SynsetDao synsetDao;
 
     @Autowired
     private WikiDao wikiDao;
     private enum State{
-        beforeIs, afterIs, inPG, resultFound
+        before, afterIs, inPG, resultFound, resultAndOfFound
     }
+    public static final String MAINWORD="MAINWORD",
+            PARTOF="PARTOF";
     static MaxentTagger tagger;
     static {
         try {
@@ -35,19 +40,29 @@ public class DescriptionIsAConnection implements ConnectionsMaker {
             System.exit(-1);
         }
     }
-    public static String getMainWord(String text) {
-        Sentence<TaggedWord> res=new Sentence<TaggedWord>(),
+
+    /**
+     * returns main word
+     * @param text
+     * @return
+     */
+    public Map<String, String> getInfo(String text) {
+        text = text.replaceAll("\\([^\\)]+\\)", "");
+        Sentence<TaggedWord> mainWord=new Sentence<TaggedWord>(),
                 of=new Sentence<TaggedWord>();
         List<Sentence<? extends HasWord>> sentences =
         MaxentTagger.tokenizeText(new StringReader(text));
         Sentence sentence=sentences.iterator().next();
+        Map<String, String> info = new HashMap<String, String>();
         Sentence<TaggedWord> tSentence = MaxentTagger.tagSentence(sentence);
-        State state=State.beforeIs;
+        State state=State.before;
         for (TaggedWord taggedWord : tSentence) {
             switch(state) {
-                case beforeIs: {
-                    if (taggedWord.word().equalsIgnoreCase("is")) {
+                case before: {
+                    if (Utils.TOBE.contains(taggedWord.word().toLowerCase())) {
                         state = State.afterIs;
+                    } else if (taggedWord.tag().equals("VB")){
+                        return info;
                     }
                     break;
                 }
@@ -56,8 +71,8 @@ public class DescriptionIsAConnection implements ConnectionsMaker {
                         state = State.inPG;
                         break;
                     }
-                    res.add(taggedWord);
-                    if (taggedWord.tag().equals("NN")) {
+                    mainWord.add(taggedWord);
+                    if (taggedWord.tag().startsWith("NN")) {
                         state = State.resultFound;
                     }
                     break;
@@ -65,30 +80,28 @@ public class DescriptionIsAConnection implements ConnectionsMaker {
                 case inPG: {
                     if (taggedWord.tag().equals("NN")) {
                         state = State.afterIs;
-                        res.clear();
+                        mainWord.clear();
                     }
                     break;
                 }
                 case resultFound: {
+                    info.put(MAINWORD, mainWord.toString());
                     if (taggedWord.word().equalsIgnoreCase("of")) {
-                        
+                        state = State.resultAndOfFound;
+                    } else {
+                        return info;
                     }
                     break;
                 }
+                case resultAndOfFound: {
+                    of.add(taggedWord);
+                    if (taggedWord.tag().startsWith("NN")) {
+                        info.put(PARTOF, of.toString());
+                        return info;
+                    }
+                }
             }
         }
-        return res.toString();
-    }
-    /**
-     * 
-     * @param synset
-     * @param article
-     */
-    @Override
-    public void addConnections(Synset synset, ArticleReference article) {
-        String descriptionText="LOL, an abbreviation for laughing out loud, laugh out " +
-                "loud or sometimes lots of laughs, is a common element of Internet slang.";
-    
-    }
-
+        return info;
+    }    
 }
