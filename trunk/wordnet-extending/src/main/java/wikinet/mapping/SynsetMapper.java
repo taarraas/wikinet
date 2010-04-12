@@ -25,8 +25,8 @@ public abstract class SynsetMapper {
     @Autowired
     private Collection<SynsetArticleVoter> voters;
 
-    private double minLevel;
-    private double minDif;
+    private double minLevel = 0.6;
+    private double minDif=1;
 
     public void setMinimalTrust(double minLevel, double minDif) {
         this.minLevel = minLevel;
