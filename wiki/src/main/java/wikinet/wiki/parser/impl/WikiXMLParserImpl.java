@@ -5,7 +5,10 @@ import org.apache.log4j.Logger;
 import org.apache.tools.bzip2.CBZip2InputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.wiki.parser.PageBuilder;
+import wikinet.wiki.parser.PageProcessor;
+import wikinet.wiki.parser.PagePrototypeSaver;
 import wikinet.wiki.parser.WikiXMLParser;
+import wikinet.wiki.parser.prototype.PagePrototype;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -23,10 +26,10 @@ public class WikiXMLParserImpl implements WikiXMLParser {
     private static Logger logger = Logger.getLogger(WikiXMLParserImpl.class);
 
     @Autowired
-    private PageBuilder pageBuilder;
+    private PageProcessor pageProcessor;
 
-    public WikiXMLParserImpl(PageBuilder pageBuilder) {
-        this.pageBuilder = pageBuilder;
+    public WikiXMLParserImpl(PageProcessor pageProcessor) {
+        this.pageProcessor = pageProcessor;
     }
 
     public void importFile(File file) throws Exception {
@@ -74,7 +77,7 @@ public class WikiXMLParserImpl implements WikiXMLParser {
                 if (logger.isDebugEnabled())
                     logger.debug("Processing page \"" + title + "\"");
 
-                pageBuilder.importPage(title, text);
+                pageProcessor.process(title, text);
 
                 findClosingTag(reader, "page");
             }
