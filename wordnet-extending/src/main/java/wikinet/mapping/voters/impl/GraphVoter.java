@@ -5,11 +5,11 @@
 
 package wikinet.mapping.voters.impl;
 
-import java.util.Set;
 import wikinet.db.domain.Synset;
-import wikinet.db.domain.Word;
 import wikinet.mapping.voters.SynsetArticleVoter;
-import wikinet.wiki.ArticleReference;
+import wikinet.wiki.parser.prototype.PagePrototype;
+
+import java.util.Set;
 
 /**
  *
@@ -47,12 +47,12 @@ public class GraphVoter implements SynsetArticleVoter {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    int countWordsInArticle(Set<String> words, ArticleReference article) {
+    int countWordsInArticle(Set<String> words, PagePrototype article) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public double getVote(long synsetId, ArticleReference article) {
+    public double getVote(long synsetId, PagePrototype article) {
         Set<String> words = getLinkedWords(synsetId);
         double wordsInArticle=(double)countWordsInArticle(words, article)/words.size();
         

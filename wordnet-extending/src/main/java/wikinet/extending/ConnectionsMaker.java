@@ -1,11 +1,11 @@
 package wikinet.extending;
 
 import wikinet.db.domain.Synset;
-import wikinet.wiki.ArticleReference;
+import wikinet.wiki.parser.prototype.PagePrototype;
 
 /**
  * @author taras, shyiko
  */
 public interface ConnectionsMaker {
-    public void addConnections(Synset synset, ArticleReference article);
+    public void addConnections(Synset synset, PagePrototype article);
 }

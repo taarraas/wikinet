@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 /**
- * @author shyiko
+ * @author shyiko, taras
  * @since Mar 28, 2010
  */
 public class MappingUtils {

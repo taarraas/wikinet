@@ -100,6 +100,10 @@ public class Page {
         return word;
     }
 
+    public String getDisambiguation() {
+        return disambiguation;
+    }
+
     public String getFirstParagraph() {
         return firstParagraph;
     }
