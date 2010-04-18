@@ -4,17 +4,20 @@ import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.ling.Sentence;
 import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
-import java.io.StringReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.db.dao.SynsetDao;
 import wikinet.db.domain.Synset;
+import wikinet.mapping.MappingConstants;
 import wikinet.mapping.MappingUtils;
 import wikinet.mapping.voters.SynsetArticleVoter;
-import wikinet.wiki.ArticleReference;
-import wikinet.wiki.dao.WikiDao;
+import wikinet.wiki.dao.PageDao;
+import wikinet.wiki.domain.Page;
+import wikinet.wiki.parser.prototype.PagePrototype;
 
-import java.util.*;
-import wikinet.mapping.MappingConstants;
+import java.io.StringReader;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author taras, shyiko
@@ -25,13 +28,14 @@ public class DescriptionVoter implements SynsetArticleVoter {
     private SynsetDao synsetDao;
 
     @Autowired
-    private WikiDao wikiDao;
+    private PageDao pageDao;
 
     @Autowired
     private MappingUtils mappingUtils;
 
     private static final double MINIMALWEIGHT = 2.;
     private static final int PARSEONLYFIRSTMSENTENCES = 2;
+    
     public final static Map<String, Double> WEIGHTS = new TreeMap<String, Double>();
     static {
         WEIGHTS.put("NN", 0.7);
@@ -72,10 +76,11 @@ public class DescriptionVoter implements SynsetArticleVoter {
     }
     
     @Override
-    public double getVote(long synsetId, ArticleReference article) {
+    public double getVote(long synsetId, PagePrototype pagePrototype) {
         Synset synset = synsetDao.findById(synsetId);
         String descriptionSynset = synset.getDescription();
-        String descriptionWiki = wikiDao.getDescription(article);
+        Page page = pageDao.findByWordAndDisambiguation(pagePrototype.getWord(), pagePrototype.getDisambiguation());
+        String descriptionWiki = page.getFirstParagraph();
         Map<String, Double> synsetWords = getWords(descriptionSynset),
                 wikiWords = getWords(descriptionWiki);
         double wordsInCommon = mappingUtils.sizeOfSet(mappingUtils.intersect(synsetWords, wikiWords));

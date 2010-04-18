@@ -8,10 +8,10 @@ import wikinet.db.domain.Article;
 import wikinet.db.domain.Synset;
 import wikinet.db.domain.Word;
 import wikinet.db.model.SynsetType;
-import wikinet.wiki.ArticleReference;
-import wikinet.wiki.dao.WikiDao;
+import wikinet.wiki.dao.PageDao;
+import wikinet.wiki.domain.Page;
+import wikinet.wiki.parser.prototype.PagePrototype;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,13 +27,13 @@ public class ExtendWordnet {
     private ArticleDao articleDao;
 
     @Autowired
-    private WikiDao wikiDao;
-
-    @Autowired
     private WordDao wordDao;
 
     @Autowired
     private SynsetDao synsetDao;
+
+    @Autowired
+    private PageDao pageDao;
 
     /**
      * Make synset with such information :
@@ -44,26 +44,26 @@ public class ExtendWordnet {
      *
      * @return Newly instantiated Synset entity
      */
-    public Synset createSynset(ArticleReference article) {
+    public Synset createSynset(PagePrototype pagePrototype) {
         SynsetType synsetType = null; // TODO:taras
 
+        Page page = pageDao.findByWordAndDisambiguation(pagePrototype.getWord(), pagePrototype.getDisambiguation());
         // create synset with description from wiki
-        Synset synset = new Synset(wikiDao.getDescription(article), synsetType);
+        Synset synset = new Synset(page.getFirstParagraph(), synsetType);
         // connect article to synset
         String link = null; // TODO:taras
-        Article articleObj = articleDao.getArticle(article.getWord(), link);
-        articleObj.setDisambiguation(article.getDisambiguation());
+        Article articleObj = articleDao.getArticle(pagePrototype.getWord(), link);
+        articleObj.setDisambiguation(pagePrototype.getDisambiguation());
         synset.addArticle(articleObj);
-        Collection<String> redirectWords = wikiDao.getRedirectWords(article);
         List<Word> words = new LinkedList<Word>();
-        for (String redirectWord : redirectWords) {
-            words.add(wordDao.findById(redirectWord));
+        for (Page rp : page.getRedirects()) {
+            words.add(wordDao.findById(rp.getWord()));
         }
         synset.setWords(words);
         synsetDao.save(synset);
 
         for (ConnectionsMaker connectionsMaker : connectionsMakers) {
-            connectionsMaker.addConnections(synset, article);
+            connectionsMaker.addConnections(synset, pagePrototype);
         }
         return synset;
     }

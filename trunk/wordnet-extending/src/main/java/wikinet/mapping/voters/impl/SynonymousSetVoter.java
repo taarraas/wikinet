@@ -5,14 +5,18 @@
 
 package wikinet.mapping.voters.impl;
 
-import java.util.Collection;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.db.dao.SynsetDao;
+import wikinet.db.domain.Word;
 import wikinet.mapping.MappingUtils;
 import wikinet.mapping.voters.SynsetArticleVoter;
-import wikinet.wiki.ArticleReference;
-import wikinet.wiki.dao.WikiDao;
+import wikinet.wiki.dao.PageDao;
+import wikinet.wiki.domain.Page;
+import wikinet.wiki.parser.prototype.PagePrototype;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -25,16 +29,25 @@ public class SynonymousSetVoter implements SynsetArticleVoter{
     private SynsetDao synsetDao;
 
     @Autowired
-    private WikiDao wikiDao;
+    private PageDao pageDao;
 
     @Autowired
     private MappingUtils mappingUtils;
 
     @Override
-    public double getVote(long synsetId, ArticleReference article) {
-        Collection<String> fromWordNet = null; //TODO:shiyko get words for synset with id synsetId
-        Collection<String> fromWiki = wikiDao.getRedirectWords(article);
-        int cnt = mappingUtils.intersect(fromWordNet, fromWiki).size();
+    public double getVote(long synsetId, PagePrototype page) {
+        List<Word> fromWordNet = synsetDao.findById(synsetId).getWords();
+        Page p = pageDao.findByWordAndDisambiguation(page.getWord(), page.getDisambiguation());
+        List<String> a = new LinkedList<String>();
+        for (Word word : fromWordNet) {
+            a.add(word.getWord());
+        }
+        Set<Page> fromWiki = p.getRedirects();
+        List<String> b = new LinkedList<String>();
+        for (Page pg : fromWiki) {
+            b.add(pg.getWord());
+        }
+        int cnt = mappingUtils.intersect(a, b).size();
         if (cnt >= MINIMALWORDSCOUNT
                 || fromWordNet.size()<MINIMALWORDSCOUNT
                 || fromWiki.size() < MINIMALWORDSCOUNT) {

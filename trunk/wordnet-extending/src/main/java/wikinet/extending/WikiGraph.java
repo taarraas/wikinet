@@ -5,13 +5,16 @@
 
 package wikinet.extending;
 
+import wikinet.wiki.parser.prototype.PagePrototype;
+
 import java.util.Set;
-import wikinet.wiki.ArticleReference;
 
 /**
  *
  * @author taras
  */
 public interface WikiGraph {
-    public Set<ArticleReference> getLinked(ArticleReference article);
+
+    public Set<PagePrototype> getLinked(PagePrototype article);
+    
 }

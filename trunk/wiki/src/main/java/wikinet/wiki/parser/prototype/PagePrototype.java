@@ -23,6 +23,11 @@ public class PagePrototype implements Comparable<PagePrototype> {
             word = title;
     }
 
+    public PagePrototype(String word, String disambiguation) {
+        this.word = word;
+        this.disambiguation = disambiguation;
+    }
+
     public String getWord() {
         return word;
     }
