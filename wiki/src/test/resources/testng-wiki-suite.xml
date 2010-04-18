@@ -9,6 +9,7 @@
             <class name="wikinet.wiki.dao.impl.PageDaoImplTest"/>
             <class name="wikinet.wiki.parser.impl.WikiXMLParserTest"/>
             <class name="wikinet.wiki.parser.impl.PageBuilderImplTest"/>
+            <!--<class name="wikinet.wiki.parser.impl.PagePrototypeSaverImplTest"/>-->
         </classes>
     </test>
 </suite>

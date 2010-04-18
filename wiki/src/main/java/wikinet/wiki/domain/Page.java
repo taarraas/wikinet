@@ -10,28 +10,39 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+@NamedQueries({
+        @NamedQuery(name = "Page.findByWord",
+        query = "select p from Page p where p.word = :word"),
+        @NamedQuery(name = "Page.findByWordAndDisambiguation",
+        query = "select p from Page p where p.word = :word and p.disambiguation = :disambiguation")
+})
+
 /**
  * @author shyiko
  * @since Mar 29, 2010
  */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"word", "disambiguation"}))
 public class Page {
 
-    /**
-     * Text between &lt;title&gt;&lt;/title&gt;
-     */
     @Id
-    private String title;
+    @GeneratedValue
+    private long id;
+
+    @Column(nullable = false, length = 120)
+    private String word;
+
+    @Column(length = 120)
+    private String disambiguation;
+
+    @Column(columnDefinition = "text")
+    private String firstParagraph;
 
     /**
-     * First paragraph of text between tags &lt;text&gt;&lt;/text&gt;
-     */
-    private String paragraph;
-
-    /**
-     * Text between tags &lt;text&gt;&lt;/text&gt; without first paragraph
+     * Text without first paragraph
      */
     @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "longblob")
     private Clob text;
 
     /**
@@ -39,52 +50,62 @@ public class Page {
      */
     @OneToMany
     @JoinTable(name = "Page_Redirect",
-        joinColumns = @JoinColumn(name = "page_title", referencedColumnName = "title"),
-        inverseJoinColumns = @JoinColumn(name = "redirect_page_title", referencedColumnName = "title"))
+        joinColumns = @JoinColumn(name = "page_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "redirect_page_id", referencedColumnName = "id"))
     private Set<Page> redirects = new HashSet<Page>();
 
     /**
-     * All linked pages being gotten from<br>
+     * All linked pages
      */
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Page_LinkedPage",
-        joinColumns = @JoinColumn(name = "page_title", referencedColumnName = "title"),
-        inverseJoinColumns = @JoinColumn(name = "linked_page_title", referencedColumnName = "id"))
+        joinColumns = @JoinColumn(name = "page_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "linked_page_id", referencedColumnName = "id"))
     private Set<LinkedPage> linkedPages = new HashSet<LinkedPage>();
 
     /**
      * Page categories
      */
     @ManyToMany
+    @JoinTable(name = "Page_Category",
+        joinColumns = @JoinColumn(name = "page_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private List<Category> categories = new LinkedList<Category>();
 
     /**
-     * Same page but in some other language
+     * Same page but in the other language
      */
     @OneToMany
+    @JoinTable(name = "Page_LocalizedPage",
+        joinColumns = @JoinColumn(name = "page_id", referencedColumnName = "id"),
+        inverseJoinColumns = {
+                @JoinColumn(name = "localizedPage_title", referencedColumnName = "title"),
+                @JoinColumn(name = "localizedPage_locale", referencedColumnName = "locale")
+        })
     private List<LocalizedPage> localizedPages = new LinkedList<LocalizedPage>();
 
     protected Page() {
     }
 
-    public Page(String title) {
-        this.title = title;
+    public Page(String word, String disambiguation) {
+        this.word = word;
+        this.disambiguation = disambiguation;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public long getId() {
+        return id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getWord() {
+        return word;
     }
 
-    public String getParagraph() {
-        return paragraph;
+    public String getFirstParagraph() {
+        return firstParagraph;
     }
 
-    public void setParagraph(String paragraph) {
-        this.paragraph = paragraph;
+    public void setFirstParagraph(String firstParagraph) {
+        this.firstParagraph = firstParagraph;
     }
 
     public String getText() {
@@ -92,7 +113,10 @@ public class Page {
     }
 
     public void setText(String text) {
-        this.text = new ClobImpl(text);
+        if (text == null)
+            this.text = null;
+        else
+            this.text = new ClobImpl(text);
     }
 
     public void addRedirect(Page redirect) {
@@ -134,16 +158,17 @@ public class Page {
 
         Page page = (Page) o;
 
-        if (paragraph != null ? !paragraph.equals(page.paragraph) : page.paragraph != null) return false;
-        if (title != null ? !title.equals(page.title) : page.title != null) return false;
+        if (disambiguation != null ? !disambiguation.equals(page.disambiguation) : page.disambiguation != null)
+            return false;
+        if (!word.equals(page.word)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = title != null ? title.hashCode() : 0;
-        result = 31 * result + (paragraph != null ? paragraph.hashCode() : 0);
+        int result = word.hashCode();
+        result = 31 * result + (disambiguation != null ? disambiguation.hashCode() : 0);
         return result;
     }
 }
