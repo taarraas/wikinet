@@ -63,14 +63,20 @@
     <bean id="categoryDao" class="wikinet.wiki.dao.impl.CategoryDaoImpl" parent="genericDao" />
     <bean id="linkedPageDao" class="wikinet.wiki.dao.impl.LinkedPageDaoImpl" parent="genericDao" />
 
-    <bean id="pageBuilder" class="wikinet.wiki.parser.impl.PageBuilderImpl" >
-        <constructor-arg>
-            <bean class="wikinet.wiki.parser.impl.PagePrototypeSaverImpl" autowire="byName" />
-        </constructor-arg>
+    <bean id="pagePrototypeSaver" class="wikinet.wiki.parser.impl.PagePrototypeSaverImpl" autowire="byName" />
+    <bean id="pageBuilder" class="wikinet.wiki.parser.impl.PageBuilderImpl" />
+    <bean id="oneThreadPageProcessor" class="wikinet.wiki.parser.impl.OneThreadPageProcessor" >
+        <constructor-arg ref="pageBuilder" />
+        <constructor-arg ref="pagePrototypeSaver" />
+    </bean>
+    <bean id="multiThreadPageProcessor" class="wikinet.wiki.parser.concurrency.MultiThreadPageProcessor" >
+        <constructor-arg ref="pageBuilder" />
+        <constructor-arg ref="pagePrototypeSaver" />
+        <constructor-arg value="10" />
     </bean>
 
     <bean id="wikiXMLParser" class="wikinet.wiki.parser.impl.WikiXMLParserImpl">
-        <constructor-arg ref="pageBuilder" />
+        <constructor-arg ref="multiThreadPageProcessor" />
    </bean>
 
     <tx:annotation-driven />

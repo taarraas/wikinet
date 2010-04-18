@@ -1,10 +1,8 @@
 package wikinet.wiki.parser.impl;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.db.model.Locale;
 import wikinet.wiki.parser.PageBuilder;
-import wikinet.wiki.parser.PagePrototypeSaver;
 import wikinet.wiki.parser.ParseException;
 import wikinet.wiki.parser.prototype.PagePrototype;
 import wikinet.wiki.parser.prototype.RedirectPagePrototype;
@@ -35,21 +33,13 @@ public class PageBuilderImpl implements PageBuilder {
 
     private boolean endLineHasBeenMet = false;
 
-    private PagePrototypeSaver pagePrototypeSaver;
-
-    @Autowired
-    public PageBuilderImpl(PagePrototypeSaver pagePrototypeSaver) {
-        this.pagePrototypeSaver = pagePrototypeSaver;
-    }
-
     @Override
-    public void importPage(String title, String text) {
+    public PagePrototype buildPagePrototype(String title, String text) {
         endLineHasBeenMet = false;
         if (text.indexOf("#REDIRECT [[") != -1) {
             int pos = text.indexOf("[[");
             String redirectedPageTitle = text.substring(pos + 2, text.indexOf("]]", pos + 2)).trim();
-            pagePrototypeSaver.save(new RedirectPagePrototype(title, new PagePrototype(redirectedPageTitle)));
-            return;
+            return new RedirectPagePrototype(title, new PagePrototype(redirectedPageTitle));
         }
 
         UniquePagePrototype pagePrototype = new UniquePagePrototype(title);
@@ -60,9 +50,9 @@ public class PageBuilderImpl implements PageBuilder {
                 logger.error("Page \"" + pagePrototype + "\" : " + ex.getMessage());
             else
                 logger.error("Page \"" + pagePrototype + "\"", ex);
-            return;
+            return null;
         }
-        pagePrototypeSaver.save(pagePrototype);
+        return pagePrototype;
     }
 
     private void processText(final UniquePagePrototype pagePrototype, String text) {

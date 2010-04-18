@@ -1,11 +1,13 @@
 package wikinet.wiki.parser;
 
+import wikinet.wiki.parser.prototype.PagePrototype;
+
 /**
  * @author shyiko
  * @since Mar 30, 2010
  */
 public interface PageBuilder {
 
-    void importPage(String title, String text);
+    PagePrototype buildPagePrototype(String title, String text);
 
 }
