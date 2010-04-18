@@ -20,10 +20,17 @@ public class LinkedPage {
     @OneToOne
     private Page page;
 
+    protected LinkedPage() {
+    }
+
     public LinkedPage(int startPos, int length, Page page) {
         this.startPos = startPos;
         this.length = length;
         this.page = page;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public int getStartPos() {

@@ -21,11 +21,6 @@
         <property name="maxActive" value="10" />
     </bean>
 
-    <bean id="hibernateTemplate"
-    class="org.springframework.orm.hibernate3.HibernateTemplate">
-          <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
     <bean id="sessionFactory"
     class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
@@ -49,23 +44,34 @@
         </property>
     </bean>
 
+    <bean id="hibernateTemplate"
+    class="org.springframework.orm.hibernate3.HibernateTemplate">
+          <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
     <bean id="genericDao" class="wikinet.db.dao.impl.GenericDaoImpl" abstract="true" >
-        <property name="sessionFactory" ref="sessionFactory" />
+        <!--<property name="sessionFactory" ref="sessionFactory" />-->
+        <property name="hibernateTemplate" ref="hibernateTemplate" />
     </bean>
 
     <bean id="pageDao" class="wikinet.wiki.dao.impl.PageDaoImpl" parent="genericDao" />
     <bean id="localizedPageDao" class="wikinet.wiki.dao.impl.LocalizedPageDaoImpl" parent="genericDao" />
     <bean id="categoryDao" class="wikinet.wiki.dao.impl.CategoryDaoImpl" parent="genericDao" />
+    <bean id="linkedPageDao" class="wikinet.wiki.dao.impl.LinkedPageDaoImpl" parent="genericDao" />
 
-    <bean id="wikiXMLParser" class="wikinet.wiki.parser.impl.WikiXMLParserImpl">
+    <bean id="pageBuilder" class="wikinet.wiki.parser.impl.PageBuilderImpl" >
         <constructor-arg>
-            <bean class="wikinet.wiki.parser.impl.PageBuilderImpl" />
+            <bean class="wikinet.wiki.parser.impl.PagePrototypeSaverImpl" autowire="byName" />
         </constructor-arg>
     </bean>
+
+    <bean id="wikiXMLParser" class="wikinet.wiki.parser.impl.WikiXMLParserImpl">
+        <constructor-arg ref="pageBuilder" />
+   </bean>
 
     <tx:annotation-driven />
 

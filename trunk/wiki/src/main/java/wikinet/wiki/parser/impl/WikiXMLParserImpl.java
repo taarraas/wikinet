@@ -22,9 +22,9 @@ public class WikiXMLParserImpl implements WikiXMLParser {
 
     private static Logger logger = Logger.getLogger(WikiXMLParserImpl.class);
 
+    @Autowired
     private PageBuilder pageBuilder;
 
-    @Autowired
     public WikiXMLParserImpl(PageBuilder pageBuilder) {
         this.pageBuilder = pageBuilder;
     }
@@ -39,6 +39,9 @@ public class WikiXMLParserImpl implements WikiXMLParser {
         CBZip2InputStream bz2InputStream = new CBZip2InputStream(fileInputStream);
         CountingInputStream inputStream = new CountingInputStream(bz2InputStream);
         XMLStreamReader reader = inputFactory.createXMLStreamReader(inputStream);
+        if (logger.isInfoEnabled())
+            logger.info("Importing file " + file.getCanonicalPath() + "...");
+        long beginTime = System.currentTimeMillis();
         try {
             int i = 1;
             long pagesCount = 0;
@@ -49,9 +52,12 @@ public class WikiXMLParserImpl implements WikiXMLParser {
                 pagesCount++;
                 if (i > 1000) {
                     i = 1;
-                    if (logger.isInfoEnabled())
-                        logger.info("Imported " + (inputStream.getByteCount() >> 20) + " mb. in terms of " +
-                                pagesCount + " pages.");
+                    if (logger.isInfoEnabled()) {
+                        logger.info(String.format("Imported %1$d mb (%2$d pages) in %3$.2f minutes.",
+                                inputStream.getByteCount() >> 20,
+                                pagesCount,
+                                ((System.currentTimeMillis() - beginTime) / 1000 / 60.0)));
+                    }
                 }
                 if (!findOpeningTag(reader, "title")) {
                     logger.warn("Couldn't find a title inside page tag. Skipping page...");
@@ -66,7 +72,7 @@ public class WikiXMLParserImpl implements WikiXMLParser {
                 String text = reader.getElementText();
 
                 if (logger.isDebugEnabled())
-                    logger.debug("title = " + title + ", text = " + text);
+                    logger.debug("Processing page \"" + title + "\"");
 
                 pageBuilder.importPage(title, text);
 

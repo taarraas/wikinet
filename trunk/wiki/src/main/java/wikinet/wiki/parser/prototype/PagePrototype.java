@@ -1,17 +1,26 @@
-package wikinet.wiki;
+package wikinet.wiki.parser.prototype;
 
 /**
  * @author shyiko
- * @since Mar 28, 2010
+ * @since Apr 16, 2010
  */
-public class ArticleReference implements Comparable<ArticleReference> {
+public class PagePrototype implements Comparable<PagePrototype> {
 
     private String word;
     private String disambiguation;
 
-    public ArticleReference(String word, String disambiguation) {
-        this.word = word;
-        this.disambiguation = disambiguation;
+    public PagePrototype(String title) {
+        title = title.trim();
+        int start = title.indexOf("(");
+        if (start > -1) {
+            int end = title.lastIndexOf(")");
+            if (end > -1) {
+                word = title.substring(0, start).trim();
+                disambiguation = title.substring(start + 1, end).trim();
+            } else
+                word = title;
+        } else
+            word = title;
     }
 
     public String getWord() {
@@ -23,11 +32,16 @@ public class ArticleReference implements Comparable<ArticleReference> {
     }
 
     @Override
+    public int compareTo(PagePrototype o) {
+        return this.toString().compareTo(o.toString());
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ArticleReference that = (ArticleReference) o;
+        PagePrototype that = (PagePrototype) o;
 
         if (disambiguation != null ? !disambiguation.equals(that.disambiguation) : that.disambiguation != null)
             return false;
@@ -45,12 +59,7 @@ public class ArticleReference implements Comparable<ArticleReference> {
 
     @Override
     public String toString() {
-        return word + '\n' + disambiguation;
+        return word + (disambiguation == null ? "" : " (" + disambiguation + ")");
     }
 
-    @Override
-    public int compareTo(ArticleReference o) {
-        return this.toString().compareTo(o.toString());
-    }
-    
 }

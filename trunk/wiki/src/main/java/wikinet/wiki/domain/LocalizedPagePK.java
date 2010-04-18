@@ -2,26 +2,27 @@ package wikinet.wiki.domain;
 
 import wikinet.db.model.Locale;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import java.io.Serializable;
 
 /**
  * @author shyiko
- * @since Mar 30, 2010
+ * @since Apr 11, 2010
  */
-@Entity
-@IdClass(LocalizedPagePK.class)
-public class LocalizedPage {
+public class LocalizedPagePK implements Serializable {
 
-    @Id
     private String title;
 
-    @Id
+    @Enumerated(EnumType.STRING)
+    @Column(length = 10)
     private Locale locale;
 
-    protected LocalizedPage() {
+    protected LocalizedPagePK() {
     }
 
-    public LocalizedPage(String title, Locale locale) {
+    public LocalizedPagePK(String title, Locale locale) {
         this.title = title;
         this.locale = locale;
     }
@@ -39,7 +40,7 @@ public class LocalizedPage {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LocalizedPage that = (LocalizedPage) o;
+        LocalizedPagePK that = (LocalizedPagePK) o;
 
         if (locale != that.locale) return false;
         if (!title.equals(that.title)) return false;
@@ -52,13 +53,5 @@ public class LocalizedPage {
         int result = title.hashCode();
         result = 31 * result + locale.hashCode();
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "LocalizedPage{" +
-                "title='" + title + '\'' +
-                ", locale=" + locale +
-                '}';
     }
 }

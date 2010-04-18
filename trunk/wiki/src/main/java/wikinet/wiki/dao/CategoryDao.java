@@ -7,6 +7,10 @@ import wikinet.wiki.domain.Category;
  * @author shyiko
  * @since Mar 30, 2010
  */
-public interface CategoryDao extends GenericDao<Category, String> {
+public interface CategoryDao extends GenericDao<Category, Long> {
+
+    Category findByName(String name);
+    Category createIfNotExist(String name);
+
 }
 

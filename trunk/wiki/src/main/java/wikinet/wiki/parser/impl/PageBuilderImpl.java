@@ -3,25 +3,17 @@ package wikinet.wiki.parser.impl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.db.model.Locale;
-import wikinet.wiki.dao.CategoryDao;
-import wikinet.wiki.dao.LocalizedPageDao;
-import wikinet.wiki.dao.PageDao;
-import wikinet.wiki.domain.Category;
-import wikinet.wiki.domain.LinkedPage;
-import wikinet.wiki.domain.LocalizedPage;
-import wikinet.wiki.domain.Page;
 import wikinet.wiki.parser.PageBuilder;
+import wikinet.wiki.parser.PagePrototypeSaver;
+import wikinet.wiki.parser.ParseException;
+import wikinet.wiki.parser.prototype.PagePrototype;
+import wikinet.wiki.parser.prototype.RedirectPagePrototype;
+import wikinet.wiki.parser.prototype.UniquePagePrototype;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * todo: text = text.replaceAll("[=]{2,4}.*?[=]{2,4}", "");
- *
  * http://meta.wikimedia.org/wiki/Help:Wikitext_examples
  * @author shyiko
  * @since Mar 30, 2010
@@ -32,74 +24,49 @@ public class PageBuilderImpl implements PageBuilder {
 
     private static final Pattern NOWIKI = Pattern.compile("(<nowiki>).*?(</ ?nowiki>)");
     private static final Pattern PRE = Pattern.compile("(<pre>).*?(</ ?pre>)");
+    private static final Pattern PATTERN_MATH = Pattern.compile("(<math).*?(/[ ]*math>)", Pattern.DOTALL);
+    private static final Pattern PATTERN_REF = Pattern.compile("(<ref([^>])*?/>)|((<ref).*?(/[ ]*ref>))", Pattern.DOTALL);
+    private static final Pattern PATTERN_HTML_TAGS = Pattern.compile("(<).*?(>)", Pattern.DOTALL);
 
     private static final String[] NAMESPACES_TO_SKIP =
             {"Media:", "Special:", "main:", "Talk:", "User:", "User talk:", "Meta:",
             "Meta talk:", "File:", "File talk:", "MediaWiki:", "MediaWiki talk:", "Template:", "Template talk:",
             "Help:", "Help talk:", "Category talk:", "Portal:", "Portal talk:", "media:", "Image:"};
 
+    private boolean endLineHasBeenMet = false;
+
+    private PagePrototypeSaver pagePrototypeSaver;
 
     @Autowired
-    private PageDao pageDao;
-
-    @Autowired
-    private CategoryDao categoryDao;
-
-    @Autowired
-    private LocalizedPageDao localizedPageDao;
-    private static final Pattern PATTERN_MATH = Pattern.compile("(<math).*?(/[ ]*math>)", Pattern.DOTALL);
-    private static final Pattern PATTERN_REF = Pattern.compile("(<ref).*?(/[ ]*ref>)", Pattern.DOTALL);
-
-    public void setPageDao(PageDao pageDao) {
-        this.pageDao = pageDao;
-    }
-
-    public void setCategoryDao(CategoryDao categoryDao) {
-        this.categoryDao = categoryDao;
-    }
-
-    public void setLocalizedPageDao(LocalizedPageDao localizedPageDao) {
-        this.localizedPageDao = localizedPageDao;
+    public PageBuilderImpl(PagePrototypeSaver pagePrototypeSaver) {
+        this.pagePrototypeSaver = pagePrototypeSaver;
     }
 
     @Override
     public void importPage(String title, String text) {
-        title = title.trim();
-
-        PagePrototype pagePrototype = new PagePrototype(title);
-
-        // check if text is just a redirect to the other page
+        endLineHasBeenMet = false;
         if (text.indexOf("#REDIRECT [[") != -1) {
-            String redirectedPageTitle = text.substring(text.indexOf("[[") + 2, text.lastIndexOf("]]")).trim();
-            Page thisPage = findOrCreatePage(title);
-            Page redirectedPage = findOrCreatePage(redirectedPageTitle);
-            redirectedPage.addRedirect(thisPage);
-            pageDao.save(redirectedPage);
+            int pos = text.indexOf("[[");
+            String redirectedPageTitle = text.substring(pos + 2, text.indexOf("]]", pos + 2)).trim();
+            pagePrototypeSaver.save(new RedirectPagePrototype(title, new PagePrototype(redirectedPageTitle)));
             return;
         }
 
-        text = processText(pagePrototype, text);
-
-        Page page = findOrCreatePage(title);
-        for (Link link : pagePrototype.getLinkPrototypes().values()) {
-            // todo: change LinkedPage class definition to <id,page,map<pos,length>
-            Page linkedPage = findOrCreatePage(link.getText());
-            for (Map.Entry<Integer, Integer> entry : link.getPos().entrySet()) {
-                page.addLinkedPage(new LinkedPage(entry.getKey(), entry.getValue(), linkedPage));
-            }
+        UniquePagePrototype pagePrototype = new UniquePagePrototype(title);
+        try {
+            processText(pagePrototype, text);
+        } catch (Exception ex) {
+            if (ex instanceof ParseException)
+                logger.error("Page \"" + pagePrototype + "\" : " + ex.getMessage());
+            else
+                logger.error("Page \"" + pagePrototype + "\"", ex);
+            return;
         }
-        for (String category : pagePrototype.getCategories()) {
-            page.addCategory(findOrCreateCategory(category));
-        }
-        for (Map.Entry<Locale, String> entry : pagePrototype.getLocalizedPages().entrySet()) {
-            page.addLocalizedPage(findOrCreateLocalizedPage(entry.getValue(), entry.getKey()));
-        }
-        page.setText(text);
-        pageDao.save(page);
+        pagePrototypeSaver.save(pagePrototype);
     }
 
-    public String processText(final PagePrototype pagePrototype, String text) {
-        StringBuilder sb = new StringBuilder();
+    private void processText(final UniquePagePrototype pagePrototype, String text) {
+        //StringBuilder sb = new StringBuilder();
         Matcher nowikiMatcher = NOWIKI.matcher(text);
         Matcher preMatcher = PRE.matcher(text);
         int index = 0;
@@ -107,8 +74,10 @@ public class PageBuilderImpl implements PageBuilder {
             int nowikipos = nowikiMatcher.find(index) ? nowikiMatcher.start() : -1;
             int prepos = preMatcher.find(index) ? preMatcher.start() : -1;
             if (nowikipos == -1 && prepos == -1) {
-                if (index == 0)
-                    return processTextBlock(pagePrototype, text);
+                if (index == 0) {
+                    processTextBlock(pagePrototype, text, true);
+                    return;
+                }
                 break;
             }
             int startGroup;
@@ -124,47 +93,86 @@ public class PageBuilderImpl implements PageBuilder {
                 group = preMatcher.group();
             }
             if (startGroup < index) {
-                throw new Error("Couldn't parse page \"" + pagePrototype.getTitle() + "\".");
+                throw new ParseException("Unrecognizable <nowiki> / <pre> structure.");
             }
 
-            String block = text.substring(index, startGroup);
-            block = processTextBlock(pagePrototype, block);
-            sb.append(block);
-            sb.append(group.substring(group.indexOf(">") + 1,
-                      group.lastIndexOf("<")));
+            processTextBlock(pagePrototype, text.substring(index, startGroup), false);
+            String between = group.substring(group.indexOf(">") + 1, group.lastIndexOf("<"));
+            if (!endLineHasBeenMet)
+                pagePrototype.appendFirstParagraph(between);
+            else
+                pagePrototype.appendText(between);
             index = endGroup;
         } while(true);
-        sb.append(processTextBlock(pagePrototype, text.substring(index)));
-        return sb.toString();
+        processTextBlock(pagePrototype, text.substring(index), true);
     }
 
-    public String processTextBlock(final PagePrototype pagePrototype, String block) {
+    private void processTextBlock(final UniquePagePrototype pagePrototype, String block, boolean trimEnd) {
         // removing all mathematical formulas
         block = PATTERN_MATH.matcher(block).replaceAll("");
         // removing basic text formatting
         block = block.replaceAll("[']{2,5}", "");
         block = block.replaceAll("[~]{3,5}", "");
         block = block.replaceAll("[-]{4}", "");
+        block = block.replaceAll("[=]{2,4}.*?[=]{2,4}", "");
         // replacing html entities
-        block = block.replaceAll("&lt;", "<");
-        block = block.replaceAll("&gt;", ">");
-        block = block.replaceAll("&apos;", "'");
-        block = block.replaceAll("&quot;", "\"");
-        block = block.replaceAll("&amp;", "&");
+        block = block.replace("&lt;", "<");
+        block = block.replace("&gt;", ">");
+        block = block.replace("&apos;", "'");
+        block = block.replace("&quot;", "\"");
+        block = block.replace("&amp;", "&");
         // removing unusual constructions
         block = PATTERN_REF.matcher(block).replaceAll("");
         // removing all html tags
-        block = Pattern.compile("(<).*?(>)", Pattern.DOTALL).matcher(block).replaceAll("");
+        block = PATTERN_HTML_TAGS.matcher(block).replaceAll("");
 
         // todo: templates
 
         block = processCurlyBrackets(pagePrototype, block);
-        block = processSquareBrackets(pagePrototype, block);
+        
+        // remove spaces and new lines repeat
+        StringBuilder sb = new StringBuilder(block);
+        int i = 0, j;
+        while ((i = sb.indexOf("\n", i)) != -1) {
+            j = sb.indexOf("\n", i+1);
+            if (j == -1)
+                break;
+            if (sb.substring(i + 1, j).trim().isEmpty())
+                sb.replace(i, j, "");
+            else
+                i = j;
+        }
+        if (sb.length() == 0)
+            return;
+        if (sb.charAt(0) == '\n')
+            sb.replace(0, 1, "");
+        block = sb.toString();
 
-        return block;
+        if (!endLineHasBeenMet) {
+            i = block.indexOf("\n");
+            if (i == -1)
+                i = block.length();
+            else
+                endLineHasBeenMet = true;
+            String fp = block.substring(0, i);
+            if (!fp.trim().isEmpty()) {
+                String pp = processSquareBrackets(pagePrototype, fp, true);
+                if (trimEnd)
+                    pp = trimEnd(pp);
+                pagePrototype.appendFirstParagraph(pp);
+            }
+            if (i == block.length())
+                return;
+            block = block.substring(i + 1);
+        }
+
+        block = processSquareBrackets(pagePrototype, block, false);
+        if (trimEnd)
+            block = trimEnd(block);
+        pagePrototype.appendText(block);
     }
 
-    public String processCurlyBrackets(final PagePrototype pagePrototype, String text) {
+    private String processCurlyBrackets(final PagePrototype pagePrototype, String text) {
         /*
         todo:
         {{for|the anthology of anarchist writings|Anarchism: A Documentary History of Libertarian Ideas}}
@@ -194,7 +202,9 @@ public class PageBuilderImpl implements PageBuilder {
      * @param text Text outside &lt;nowiki&gt; tag
      * @return text without square brackets compounds
      */
-    public String processSquareBrackets(final PagePrototype pagePrototype, String text) {
+    private String processSquareBrackets(final UniquePagePrototype pagePrototype, String text, boolean addLinks) {
+        if (text.isEmpty())
+            return "";
         StringBuilder sb = new StringBuilder(text);
         int start = 0, end;
         root_cycle:
@@ -202,29 +212,40 @@ public class PageBuilderImpl implements PageBuilder {
             end = sb.indexOf("]", start + 1);
             if (end == -1)
                 break;
-            String str = sb.substring(start + 1, end + 1).trim();
+            // [ [][] ], [ ], [ [] ]
+            int includedBracketStart = start;
+            while ((includedBracketStart = sb.indexOf("[", includedBracketStart + 1)) < end) {
+                if (includedBracketStart == -1)
+                    break;
+                end = sb.indexOf("]", end + 1);
+            }
+            if (end == -1) {
+                throw new ParseException("Unrecognizable square brackets structure.");
+            }
+            String str = sb.substring(start + 1, end).trim();
             // external link
             if (str.matches("(http://|https://|telnet://|gopher://|file://|wais://|ftp://|mailto:|news:).*")) {
                 int spaceIndex = str.indexOf(" ");
                 String replacement = "";
                 if (spaceIndex > 0) {
-                    replacement = str.substring(spaceIndex + 1, str.length() - 1).trim();
+                    replacement = str.substring(spaceIndex + 1, str.length()/* - 1*/).trim();
                 }
                 sb.replace(start, end + 1, replacement);
                 start += replacement.length();
                 continue;
             }
             if (!str.startsWith("[") || !str.endsWith("]")) {
-                logger.warn("Page \"" + pagePrototype.getTitle() + "\". Unrecognizable square brackets structure \"[" + str + "]\"");
+//                logger.warn("Page \"" + pagePrototype.getTitle() + "\". Unrecognizable square brackets structure \"[" + str + "]\"");
+                sb.replace(start, end + 1, str);
                 start = end;
                 continue;
             }
             str = str.substring(1, str.length() - 1).trim();
-            end++;
+//            end++;
 
             for (Locale locale : Locale.values()) {
                 if (str.startsWith(locale.getText() + ":")) {
-                    pagePrototype.addLocalizedPages(locale, str.substring(locale.getText().length() + 1));
+                    pagePrototype.addLocalizedPage(locale, str.substring(locale.getText().length() + 1));
                     sb.replace(start, end + 1, "");
                     continue root_cycle;
                 }
@@ -236,18 +257,33 @@ public class PageBuilderImpl implements PageBuilder {
             for (String namespacePrefix : NAMESPACES_TO_SKIP) {
                 String pr = prefix + namespacePrefix;
                 if (str.startsWith(pr)) {
+                    // skip parsing for now, just replace with empty string
                     str = str.substring(pr.length());
                     String replacement = "";
-                    int pipePos = str.lastIndexOf("|");
+                    int pipePos, odd = 0, pp = str.length();
+                    do {
+                        odd = 0;
+                        pipePos = str.lastIndexOf("|", pp);
+                        for (int i = pipePos + 1, n = str.length(); i < n; i++) {
+                            if (str.charAt(i) == '[')
+                                odd++;
+                            else
+                                if (str.charAt(i) == ']')
+                                    odd--;
+                        }
+                        pp = pipePos - 1;
+                    } while (odd != 0);
                     if (pipePos != -1) {
                         replacement = str.substring(pipePos + 1).trim();
                     } else
                         pipePos = str.length();
                     if (replacement.isEmpty()) {
-                        replacement = str.substring(0, pipePos);        
+                        replacement = str.substring(0, pipePos);
                     }
                     sb.replace(start, end + 1, replacement);
-                    start += replacement.length();
+                    //start += replacement.length(); // here shouldn't be any increment,
+                    // otherwise nested costructions may occure (like [File:a|b[]])
+                    //sb.replace(start, end + 1, "");
                     continue root_cycle;
                 }
             }
@@ -268,9 +304,23 @@ public class PageBuilderImpl implements PageBuilder {
                 continue;
             }
 
+            // remove language definition
+            if (str.matches(".*[:].*")) {
+                for (Locale locale : Locale.values()) {
+                    if (str.startsWith(locale.getText() + ":")) {
+                        String s = str.substring(locale.getText().length() + 1);
+                        if (!s.isEmpty())
+                            pagePrototype.addLocalizedPage(locale, s);
+                        break;
+                    }
+                }
+                sb.replace(start, end + 1, "");
+                continue;
+            }
+
             // date
             // [[1969]]-[[07-20]]
-            if (str.matches("(\\d){4}")) {
+            if (str.matches("(\\d){4}") && sb.length() > end + 3) {
                 String space = sb.substring(end + 1, end + 4);
                 if (space.equals("-[[")) {
                     int dateStart = end + 2;
@@ -288,7 +338,7 @@ public class PageBuilderImpl implements PageBuilder {
             }
             // [[July 20]], [[1969]] and [[20 July]] [[1969]]
             String allMonthes = "(January|February|March|April| May|June|July|August|September|October|November|December)";
-            if (str.matches("(" + allMonthes + " (\\d){1,2})|((\\d){1,2} " + allMonthes + ")")) {
+            if (str.matches("(" + allMonthes + " (\\d){1,2})|((\\d){1,2} " + allMonthes + ")") && sb.length() > end + 4) {
                 String space = sb.substring(end + 1, end + 5);
                 if (space.equals(", [[") || space.substring(0, 3).equals(" [[")) {
                     int dateStart = sb.indexOf("[[", end + 1);
@@ -336,10 +386,13 @@ public class PageBuilderImpl implements PageBuilder {
                 continue;
             }
 
+            if (!addLinks)
+                continue;
+
             String title = normalizePageTitle(link);
-            Link linkObj = pagePrototype.getLinkPrototype(title);
+            UniquePagePrototype.Link linkObj = pagePrototype.getLink(title);
             if (linkObj == null) {
-                linkObj = pagePrototype.addLinkPrototype(title);
+                linkObj = pagePrototype.addLink(title);
             }
             linkObj.addPosition(start, linkText.length());
         }
@@ -351,125 +404,20 @@ public class PageBuilderImpl implements PageBuilder {
         return Character.toUpperCase(title.charAt(0)) + title.substring(1);
     }
 
-    private Page findOrCreatePage(String title) {
-        Page page = pageDao.findById(title);
-        if (page == null) {
-            page = new Page(title);
-            pageDao.save(page);
+    private String trimBegin(String text) {
+        int len = text.length(), i = 0;
+        while ((i < len) && (text.charAt(i) <= ' ')) {
+            i++;
         }
-        return page;
+        return (i < len) ? text.substring(i) : text;
     }
 
-    private Category findOrCreateCategory(String name) {
-        Category category = categoryDao.findById(name);
-        if (category == null) {
-            category = new Category(name);
-            categoryDao.save(category);
+    private String trimEnd(String text) {
+        int len = text.length() - 1;
+        while ((len > -1) && (text.charAt(len) <= ' ')) {
+            len--;
         }
-        return category;
+        return (len > -1) ? text.substring(0, len + 1) : text;
     }
-
-    private LocalizedPage findOrCreateLocalizedPage(String title, Locale locale) {
-        LocalizedPage localizedPage = localizedPageDao.findById(title);
-        if (localizedPage == null) {
-            localizedPage = new LocalizedPage(title, locale);
-            localizedPageDao.save(localizedPage);
-        }
-        return localizedPage;
-    }
-
-    static class PagePrototype {
-
-        private String title;
-        private Map<String, Link> linkPrototypes = new HashMap<String, Link>();
-        private Set<String> categories = new HashSet<String>();
-        private Map<Locale, String> localizedPages = new HashMap<Locale, String>();
-
-        public PagePrototype(String title) {
-            this.title = title;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public Link getLinkPrototype(String linkTitle) {
-            return linkPrototypes.get(linkTitle);
-        }
-
-        public Link addLinkPrototype(String linkTitle) {
-            Link link = new Link(linkTitle);
-            linkPrototypes.put(linkTitle, link);
-            return link;
-        }
-
-        public Map<String, Link> getLinkPrototypes() {
-            return linkPrototypes;
-        }
-
-        public void addCategory(String category) {
-            categories.add(category);
-        }
-
-        public Set<String> getCategories() {
-            return categories;
-        }
-
-        public Map<Locale, String> getLocalizedPages() {
-            return localizedPages;
-        }
-
-        public String getLocalizedPages(Locale locale) {
-            return localizedPages.get(locale);
-        }
-
-        public void addLocalizedPages(Locale locale, String localizedPageTitle) {
-            this.localizedPages.put(locale, localizedPageTitle);
-        }
-    }
-
-    static class Link {
-
-        private String text;
-
-        /*
-        key = start position, value = length
-        */
-        private Map<Integer, Integer> pos = new HashMap<Integer, Integer>();
-
-        public Link(String text) {
-            this.text = text;
-        }
-
-        public void addPosition(Integer startPos, Integer length) {
-            pos.put(startPos, length);
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public Map<Integer, Integer> getPos() {
-            return pos;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Link link = (Link) o;
-
-            if (!text.equals(link.text)) return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            return text.hashCode();
-        }
-    }
-
 
 }
