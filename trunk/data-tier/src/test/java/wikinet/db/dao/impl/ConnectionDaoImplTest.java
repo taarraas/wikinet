@@ -38,9 +38,9 @@ public class ConnectionDaoImplTest extends AbstractTransactionalTestNGSpringCont
     public void testSave() {
         Synset first = getNewSavedSynset(1L, "word1");
         Synset second = getNewSavedSynset(2L, "word2");
-        Connection connection = new Connection(first, second, ConnectionType.ATTRIBUTE);
+        Connection connection = new Connection(first, second, ConnectionType.ATTRIBUTE, 1, 2);
         connectionDao.save(connection);
-        Connection foundConnection = connectionDao.findById(new ConnectionPK(first, second, ConnectionType.ATTRIBUTE));
+        Connection foundConnection = connectionDao.findById(new ConnectionPK(first, second, ConnectionType.ATTRIBUTE, 1, 2));
         assertEquals(foundConnection, connection);
     }
 
@@ -48,10 +48,10 @@ public class ConnectionDaoImplTest extends AbstractTransactionalTestNGSpringCont
     public void testConnectedSynsetsSearch() {
         Synset first = getNewSavedSynset(1L, "word1");
         Synset second = getNewSavedSynset(2L, "word2");
-        Connection connection = new Connection(first, second, ConnectionType.ATTRIBUTE);
+        Connection connection = new Connection(first, second, ConnectionType.ATTRIBUTE, 1, 2);
         connectionDao.save(connection);
         Synset third = getNewSavedSynset(3L, "word3");
-        Connection connection2 = new Connection(third, first, ConnectionType.ATTRIBUTE);
+        Connection connection2 = new Connection(third, first, ConnectionType.ATTRIBUTE, 2, 3);
         connectionDao.save(connection2);
         List<Synset> connectedSynsets = synsetDao.getConnected(first);
         assertEquals(connectedSynsets.size(), 1);

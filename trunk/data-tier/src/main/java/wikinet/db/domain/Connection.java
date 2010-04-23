@@ -29,6 +29,12 @@ public class Connection {
     @Enumerated(EnumType.STRING)
     private ConnectionType connectionType;
 
+    @Id
+    private int wordsFrom;
+
+    @Id
+    private int wordsTo;
+
     @ManyToOne
     @JoinColumn(name = "fsid")
     private Synset firstSynset;
@@ -37,18 +43,18 @@ public class Connection {
     @JoinColumn(name = "ssid")
     private Synset secondSynset;
 
-    private Integer wordsFrom;
-    private Integer wordsTo;
-
     protected Connection() {
     }
 
-    public Connection(Synset firstSynset, Synset secondSynset, ConnectionType connectionType) {
+    public Connection(Synset firstSynset, Synset secondSynset, ConnectionType connectionType,
+                      int wordsFrom, int wordsTo) {
         this.firstSynset = firstSynset;
         this.firstSynsetId = firstSynset.getId();
         this.secondSynset = secondSynset;
         this.secondSynsetId = secondSynset.getId();
         this.connectionType = connectionType;
+        this.wordsFrom = wordsFrom;
+        this.wordsTo = wordsTo;
     }
 
     public Synset getFirstSynset() {
@@ -88,9 +94,9 @@ public class Connection {
 
         if (firstSynsetId != that.firstSynsetId) return false;
         if (secondSynsetId != that.secondSynsetId) return false;
+        if (wordsFrom != that.wordsFrom) return false;
+        if (wordsTo != that.wordsTo) return false;
         if (connectionType != that.connectionType) return false;
-        if (wordsFrom != null ? !wordsFrom.equals(that.wordsFrom) : that.wordsFrom != null) return false;
-        if (wordsTo != null ? !wordsTo.equals(that.wordsTo) : that.wordsTo != null) return false;
 
         return true;
     }
@@ -100,8 +106,8 @@ public class Connection {
         int result = (int) (firstSynsetId ^ (firstSynsetId >>> 32));
         result = 31 * result + (int) (secondSynsetId ^ (secondSynsetId >>> 32));
         result = 31 * result + connectionType.hashCode();
-        result = 31 * result + (wordsFrom != null ? wordsFrom.hashCode() : 0);
-        result = 31 * result + (wordsTo != null ? wordsTo.hashCode() : 0);
+        result = 31 * result + wordsFrom;
+        result = 31 * result + wordsTo;
         return result;
     }
 

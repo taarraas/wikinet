@@ -16,19 +16,29 @@ public class ConnectionPK implements Serializable {
 
     private ConnectionType connectionType;
 
+    private int wordsFrom;
+
+    private int wordsTo;
+
     protected ConnectionPK() {
     }
 
-    public ConnectionPK(long firstSynsetId, long secondSynsetId, ConnectionType connectionType) {
+    public ConnectionPK(long firstSynsetId, long secondSynsetId, ConnectionType connectionType,
+                        int wordsFrom, int wordsTo) {
         this.firstSynsetId = firstSynsetId;
         this.secondSynsetId = secondSynsetId;
         this.connectionType = connectionType;
+        this.wordsFrom = wordsFrom;
+        this.wordsTo = wordsTo;
     }
 
-    public ConnectionPK(Synset firstSynset, Synset secondSynset, ConnectionType connectionType) {
+    public ConnectionPK(Synset firstSynset, Synset secondSynset, ConnectionType connectionType,
+                        int wordsFrom, int wordsTo) {
         this.firstSynsetId = firstSynset.getId();
         this.secondSynsetId = secondSynset.getId();
         this.connectionType = connectionType;
+        this.wordsFrom = wordsFrom;
+        this.wordsTo = wordsTo;
     }
 
     @Override
@@ -40,6 +50,8 @@ public class ConnectionPK implements Serializable {
 
         if (firstSynsetId != that.firstSynsetId) return false;
         if (secondSynsetId != that.secondSynsetId) return false;
+        if (wordsFrom != that.wordsFrom) return false;
+        if (wordsTo != that.wordsTo) return false;
         if (connectionType != that.connectionType) return false;
 
         return true;
@@ -50,6 +62,8 @@ public class ConnectionPK implements Serializable {
         int result = (int) (firstSynsetId ^ (firstSynsetId >>> 32));
         result = 31 * result + (int) (secondSynsetId ^ (secondSynsetId >>> 32));
         result = 31 * result + connectionType.hashCode();
+        result = 31 * result + wordsFrom;
+        result = 31 * result + wordsTo;
         return result;
     }
 }
