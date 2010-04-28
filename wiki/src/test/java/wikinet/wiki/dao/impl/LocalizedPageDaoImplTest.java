@@ -3,7 +3,6 @@ package wikinet.wiki.dao.impl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
@@ -29,11 +28,12 @@ public class LocalizedPageDaoImplTest extends AbstractTransactionalTestNGSpringC
 
     @AfterMethod(alwaysRun = true)
     public void cleanUp() {
-        Session session = SessionFactoryUtils.getSession(sessionFactory, true);
+        Session session = sessionFactory.openSession();
         for (LocalizedPage localizedPage : localizedPageDao.findAll()) {
             localizedPageDao.delete(localizedPage);
         }
         session.flush();
+        session.close();
     }
 
     @Test

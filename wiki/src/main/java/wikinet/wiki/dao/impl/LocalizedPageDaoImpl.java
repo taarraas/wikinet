@@ -17,7 +17,7 @@ public class LocalizedPageDaoImpl extends GenericDaoImpl<LocalizedPage, Localize
         LocalizedPage localizedPage = findById(new LocalizedPagePK(title, locale));
         if (localizedPage == null) {
             localizedPage = new LocalizedPage(title, locale);
-            getHibernateTemplate().save(localizedPage);
+            getSession().save(localizedPage);
         }
         return localizedPage;
     }

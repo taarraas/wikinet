@@ -1,5 +1,6 @@
 package wikinet.wiki.domain;
 
+import org.hibernate.annotations.Index;
 import org.hibernate.lob.ClobImpl;
 import wikinet.db.Utils;
 
@@ -29,6 +30,7 @@ public class Page {
     @GeneratedValue
     private long id;
 
+    @Index(name = "wordIndex")
     @Column(nullable = false, length = 120)
     private String word;
 

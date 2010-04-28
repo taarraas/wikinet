@@ -1,7 +1,5 @@
 package wikinet.wiki.dao.impl;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
 import wikinet.db.dao.impl.GenericDaoImpl;
 import wikinet.wiki.dao.CategoryDao;
 import wikinet.wiki.domain.Category;
@@ -14,12 +12,8 @@ public class CategoryDaoImpl extends GenericDaoImpl<Category, Long> implements C
 
     @Override
     public Category findByName(String name) {
-        Session session = getSession(true);
-        Query queryObject = session.getNamedQuery("Category.findByName");
-        queryObject.setString("name", name);
-        Category category = (Category) queryObject.uniqueResult();
-        session.close();
-        return category;
+        return (Category) getSession().getNamedQuery("Category.findByName")
+                .setString("name", name).uniqueResult();
     }
 
     @Override
@@ -27,9 +21,7 @@ public class CategoryDaoImpl extends GenericDaoImpl<Category, Long> implements C
         Category category = findByName(name);
         if (category == null) {
             category = new Category(name);
-            Session session = getSession(true);
-            session.save(category);
-            session.close();
+            getSession().save(category);
         }
         return category;
     }

@@ -1,5 +1,7 @@
 package wikinet.wiki.domain;
 
+import org.hibernate.annotations.Index;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class Category {
     @GeneratedValue
     private long id;
 
+    @Index(name = "nameIndex")
     private String name;
 
     @ManyToOne
