@@ -40,6 +40,9 @@
                 <prop key="hibernate.show_sql">${hibernate.showsql}</prop>
                 <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
                 <prop key="hibernate.use_sql_comments">${hibernate.use_sql_comments}</prop>
+                <!--<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate3.SpringSessionContext</prop>-->
+                <!--<prop key="hibernate.current_session_context_class">wikinet.wiki.context.ThreadLocalSessionContext</prop>-->
+                <prop key="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</prop>
             </props>
         </property>
     </bean>
@@ -54,8 +57,7 @@
     </bean>
 
     <bean id="genericDao" class="wikinet.db.dao.impl.GenericDaoImpl" abstract="true" >
-        <!--<property name="sessionFactory" ref="sessionFactory" />-->
-        <property name="hibernateTemplate" ref="hibernateTemplate" />
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
     <bean id="pageDao" class="wikinet.wiki.dao.impl.PageDaoImpl" parent="genericDao" />

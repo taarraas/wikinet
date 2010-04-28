@@ -483,12 +483,12 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.1.ga/hibernate-3.2.1.ga.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="file://$PROJECT_DIR$/../../../hibernate-3.2/doc/api" />
         <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.1.ga/hibernate-3.2.1.ga-javadoc.jar!/" />
+        <root url="file://$PROJECT_DIR$/../../../hibernate/hibernate-3.2/doc/api" />
       </JAVADOC>
       <SOURCES>
-        <root url="file://$PROJECT_DIR$/../../../hibernate-3.2/src" />
         <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.1.ga/hibernate-3.2.1.ga-sources.jar!/" />
+        <root url="file://$PROJECT_DIR$/../../../hibernate/hibernate-3.2/src" />
       </SOURCES>
     </library>
     <library name="Maven: net.sf.ehcache:ehcache:1.2.3">

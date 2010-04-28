@@ -1,6 +1,8 @@
 package wikinet.wiki.parser.impl;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.db.model.Locale;
 import wikinet.wiki.dao.CategoryDao;
@@ -38,6 +40,9 @@ public class PagePrototypeSaverImpl implements PagePrototypeSaver {
     @Autowired
     private LinkedPageDao linkedPageDao;
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
     public void setPageDao(PageDao pageDao) {
         this.pageDao = pageDao;
     }
@@ -54,18 +59,24 @@ public class PagePrototypeSaverImpl implements PagePrototypeSaver {
         this.linkedPageDao = linkedPageDao;
     }
 
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public void save(PagePrototype pagePrototype) {
-        if (pagePrototype instanceof RedirectPagePrototype) {
-            RedirectPagePrototype pp = (RedirectPagePrototype) pagePrototype;
-            PagePrototype rp = pp.getRedirectedPage();
-            if (!validate(pp) || !validate(rp))
-                return;
-            Page thisPage = pageDao.createIfNotExist(pp.getWord(), pp.getDisambiguation());
-            Page redirectedPage = pageDao.createIfNotExist(rp.getWord(), rp.getDisambiguation());
-            pageDao.addRedirect(redirectedPage, thisPage);
-        } else
-            if (pagePrototype instanceof UniquePagePrototype) {
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        try {
+            if (pagePrototype instanceof RedirectPagePrototype) {
+                RedirectPagePrototype pp = (RedirectPagePrototype) pagePrototype;
+                PagePrototype rp = pp.getRedirectedPage();
+                if (!validate(pp) || !validate(rp))
+                    return;
+                Page thisPage = pageDao.createIfNotExist(pp.getWord(), pp.getDisambiguation());
+                Page redirectedPage = pageDao.createIfNotExist(rp.getWord(), rp.getDisambiguation());
+                pageDao.addRedirect(redirectedPage, thisPage);
+            } else if (pagePrototype instanceof UniquePagePrototype) {
                 UniquePagePrototype pp = (UniquePagePrototype) pagePrototype;
                 if (!validate(pp))
                     return;
@@ -97,6 +108,11 @@ public class PagePrototypeSaverImpl implements PagePrototypeSaver {
                 pageDao.save(page);
             } else
                 throw new UnsupportedOperationException();
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            logger.error(pagePrototype, ex);
+            session.getTransaction().rollback();
+        }
     }
 
     private boolean validate(PagePrototype pagePrototype) {

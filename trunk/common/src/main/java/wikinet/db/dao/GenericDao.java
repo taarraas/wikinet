@@ -13,7 +13,7 @@ public interface GenericDao<T, PK extends Serializable> {
 
         List<T> findAll();
 
-        void save(T obj);
+        T save(T obj);
 
         void delete(T obj);
 
