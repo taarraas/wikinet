@@ -67,6 +67,7 @@ public class PagePrototypeSaverImpl implements PagePrototypeSaver {
     public void save(PagePrototype pagePrototype) {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
+        String temp="";
         try {
             if (pagePrototype instanceof RedirectPagePrototype) {
                 RedirectPagePrototype pp = (RedirectPagePrototype) pagePrototype;
@@ -102,6 +103,7 @@ public class PagePrototypeSaverImpl implements PagePrototypeSaver {
                     pageDao.addLocalizedPage(page, entry.getValue(), entry.getKey());
                 }
                 page.setFirstParagraph(pp.getFirstParagraph());
+                temp=pp.getFirstParagraph();
                 page.setText(pp.getText());
                 pageDao.save(page);
             } else
@@ -110,6 +112,7 @@ public class PagePrototypeSaverImpl implements PagePrototypeSaver {
         } catch (Exception ex) {
             logger.error(pagePrototype, ex);
             session.getTransaction().rollback();
+            System.out.println(temp);
         }
     }
 
