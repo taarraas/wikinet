@@ -79,7 +79,7 @@ public class Page {
     /**
      * Same page but in the other language
      */
-    @OneToMany
+    @ManyToMany
     @JoinTable(name = "Page_LocalizedPage",
         joinColumns = @JoinColumn(name = "page_id", referencedColumnName = "id"),
         inverseJoinColumns = {
