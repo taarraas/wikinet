@@ -78,7 +78,7 @@ public class PageDaoImpl extends GenericDaoImpl<Page, Long> implements PageDao {
 
     @Override
     public boolean addLocalizedPage(Page page, String title, Locale locale) {
-        boolean notExist = getSession().createSQLQuery("select page_id from LocalizedPage where " +
+        boolean notExist = getSession().createSQLQuery("select title from LocalizedPage where " +
                 "title = ? and locale = ?")
                 .setString(0, title)
                 .setString(1, locale.toString())
