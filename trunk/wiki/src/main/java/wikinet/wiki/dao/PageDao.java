@@ -7,6 +7,7 @@ import wikinet.wiki.domain.LocalizedPage;
 import wikinet.wiki.domain.Page;
 
 import java.util.List;
+import wikinet.db.model.Locale;
 
 /**
  * @author shyiko
@@ -20,6 +21,6 @@ public interface PageDao extends GenericDao<Page, Long> {
     boolean addRedirect(Page page, Page redirect);
     boolean addLinkedPage(Page page, LinkedPage linkedPage);
     boolean addCategory(Page page, Category category);
-    boolean addLocalizedPage(Page page, LocalizedPage localizedPage);
+    boolean addLocalizedPage(Page page, String title, Locale locale);
 
 }

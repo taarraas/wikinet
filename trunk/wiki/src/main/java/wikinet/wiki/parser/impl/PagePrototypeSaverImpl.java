@@ -99,10 +99,8 @@ public class PagePrototypeSaverImpl implements PagePrototypeSaver {
                     pageDao.addCategory(page, category);
                 }
                 for (Map.Entry<Locale, String> entry : pp.getLocalizedPages().entrySet()) {
-                    LocalizedPage localizedPage = localizedPageDao.createIfNotExist(entry.getValue(), entry.getKey());
-                    pageDao.addLocalizedPage(page, localizedPage);
+                    pageDao.addLocalizedPage(page, entry.getValue(), entry.getKey());
                 }
-
                 page.setFirstParagraph(pp.getFirstParagraph());
                 page.setText(pp.getText());
                 pageDao.save(page);
