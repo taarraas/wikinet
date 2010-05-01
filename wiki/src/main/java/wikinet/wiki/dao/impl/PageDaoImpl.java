@@ -90,11 +90,17 @@ public class PageDaoImpl extends GenericDaoImpl<Page, Long> implements PageDao {
                 .setString(1, locale.toString())
                 .executeUpdate();
         }
+        try {
         getSession().createSQLQuery("insert into Page_LocalizedPage values (?, ?, ?)")
             .setLong(0, page.getId())
             .setString(1, title)
             .setString(2, locale.toString())
             .executeUpdate();
+        } catch (Throwable e) {
+            e.printStackTrace();
+            System.out.println(title);
+            System.out.println(locale.toString());
+        }
         return notExist;
     }
 
