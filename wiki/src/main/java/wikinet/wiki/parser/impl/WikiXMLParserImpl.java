@@ -36,7 +36,7 @@ public class WikiXMLParserImpl implements WikiXMLParser {
         fileInputStream.read();
         CBZip2InputStream bz2InputStream = new CBZip2InputStream(fileInputStream);
         CountingInputStream inputStream = new CountingInputStream(bz2InputStream);
-        XMLStreamReader reader = inputFactory.createXMLStreamReader(inputStream);
+        XMLStreamReader reader = inputFactory.createXMLStreamReader(inputStream, "utf8");
         if (logger.isInfoEnabled())
             logger.info("Importing file " + file.getCanonicalPath() + "...");
         long beginTime = System.currentTimeMillis();
