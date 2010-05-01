@@ -16,23 +16,27 @@ public class Main {
         helpFormatter.printHelp("[-f <wiki-dump-bz2-archive>]", options);
     }
 
-    public static void main(String[] args) throws Exception {
-        CommandLineParser cmdParser = new BasicParser();
-        Options options = new Options();
-        Option option = new Option("f", "file", true, "wiki xml dump bz2 archive");
-        option.setRequired(true);
-        options.addOption(option);
-
-        CommandLine commandLine = null;
+    public static void main(String[] args) {
         try {
-            commandLine = cmdParser.parse(options, args);
-        } catch (ParseException ex) {
-            printUsage(options);
-            System.exit(0);
-        }
+            CommandLineParser cmdParser = new BasicParser();
+            Options options = new Options();
+            Option option = new Option("f", "file", true, "wiki xml dump bz2 archive");
+            option.setRequired(true);
+            options.addOption(option);
 
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-wiki-module.xml");
-        WikiXMLParser wikiParser = (WikiXMLParser) context.getBean("wikiXMLParser");
-        wikiParser.importFile(commandLine.getOptionValue("f"));
+            CommandLine commandLine = null;
+            try {
+                commandLine = cmdParser.parse(options, args);
+            } catch (ParseException ex) {
+                printUsage(options);
+                System.exit(0);
+            }
+
+            ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-wiki-module.xml");
+            WikiXMLParser wikiParser = (WikiXMLParser) context.getBean("wikiXMLParser");
+            wikiParser.importFile(commandLine.getOptionValue("f"));
+        } catch (Throwable thr) {
+            thr.printStackTrace();
+        }
     }
 }
