@@ -24,8 +24,13 @@ public class PageDaoImpl extends GenericDaoImpl<Page, Long> implements PageDao {
 
     @Override
     public Page findByWordAndDisambiguation(String word, String disambiguation) {
-        return (Page) getSession().getNamedQuery("Page.findByWordAndDisambiguation")
+        if (disambiguation==null) {
+            return (Page) getSession().getNamedQuery("Page.findByWordAndDisambiguationNull")
+                .setString("word", word).uniqueResult();
+        } else {
+            return (Page) getSession().getNamedQuery("Page.findByWordAndDisambiguation")
                 .setString("word", word).setString("disambiguation", disambiguation).uniqueResult();
+        }
     }
 
     @Override

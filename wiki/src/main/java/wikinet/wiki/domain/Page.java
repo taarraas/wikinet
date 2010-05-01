@@ -15,7 +15,9 @@ import java.util.Set;
         @NamedQuery(name = "Page.findByWord",
         query = "select p from Page p where p.word = :word"),
         @NamedQuery(name = "Page.findByWordAndDisambiguation",
-        query = "select p from Page p where p.word = :word and p.disambiguation = :disambiguation")
+        query = "select p from Page p where p.word = :word and p.disambiguation = :disambiguation"),
+        @NamedQuery(name = "Page.findByWordAndDisambiguationNull",
+        query = "select p from Page p where p.word = :word and isNull(disambiguation)")
 })
 
 /**
