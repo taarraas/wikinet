@@ -100,6 +100,7 @@ public class PageDaoImpl extends GenericDaoImpl<Page, Long> implements PageDao {
             e.printStackTrace();
             System.out.println(title);
             System.out.println(locale.toString());
+            System.out.println(page.getId());
         }
         return notExist;
     }
