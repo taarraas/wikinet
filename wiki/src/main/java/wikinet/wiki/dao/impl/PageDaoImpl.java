@@ -8,6 +8,7 @@ import wikinet.wiki.domain.LocalizedPage;
 import wikinet.wiki.domain.Page;
 
 import java.util.List;
+import wikinet.db.model.Locale;
 
 /**
  * @author shyiko
@@ -71,18 +72,20 @@ public class PageDaoImpl extends GenericDaoImpl<Page, Long> implements PageDao {
     }
 
     @Override
-    public boolean addLocalizedPage(Page page, LocalizedPage localizedPage) {
-        boolean notExist = getSession().createSQLQuery("select page_id from Page_LocalizedPage where page_id = ? and " +
+    public boolean addLocalizedPage(Page page, String title, Locale locale) {
+        /*boolean notExist = getSession().createSQLQuery("select page_id from Page_LocalizedPage where page_id = ? and " +
                 "localizedPage_title = ? and localizedPage_locale = ?")
                 .setLong(0, page.getId())
-                .setString(1, localizedPage.getTitle())
-                .setString(2, localizedPage.getLocale().toString())
-                .uniqueResult() == null;
+                .setString(1, title)
+                .setString(2, locale.toString())
+                .uniqueResult() == null;/*
+         */
+        boolean notExist=true;
         if (notExist) {
             getSession().createSQLQuery("insert into Page_LocalizedPage values (?, ?, ?)")
                 .setLong(0, page.getId())
-                .setString(1, localizedPage.getTitle())
-                .setString(2, localizedPage.getLocale().toString())
+                .setString(1, title)
+                .setString(2, locale.toString())
                 .executeUpdate();
         }
         return notExist;
