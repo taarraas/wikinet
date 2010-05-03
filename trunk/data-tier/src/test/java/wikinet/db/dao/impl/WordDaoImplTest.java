@@ -2,8 +2,8 @@ package wikinet.db.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.Test;
+import wikinet.testng.SpringDaoTest;
 import wikinet.db.dao.WordDao;
 import wikinet.db.domain.Word;
 
@@ -17,7 +17,7 @@ import static org.testng.Assert.assertNull;
  * @since Feb 28, 2010
  */
 @ContextConfiguration(locations = {"classpath:spring-dao-module-test.xml"})
-public class WordDaoImplTest extends AbstractTransactionalTestNGSpringContextTests {
+public class WordDaoImplTest extends SpringDaoTest {
 
     @Autowired
     private WordDao wordDao;

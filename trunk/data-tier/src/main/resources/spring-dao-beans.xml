@@ -21,11 +21,6 @@
         <property name="maxActive" value="10" />
     </bean>
 
-    <bean id="hibernateTemplate"
-    class="org.springframework.orm.hibernate3.HibernateTemplate">
-          <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
     <bean id="sessionFactory"
     class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
@@ -46,12 +41,9 @@
                 <prop key="hibernate.show_sql">${hibernate.showsql}</prop>
                 <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
                 <prop key="hibernate.use_sql_comments">${hibernate.use_sql_comments}</prop>
+                <prop key="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</prop>
             </props>
         </property>
-    </bean>
-
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
     <bean id="genericDao" class="wikinet.db.dao.impl.GenericDaoImpl" abstract="true" >
@@ -62,7 +54,5 @@
     <bean id="synsetDao" class="wikinet.db.dao.impl.SynsetDaoImpl" parent="genericDao" />
     <bean id="articleDao" class="wikinet.db.dao.impl.ArticleDaoImpl" parent="genericDao" />
     <bean id="connectionDao" class="wikinet.db.dao.impl.ConnectionDaoImpl" parent="genericDao" />
-
-    <tx:annotation-driven />
 
 </beans>

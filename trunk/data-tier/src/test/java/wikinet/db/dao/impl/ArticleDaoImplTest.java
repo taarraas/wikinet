@@ -1,20 +1,18 @@
 package wikinet.db.dao.impl;
 
+import org.hibernate.PropertyValueException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.Test;
 import wikinet.db.dao.ArticleDao;
+import wikinet.testng.SpringDaoTest;
 import wikinet.db.domain.Article;
 import wikinet.db.domain.LocalizedArticle;
 import wikinet.db.model.Locale;
 
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
+import static org.testng.Assert.*;
 
 
 /**
@@ -22,7 +20,7 @@ import static org.testng.Assert.assertNull;
  * @since Feb 28, 2010
  */
 @ContextConfiguration(locations = {"classpath:spring-dao-module-test.xml"})
-public class ArticleDaoImplTest extends AbstractTransactionalTestNGSpringContextTests {
+public class ArticleDaoImplTest extends SpringDaoTest {
 
     @Autowired
     private ArticleDao articleDao;
@@ -48,7 +46,7 @@ public class ArticleDaoImplTest extends AbstractTransactionalTestNGSpringContext
         assertEquals(foundArticle, article);
     }
 
-    @Test(expectedExceptions = {DataIntegrityViolationException.class})
+    @Test(expectedExceptions = {PropertyValueException.class})
     public void testExceptionOnSaveWithoutWord() {
         Article article = new Article(null, "link");
         article.setDisambiguation("disambiguation");
@@ -63,7 +61,7 @@ public class ArticleDaoImplTest extends AbstractTransactionalTestNGSpringContext
         assertEquals(foundArticle, article);
     }
 
-    @Test(expectedExceptions = {DataIntegrityViolationException.class})
+    @Test(expectedExceptions = {PropertyValueException.class})
     public void testExceptionOnSaveWithoutLink() {
         Article article = new Article("word", null);
         article.setDisambiguation("disambiguation");

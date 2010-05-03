@@ -3,6 +3,7 @@ package wikinet.wiki.domain;
 import wikinet.db.model.Locale;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author shyiko

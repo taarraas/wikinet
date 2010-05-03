@@ -67,27 +67,26 @@ public class PagePrototypeSaverImpl implements PagePrototypeSaver {
     public void save(PagePrototype pagePrototype) {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        String temp="";
         try {
             if (pagePrototype instanceof RedirectPagePrototype) {
                 RedirectPagePrototype pp = (RedirectPagePrototype) pagePrototype;
                 PagePrototype rp = pp.getRedirectedPage();
                 if (!validate(pp) || !validate(rp))
                     return;
-                Page thisPage = pageDao.createIfNotExist(pp.getWord(), pp.getDisambiguation());
-                Page redirectedPage = pageDao.createIfNotExist(rp.getWord(), rp.getDisambiguation());
+                Page thisPage = pageDao.saveOrUpdate(pp.getWord(), pp.getDisambiguation());
+                Page redirectedPage = pageDao.saveOrUpdate(rp.getWord(), rp.getDisambiguation());
                 pageDao.addRedirect(redirectedPage, thisPage);
             } else if (pagePrototype instanceof UniquePagePrototype) {
                 UniquePagePrototype pp = (UniquePagePrototype) pagePrototype;
                 if (!validate(pp))
                     return;
-                Page page = pageDao.createIfNotExist(pp.getWord(), pp.getDisambiguation());
+                Page page = pageDao.saveOrUpdate(pp.getWord(), pp.getDisambiguation());
 
                 for (UniquePagePrototype.Link link : pp.getLinks()) {
                     PagePrototype p = new PagePrototype(link.getText());
                     if (!validate(p))
                         continue;
-                    Page linkedPage = pageDao.createIfNotExist(p.getWord(), p.getDisambiguation());
+                    Page linkedPage = pageDao.saveOrUpdate(p.getWord(), p.getDisambiguation());
                     for (Map.Entry<Integer, Integer> entry : link.getPos().entrySet()) {
                         LinkedPage linkedPageEntity = new LinkedPage(entry.getKey(), entry.getValue(), linkedPage);
                         linkedPageDao.save(linkedPageEntity);
@@ -96,14 +95,15 @@ public class PagePrototypeSaverImpl implements PagePrototypeSaver {
                 }
 
                 for (String categoryName : pp.getCategories()) {
-                    Category category = categoryDao.createIfNotExist(categoryName);
+                    Category category = categoryDao.saveOrUpdate(categoryName);
                     pageDao.addCategory(page, category);
                 }
                 for (Map.Entry<Locale, String> entry : pp.getLocalizedPages().entrySet()) {
-                    pageDao.addLocalizedPage(page, entry.getValue(), entry.getKey());
+                    LocalizedPage localizedPage = localizedPageDao.saveOrUpdate(entry.getValue(), entry.getKey());
+                    pageDao.addLocalizedPage(page, localizedPage);
                 }
+
                 page.setFirstParagraph(pp.getFirstParagraph());
-                temp=pp.getFirstParagraph();
                 page.setText(pp.getText());
                 pageDao.save(page);
             } else
@@ -112,7 +112,6 @@ public class PagePrototypeSaverImpl implements PagePrototypeSaver {
         } catch (Exception ex) {
             logger.error(pagePrototype, ex);
             session.getTransaction().rollback();
-            System.out.println(temp);
         }
     }
 

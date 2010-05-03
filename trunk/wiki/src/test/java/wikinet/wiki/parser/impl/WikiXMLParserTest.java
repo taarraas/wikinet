@@ -1,7 +1,7 @@
 package wikinet.wiki.parser.impl;
 
 import org.testng.annotations.Test;
-import wikinet.wiki.parser.PageBuilder;
+import wikinet.wiki.parser.PageProcessor;
 import wikinet.wiki.parser.WikiXMLParser;
 
 import static org.mockito.Mockito.*;
@@ -14,12 +14,12 @@ public class WikiXMLParserTest {
 
     @Test
     public void testImportFile() throws Exception {
-        PageBuilder pageBuilderMock = mock(PageBuilder.class);
+        PageProcessor pageProcessorMock = mock(PageProcessor.class);
 
-        WikiXMLParser wikiXMLParser = new WikiXMLParserImpl(pageBuilderMock);
+        WikiXMLParser wikiXMLParser = new WikiXMLParserImpl(pageProcessorMock);
         wikiXMLParser.importFile("src/test/resources/wiki-dump.xml.bz2");
 
-        verify(pageBuilderMock).importPage(eq("AccessibleComputing"), eq("#REDIRECT [[Computer accessibility]] {{R from CamelCase}}"));
+        verify(pageProcessorMock).process(eq("AccessibleComputing"), eq("#REDIRECT [[Computer accessibility]] {{R from CamelCase}}"));
     }
 
 }

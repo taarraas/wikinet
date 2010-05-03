@@ -10,7 +10,7 @@ import wikinet.wiki.parser.prototype.PagePrototype;
  * @author shyiko
  * @since Apr 18, 2010
  */
-public class OneThreadPageProcessor implements PageProcessor {
+public class OneThreadPageProcessorImpl implements PageProcessor {
 
     @Autowired
     private PageBuilder pageBuilder;
@@ -18,7 +18,7 @@ public class OneThreadPageProcessor implements PageProcessor {
     @Autowired
     private PagePrototypeSaver pagePrototypeSaver;
 
-    public OneThreadPageProcessor(PageBuilder pageBuilder, PagePrototypeSaver pagePrototypeSaver) {
+    public OneThreadPageProcessorImpl(PageBuilder pageBuilder, PagePrototypeSaver pagePrototypeSaver) {
         this.pageBuilder = pageBuilder;
         this.pagePrototypeSaver = pagePrototypeSaver;
     }

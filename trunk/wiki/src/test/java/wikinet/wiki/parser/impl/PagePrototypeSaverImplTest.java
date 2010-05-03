@@ -1,11 +1,9 @@
 package wikinet.wiki.parser.impl;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
@@ -15,20 +13,24 @@ import wikinet.wiki.dao.LinkedPageDao;
 import wikinet.wiki.dao.LocalizedPageDao;
 import wikinet.wiki.dao.PageDao;
 import wikinet.wiki.domain.Category;
+import wikinet.wiki.domain.LinkedPage;
 import wikinet.wiki.domain.LocalizedPage;
 import wikinet.wiki.domain.Page;
 import wikinet.wiki.parser.PageBuilder;
+import wikinet.wiki.parser.PagePrototypeSaver;
+import wikinet.wiki.parser.prototype.PagePrototype;
 import wikinet.wiki.parser.prototype.UniquePagePrototype;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.List;
 
 /**
  * @author shyiko
  * @since Apr 16, 2010
  */
 @ContextConfiguration(locations = {"classpath:spring-wiki-module-test.xml"})
-public class PagePrototypeSaverImplTest extends AbstractTransactionalTestNGSpringContextTests {
+public class PagePrototypeSaverImplTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private CategoryDao categoryDao;
@@ -46,30 +48,31 @@ public class PagePrototypeSaverImplTest extends AbstractTransactionalTestNGSprin
     private PageBuilder pageBuilder;
 
     @Autowired
-    private SessionFactory sessionFactory;
-    
+    private PagePrototypeSaver prototypeSaver;
+
+    @Autowired
+    protected SessionFactory sessionFactory;
+
     @AfterMethod(alwaysRun = true)
     public void cleanUp() {
-        Session session = SessionFactoryUtils.getSession(sessionFactory, true);
+        sessionFactory.getCurrentSession().beginTransaction();
         for (LocalizedPage localizedPage : localizedPageDao.findAll()) {
             localizedPageDao.delete(localizedPage);
         }
         for (Category category : categoryDao.findAll()) {
             categoryDao.delete(category);
         }
+        for (LinkedPage linkedPage : linkedPageDao.findAll()) {
+            linkedPageDao.delete(linkedPage);
+        }
         for (Page page : pageDao.findAll()) {
             pageDao.delete(page);
         }
-        session.flush();
+        sessionFactory.getCurrentSession().getTransaction().commit();
     }
 
     @Test
     public void testSave() throws Exception {
-        PagePrototypeSaverImpl prototypeSaver = new PagePrototypeSaverImpl();
-        prototypeSaver.setCategoryDao(categoryDao);
-        prototypeSaver.setLinkedPageDao(linkedPageDao);
-        prototypeSaver.setLocalizedPageDao(localizedPageDao);
-        prototypeSaver.setPageDao(pageDao);
         UniquePagePrototype uniquePagePrototype = new UniquePagePrototype("title (x)");
         uniquePagePrototype.addCategory("category");
         uniquePagePrototype.addLink("link").addPosition(1, 2);
@@ -77,50 +80,48 @@ public class PagePrototypeSaverImplTest extends AbstractTransactionalTestNGSprin
         uniquePagePrototype.appendFirstParagraph("fp");
         uniquePagePrototype.appendText("tp");
         prototypeSaver.save(uniquePagePrototype);
-        Page page = pageDao.findByWordAndDisambiguation("title", "x");
-        Assert.assertNotNull(page);
-        Assert.assertEquals(page.getCategories().size(), 1);
-        Assert.assertEquals(page.getLinkedPages().size(), 1);
-        Assert.assertEquals(page.getLocalizedPages().size(), 1);
-        Assert.assertEquals(page.getFirstParagraph(), "fp");
-        Assert.assertEquals(page.getText(), "tp");
+        sessionFactory.getCurrentSession().beginTransaction();
+        try {
+            Page page = pageDao.findByWordAndDisambiguation("title", "x");
+            Assert.assertNotNull(page);
+            Assert.assertEquals(page.getCategories().size(), 1);
+            Assert.assertEquals(page.getLinkedPages().size(), 1);
+            Assert.assertEquals(page.getLocalizedPages().size(), 1);
+            Assert.assertEquals(page.getFirstParagraph(), "fp");
+            Assert.assertEquals(page.getText(), "tp");
+        } finally {
+            sessionFactory.getCurrentSession().getTransaction().rollback();
+        }
     }
 
-//    @Test
+    @Test
     public void testSaveComplexPage() throws Exception {
+        PagePrototype prototype =
+                pageBuilder.buildPagePrototype("Abraham Lincoln",
+                        getComplexText("src/test/resources/wiki-complex-text-long.log"));
+        prototypeSaver.save(prototype);
+        sessionFactory.getCurrentSession().beginTransaction();
         try {
-            pageBuilder.importPage("Abraham Lincoln", getComplexText("src/test/resources/wiki-complex-text-long.log"));
+            List<Page> pageList = pageDao.findByWord("Abraham Lincoln");
             Page page = pageDao.findByWordAndDisambiguation("Abraham Lincoln", null);
             Assert.assertNotNull(page);
         } finally {
-            cleanDB();
+            sessionFactory.getCurrentSession().getTransaction().rollback();
         }
     }
 
-//    @Test
+    @Test
     public void testSaveLongComplexPage() throws Exception {
+        PagePrototype prototype = pageBuilder.buildPagePrototype("Anarchism",
+                getComplexText("src/test/resources/wiki-complex-text.log"));
+        prototypeSaver.save(prototype);
+        sessionFactory.getCurrentSession().beginTransaction();
         try {
-            pageBuilder.importPage("Anarchism", getComplexText("src/test/resources/wiki-complex-text.log"));
             Page page = pageDao.findByWordAndDisambiguation("Anarchism", null);
             Assert.assertNotNull(page);
         } finally {
-            cleanDB();
+            sessionFactory.getCurrentSession().getTransaction().rollback();
         }
-    }
-
-
-    private void cleanDB() {
-/*
-        for (Page page : pageDao.findAll()) {
-            pageDao.delete(page);
-        }
-        for (LocalizedPage page : localizedPageDao.findAll()) {
-            localizedPageDao.delete(page);
-        }
-        for (Category category : categoryDao.findAll()) {
-            categoryDao.delete(category);
-        }
-*/
     }
 
     private String getComplexText(String fileName) throws Exception {

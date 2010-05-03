@@ -13,7 +13,8 @@ public class SynsetDaoImpl extends GenericDaoImpl<Synset, Long> implements Synse
 
     @Override
     public List<Synset> getConnected(Synset synset) {
-        return getHibernateTemplate().findByNamedQueryAndNamedParam("Synset.getConnected", "synsetId", synset.getId());
+        return getSession().getNamedQuery("Synset.getConnected")
+               .setLong("synsetId", synset.getId()).list();
     }
     
 }

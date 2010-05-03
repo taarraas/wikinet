@@ -14,16 +14,8 @@ public class ArticleDaoImpl extends GenericDaoImpl<Article, Long> implements Art
 
     @Override
     public Article getArticle(String word, String disambiguation) {
-        List articlesList = getHibernateTemplate().findByNamedQueryAndNamedParam("Article.getByWordAndDisambiguation",
-                new String[]{"word", "disambiguation"},
-                new Object[]{word, disambiguation});
-        int size = articlesList.size();
-        if (size > 1)
-            throw new RuntimeException("Got more than one article with word = \"" + word +
-                        "\" and disambiguation = \"" + disambiguation + "\"");
-        if (size == 0)
-            return null;
-        return (Article) articlesList.get(0);
+        return (Article) getSession().getNamedQuery("Article.getByWordAndDisambiguation")
+                .setString("word", word).setString("disambiguation", disambiguation).uniqueResult();
     }
 
 }
