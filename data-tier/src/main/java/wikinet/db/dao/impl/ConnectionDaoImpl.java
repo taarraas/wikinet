@@ -15,9 +15,8 @@ public class ConnectionDaoImpl extends GenericDaoImpl<Connection, ConnectionPK> 
 
     @Override
     public List<Connection> getConnections(Synset from, Synset to) {
-        return getHibernateTemplate().findByNamedQueryAndNamedParam("Connection.getConnections",
-                new String[] {"firstSynsetId", "secondSynsetId"},
-                new Object[] {from.getId(), to.getId()});
+        return getSession().getNamedQuery("Connection.getConnections")
+               .setLong("firstSynsetId", from.getId()).setLong("secondSynsetId", to.getId()).list();
     }
     
 }

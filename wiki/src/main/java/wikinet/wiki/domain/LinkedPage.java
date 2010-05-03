@@ -17,7 +17,7 @@ public class LinkedPage {
 
     private int length;
 
-    @OneToOne
+    @ManyToOne(optional = false)
     private Page page;
 
     protected LinkedPage() {

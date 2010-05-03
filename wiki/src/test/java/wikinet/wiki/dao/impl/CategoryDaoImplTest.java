@@ -1,40 +1,36 @@
 package wikinet.wiki.dao.impl;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import wikinet.testng.SpringDaoTest;
 import wikinet.wiki.dao.CategoryDao;
 import wikinet.wiki.domain.Category;
+import wikinet.wiki.domain.LinkedPage;
+import wikinet.wiki.domain.Page;
 
 /**
  * @author shyiko
  * @since Apr 4, 2010
  */
 @ContextConfiguration(locations = {"classpath:spring-wiki-module-test.xml"})
-public class CategoryDaoImplTest extends AbstractTestNGSpringContextTests {
+public class CategoryDaoImplTest extends SpringDaoTest {
 
     @Autowired
     private CategoryDao categoryDao;
 
-    @Autowired
-    private SessionFactory sessionFactory;
-
     @AfterMethod(alwaysRun = true)
     public void cleanUp() {
-        Session session = sessionFactory.openSession();
+        sessionFactory.getCurrentSession().beginTransaction();
         for (Category category : categoryDao.findAll()) {
             categoryDao.delete(category);
         }
-//        session.flush();
-        session.close();
+        sessionFactory.getCurrentSession().getTransaction().commit();
     }
 
-//    @Test
+    @Test
     public void testSave() throws Exception {
         Category category = new Category("title");
         categoryDao.save(category);

@@ -1,7 +1,7 @@
 package wikinet.wiki.domain;
 
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Index;
-import org.hibernate.lob.ClobImpl;
 import wikinet.db.Utils;
 
 import javax.persistence.*;
@@ -16,7 +16,7 @@ import java.util.Set;
         query = "select p from Page p where p.word = :word"),
         @NamedQuery(name = "Page.findByWordAndDisambiguation",
         query = "select p from Page p where p.word = :word and p.disambiguation = :disambiguation"),
-        @NamedQuery(name = "Page.findByWordAndDisambiguationNull",
+        @NamedQuery(name = "Page.findByWordWithNullDisambiguation",
         query = "select p from Page p where p.word = :word and p.disambiguation is null")
 })
 
@@ -25,6 +25,10 @@ import java.util.Set;
  * @since Mar 29, 2010
  */
 @Entity
+/*
+@org.hibernate.annotations.Table(appliesTo = "Page",
+        indexes = @Index(name="PageWordDisambiguationIDX", columnNames = {"word", "disambiguation"}))
+*/
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"word", "disambiguation"}))
 public class Page {
 
@@ -32,7 +36,7 @@ public class Page {
     @GeneratedValue
     private long id;
 
-    @Index(name = "wordIndex")
+    @Index(name = "PageWordIDX")
     @Column(nullable = false, length = 120)
     private String word;
 
@@ -46,7 +50,7 @@ public class Page {
      * Text without first paragraph
      */
     @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "longblob")
+    @Column(columnDefinition = "mediumtext") 
     private Clob text;
 
     /**
@@ -79,6 +83,7 @@ public class Page {
     /**
      * Same page but in the other language
      */
+    // NOTE: Theoretically, here should be OneToMany connection, but due to wiki ambiguity using ManyToMany 
     @ManyToMany
     @JoinTable(name = "Page_LocalizedPage",
         joinColumns = @JoinColumn(name = "page_id", referencedColumnName = "id"),
@@ -124,7 +129,7 @@ public class Page {
         if (text == null)
             this.text = null;
         else
-            this.text = new ClobImpl(text);
+            this.text = Hibernate.createClob(text);
     }
 
     public void addRedirect(Page redirect) {

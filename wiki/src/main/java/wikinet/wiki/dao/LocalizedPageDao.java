@@ -11,7 +11,7 @@ import wikinet.wiki.domain.LocalizedPagePK;
  */
 public interface LocalizedPageDao extends GenericDao<LocalizedPage, LocalizedPagePK> {
 
-    public LocalizedPage createIfNotExist(String title, Locale locale);
-
+    LocalizedPage saveOrUpdate(String title, Locale locale);
+    
 }
 

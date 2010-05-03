@@ -35,6 +35,8 @@ public class PageBuilderImpl implements PageBuilder {
 
     @Override
     public PagePrototype buildPagePrototype(String title, String text) {
+        text = getUTF8(text);
+
         endLineHasBeenMet = false;
         if (text.indexOf("#REDIRECT [[") != -1) {
             int pos = text.indexOf("[[");
@@ -408,6 +410,26 @@ public class PageBuilderImpl implements PageBuilder {
             len--;
         }
         return (len > -1) ? text.substring(0, len + 1) : text;
+    }
+
+    public static String getUTF8(String str) {
+        if (str == null)
+            return null;
+
+        StringBuilder sb = new StringBuilder();
+        char ch;
+
+        for (int i = 0, end = str.length(); i < end; i++) {
+            ch = str.charAt(i);
+            if ((ch >= 0x0020 && ch <= 0xD7FF) ||
+                (ch >= 0xE000 && ch <= 0xFFFD) ||
+                 ch == 0x0009 ||
+                 ch == 0x000A ||
+                 ch == 0x000D) {
+                sb.append(ch);
+            } 
+        }
+        return sb.toString();
     }
 
 }

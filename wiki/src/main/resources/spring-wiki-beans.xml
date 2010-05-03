@@ -40,20 +40,9 @@
                 <prop key="hibernate.show_sql">${hibernate.showsql}</prop>
                 <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
                 <prop key="hibernate.use_sql_comments">${hibernate.use_sql_comments}</prop>
-                <!--<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate3.SpringSessionContext</prop>-->
-                <!--<prop key="hibernate.current_session_context_class">wikinet.wiki.context.ThreadLocalSessionContext</prop>-->
                 <prop key="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</prop>
             </props>
         </property>
-    </bean>
-
-    <bean id="hibernateTemplate"
-    class="org.springframework.orm.hibernate3.HibernateTemplate">
-          <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
     <bean id="genericDao" class="wikinet.db.dao.impl.GenericDaoImpl" abstract="true" >
@@ -67,20 +56,18 @@
 
     <bean id="pagePrototypeSaver" class="wikinet.wiki.parser.impl.PagePrototypeSaverImpl" autowire="byName" />
     <bean id="pageBuilder" class="wikinet.wiki.parser.impl.PageBuilderImpl" />
-    <bean id="oneThreadPageProcessor" class="wikinet.wiki.parser.impl.OneThreadPageProcessor" >
+    <bean id="oneThreadPageProcessor" class="wikinet.wiki.parser.impl.OneThreadPageProcessorImpl" >
         <constructor-arg ref="pageBuilder" />
         <constructor-arg ref="pagePrototypeSaver" />
     </bean>
-    <bean id="multiThreadPageProcessor" class="wikinet.wiki.parser.concurrency.MultiThreadPageProcessor" >
+    <bean id="multiThreadPageProcessor" class="wikinet.wiki.parser.impl.MultiThreadPageProcessorImpl" >
         <constructor-arg ref="pageBuilder" />
         <constructor-arg ref="pagePrototypeSaver" />
         <constructor-arg value="10" />
     </bean>
 
     <bean id="wikiXMLParser" class="wikinet.wiki.parser.impl.WikiXMLParserImpl">
-        <constructor-arg ref="multiThreadPageProcessor" />
+        <constructor-arg ref="oneThreadPageProcessor" />
    </bean>
-
-    <tx:annotation-driven />
 
 </beans>

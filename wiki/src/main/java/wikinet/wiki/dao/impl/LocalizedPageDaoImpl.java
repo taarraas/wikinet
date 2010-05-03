@@ -13,7 +13,7 @@ import wikinet.wiki.domain.LocalizedPagePK;
 public class LocalizedPageDaoImpl extends GenericDaoImpl<LocalizedPage, LocalizedPagePK> implements LocalizedPageDao {
 
     @Override
-    public LocalizedPage createIfNotExist(String title, Locale locale) {
+    public LocalizedPage saveOrUpdate(String title, Locale locale) {
         LocalizedPage localizedPage = findById(new LocalizedPagePK(title, locale));
         if (localizedPage == null) {
             localizedPage = new LocalizedPage(title, locale);

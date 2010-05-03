@@ -2,9 +2,9 @@ package wikinet.db.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.Test;
 import wikinet.db.dao.ConnectionDao;
+import wikinet.testng.SpringDaoTest;
 import wikinet.db.dao.SynsetDao;
 import wikinet.db.dao.WordDao;
 import wikinet.db.domain.Connection;
@@ -23,7 +23,7 @@ import static org.testng.Assert.assertEquals;
  * @since Feb 28, 2010
  */
 @ContextConfiguration(locations = {"classpath:spring-dao-module-test.xml"})
-public class ConnectionDaoImplTest extends AbstractTransactionalTestNGSpringContextTests {
+public class ConnectionDaoImplTest extends SpringDaoTest {
 
     @Autowired
     private SynsetDao synsetDao;

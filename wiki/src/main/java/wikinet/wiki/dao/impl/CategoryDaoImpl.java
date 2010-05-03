@@ -17,7 +17,7 @@ public class CategoryDaoImpl extends GenericDaoImpl<Category, Long> implements C
     }
 
     @Override
-    public Category createIfNotExist(String name) {
+    public Category saveOrUpdate(String name) {
         Category category = findByName(name);
         if (category == null) {
             category = new Category(name);

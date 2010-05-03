@@ -10,7 +10,7 @@ import wikinet.wiki.domain.Category;
 public interface CategoryDao extends GenericDao<Category, Long> {
 
     Category findByName(String name);
-    Category createIfNotExist(String name);
+    Category saveOrUpdate(String name);
 
 }
 

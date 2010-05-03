@@ -23,9 +23,9 @@ public class PageBuilderImplTest {
 
     public void testImportPage(String title, String text, ArgumentMatcher<PagePrototype> matcher) {
         PagePrototypeSaver prototypeSaverMock = mock(PagePrototypeSaver.class);
-        PageBuilder pb = new PageBuilderImpl(prototypeSaverMock);
-        pb.importPage(title, text);
-        verify(prototypeSaverMock).save(argThat(matcher));
+        PageBuilder pb = new PageBuilderImpl();
+        PagePrototype prototype = pb.buildPagePrototype(title, text);
+        Assert.assertTrue(matcher.matches(prototype));
     }
 
     @Test

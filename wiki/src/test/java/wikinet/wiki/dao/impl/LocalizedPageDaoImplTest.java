@@ -1,39 +1,35 @@
 package wikinet.wiki.dao.impl;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import wikinet.db.model.Locale;
+import wikinet.testng.SpringDaoTest;
 import wikinet.wiki.dao.LocalizedPageDao;
+import wikinet.wiki.domain.LinkedPage;
 import wikinet.wiki.domain.LocalizedPage;
 import wikinet.wiki.domain.LocalizedPagePK;
+import wikinet.wiki.domain.Page;
 
 /**
  * @author shyiko
  * @since Apr 4, 2010
  */
 @ContextConfiguration(locations = {"classpath:spring-wiki-module-test.xml"})
-public class LocalizedPageDaoImplTest extends AbstractTransactionalTestNGSpringContextTests {
+public class LocalizedPageDaoImplTest extends SpringDaoTest {
 
     @Autowired
     private LocalizedPageDao localizedPageDao;
 
-    @Autowired
-    private SessionFactory sessionFactory;
-
     @AfterMethod(alwaysRun = true)
     public void cleanUp() {
-        Session session = sessionFactory.openSession();
+        sessionFactory.getCurrentSession().beginTransaction();
         for (LocalizedPage localizedPage : localizedPageDao.findAll()) {
             localizedPageDao.delete(localizedPage);
         }
-        session.flush();
-        session.close();
+        sessionFactory.getCurrentSession().getTransaction().commit();
     }
 
     @Test

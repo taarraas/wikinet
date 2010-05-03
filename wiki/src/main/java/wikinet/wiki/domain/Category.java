@@ -21,7 +21,7 @@ public class Category {
     @GeneratedValue
     private long id;
 
-    @Index(name = "nameIndex")
+    @Index(name = "CategoryNameIDX")
     private String name;
 
     @ManyToOne
