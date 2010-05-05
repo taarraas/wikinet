@@ -8,7 +8,8 @@ import java.io.IOException;
  */
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        try {
         if (args.length == 0) {
             System.out.println("WordNet DB file should be specified as argument.");
             System.exit(0);
@@ -16,6 +17,11 @@ public class Main {
 
         WordNet2DB wordDao = (WordNet2DB) ContextFactory.getContext().getBean("wordNet2DB");
         wordDao.importFile(args[0]);
+        System.out.println("Done");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
 }

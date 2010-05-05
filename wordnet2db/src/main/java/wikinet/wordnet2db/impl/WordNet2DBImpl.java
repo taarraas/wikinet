@@ -17,7 +17,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import org.apache.log4j.Logger;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.lob.ClobImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author taras, shyiko
@@ -31,6 +36,13 @@ public class WordNet2DBImpl implements WordNet2DB {
     private WordDao wordDao;
     
     private ConnectionDao connectionDao;
+
+    private static final Logger logger = Logger.getLogger(Class.class);
+
+    SessionFactory sessionFactory;
+    public void setSessionFactory(SessionFactory s) {
+    this.sessionFactory = s;
+    }
 
     public void setSynsetDao(SynsetDao synsetDao) {
         this.synsetDao = synsetDao;
@@ -68,21 +80,37 @@ public class WordNet2DBImpl implements WordNet2DB {
     }
 
     private void saveSynset(Synset synset, List<String> words) {
-        List<Word> wordlist = new LinkedList<Word>();
-        for (String string : words) {
-            wordlist.add(saveWord(string));
+       Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        try {
+            List<Word> wordlist = new LinkedList<Word>();
+            for (String string : words) {
+                wordlist.add(saveWord(string));
+            }
+            synset.setWords(wordlist);
+            synsetDao.save(synset);
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            logger.error(synset, ex);
+            session.getTransaction().rollback();
         }
-        synset.setWords(wordlist);
-        synsetDao.save(synset);
     }
 
     private void addConnection(long from, long to, String pointer_symbol, int fromWordNo, int toWordNo) {
-        Connection connection = new Connection(synsetDao.findById(from),
-                synsetDao.findById(to),
-                ConnectionType.parse(pointer_symbol));
-        connection.setWordsFrom(fromWordNo);
-        connection.setWordsTo(toWordNo);
-        connectionDao.save(connection);
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        try {
+            Connection connection = new Connection(synsetDao.findById(from),
+                    synsetDao.findById(to),
+                    ConnectionType.parse(pointer_symbol),
+                    fromWordNo,
+                    toWordNo);
+            connectionDao.save(connection);
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            logger.error(from+"->"+to, ex);
+            session.getTransaction().rollback();
+        }
     }
 
     private SynsetType getTypeByLetter(String letter) {
