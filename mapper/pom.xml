@@ -10,31 +10,39 @@
 
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
-    <artifactId>common</artifactId>
-    <name>common</name>
+    <artifactId>mapper</artifactId>
+    <name>mapper</name>
 
     <dependencies>
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>5.9</version>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4jVersion}</version>
         </dependency>
         <!-- Spring dependencies -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${springVersion}</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring</artifactId>
             <version>${springVersion}</version>
         </dependency>
-        <!-- Hibernate dependencies -->
+        <!-- Stanford's libraries dependencies -->
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-            <version>${hibernateVersion}</version>
+            <groupId>stanford</groupId>
+            <artifactId>stanford-postagger</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/../libs/stanford-postagger.jar</systemPath>
+        </dependency>
+        <!-- Project's modules dependencies -->
+        <dependency>
+            <groupId>code.google.com</groupId>
+            <artifactId>wiki</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>code.google.com</groupId>
+            <artifactId>data-tier</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 
