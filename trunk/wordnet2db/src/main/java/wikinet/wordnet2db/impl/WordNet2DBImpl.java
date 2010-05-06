@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class WordNet2DBImpl implements WordNet2DB {
 
+    private static final Logger logger = Logger.getLogger(Class.class);
     private static final String[] FILELIST={"data.noun", "data.adj", "data.adv", "data.verb"};
 
     private SynsetDao synsetDao;
@@ -37,12 +38,7 @@ public class WordNet2DBImpl implements WordNet2DB {
     
     private ConnectionDao connectionDao;
 
-    private static final Logger logger = Logger.getLogger(Class.class);
-
     SessionFactory sessionFactory;
-    public void setSessionFactory(SessionFactory s) {
-    this.sessionFactory = s;
-    }
 
     public void setSynsetDao(SynsetDao synsetDao) {
         this.synsetDao = synsetDao;
@@ -54,6 +50,10 @@ public class WordNet2DBImpl implements WordNet2DB {
 
     public void setConnectionDao(ConnectionDao connectionDao) {
         this.connectionDao = connectionDao;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override

@@ -90,7 +90,8 @@
         <module>data-tier</module>
         <module>wordnet2db</module>
         <module>wiki</module>
-        <module>wordnet-extending</module>
+        <module>mapper</module>
+        <module>extender</module>
     </modules>
 
 </project>
