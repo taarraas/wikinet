@@ -1,8 +1,7 @@
 package wikinet.extending;
 
 import wikinet.db.domain.Synset;
-import wikinet.wiki.domain.Page;
-import wikinet.wiki.parser.prototype.PagePrototype;
+import wikinet.db.domain.Page;
 
 /**
  * @author taras, shyiko

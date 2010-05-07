@@ -11,5 +11,6 @@ import java.util.List;
 public interface SynsetDao extends GenericDao<Synset, Long> {
 
     List<Synset> getConnected(Synset synset);
-    
+    List<Long> findAllId();
+
 }

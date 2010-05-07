@@ -40,111 +40,136 @@
     </TreeState>
   </component>
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="a9921a50-2ff2-48da-9564-a00245444ba0" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/test/java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/test/java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/test/java/wikinet/extending/impl" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters/impl" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/SynsetArticleVoter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/Utils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/Manager.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/pom.xml" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/resources/spring-mapper-module.xml" />
+    <list default="true" readonly="true" id="a9921a50-2ff2-48da-9564-a00245444ba0" name="Default" comment="dependencies wired">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/main/java/wikinet/jms/impl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/SynsetProducerService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mapper/src/main/resources/log4j.properties" afterPath="$PROJECT_DIR$/mapper/src/main/resources/log4j.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/ConnectionsMaker.java" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/ConnectionsMaker.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/jms.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data-tier/src/test/resources/jdbc-test.properties" afterPath="$PROJECT_DIR$/data-tier/src/test/resources/jdbc-test.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/test/java/wikinet" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/main" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/WikiGraph.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/wikinet/db/Utils.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/Utils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki/src/test/resources/spring-wiki-module-test.xml" afterPath="$PROJECT_DIR$/wiki/src/test/resources/spring-wiki-module-test.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/parser/impl/PagePrototypeSaverImpl.java" afterPath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/parser/impl/PagePrototypeSaverImpl.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/dao/LocalizedPageDao.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/LocalizedPageDao.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/wikinet/testng" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wiki/src/main/resources/jdbc.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/wikinet/db/dao/impl" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/main/java/wikinet/jms/impl/MapperGatewayImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/main/java/wikinet/jms/impl/ExtenderGatewayImpl.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/dao/impl/LinkedPageDaoImpl.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/impl/LinkedPageDaoImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki/src/test/resources/testng-wiki-suite.xml" afterPath="$PROJECT_DIR$/wiki/src/test/resources/testng-wiki-suite.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/impl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mapper/mapper.iml" afterPath="$PROJECT_DIR$/mapper/mapper.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/common.iml" afterPath="$PROJECT_DIR$/common/common.iml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/test" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/resources/spring-extender-beans.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/test/java/wikinet/extending/impl/MainWordTest.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/wordnet-extending.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/test/java/wikinet/extending/impl/MainWordTest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/SynsetMapper.java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/test/java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/ConnectionsMaker.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters/impl/LinksVoter.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/ContextFactory.java" afterPath="$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/ContextFactory.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/Manager.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/MappingUtils.java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/resources" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/impl/WordNet2DBImpl.java" afterPath="$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/impl/WordNet2DBImpl.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters/impl/GraphVoter.java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/resources/bidirectional-distsim-wsj-0-18.tagger.props" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/resources/bidirectional-distsim-wsj-0-18.tagger.props" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/mapper.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/test" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/GraphVoter.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters/SynsetArticleVoter.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/WikiGraph.java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/impl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/resources/bidirectional-distsim-wsj-0-18.tagger" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters/impl/CategoriesVoter.java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/SynsetMapper.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/impl/CategoriesConnections.java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/test/java/wikinet/extending" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/MainWord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data-tier/src/main/resources/spring-dao-beans.xml" afterPath="$PROJECT_DIR$/data-tier/src/main/resources/spring-dao-beans.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wiki/src/test/java/wikinet/wiki/dao" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/main/java/wikinet" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordnet2db/src/main/resources/spring-w2db-mudule.xml" afterPath="$PROJECT_DIR$/wordnet2db/src/main/resources/spring-w2db-mudule.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data-tier/src/test/resources/log4j.properties" afterPath="$PROJECT_DIR$/data-tier/src/test/resources/log4j.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wikinet.iml" afterPath="$PROJECT_DIR$/wikinet.iml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/domain/Category.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/domain/Category.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/SynsetDao.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/SynsetDao.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/main/resources/log4j.properties" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/MappingConstants.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/test/java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/wikinet/db/dao/GenericDao.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/GenericDao.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/Extender.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/test/resources/testng-jms-suite.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/src/main/java/wikinet/Service.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/Mapper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/main/resources/spring-jms-module.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/main/resources" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data-tier/src/test/resources/testng-dao-suite.xml" afterPath="$PROJECT_DIR$/data-tier/src/test/resources/testng-dao-suite.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki/src/test/java/wikinet/wiki/parser/impl/PagePrototypeSaverImplTest.java" afterPath="$PROJECT_DIR$/wiki/src/test/java/wikinet/wiki/parser/impl/PagePrototypeSaverImplTest.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/SynonymousSetVoter.java" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/impl/SynonymousSetVoter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mapper/src/main/resources/spring-mapper-beans.xml" afterPath="$PROJECT_DIR$/mapper/src/main/resources/spring-mapper-beans.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/domain/Page.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/domain/Page.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/dao/impl" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet2db/src/test/java/wikinet/wordnet2db/WordNet2DBTest.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/domain/Synset.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/domain/Synset.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/impl/ArticleDaoImpl.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/domain/LinkedPage.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/domain/LinkedPage.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/main/java/wikinet/jms/MapperGateway.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/impl/SynsetDaoImpl.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/impl/SynsetDaoImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/PageProducerService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/test/java/wikinet/jms/ExtenderGatewayTest.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/CategoriesVoter.java" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/impl/CategoriesVoter.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/SynsetArticleVoter.java" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/SynsetArticleVoter.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/test/java/wikinet/wiki/dao/impl/PageDaoImplTest.java" afterPath="$PROJECT_DIR$/data-tier/src/test/java/wikinet/db/dao/PageDaoTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mapper/pom.xml" afterPath="$PROJECT_DIR$/mapper/pom.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/test/java/wikinet/wiki/dao/impl/LocalizedPageDaoImplTest.java" afterPath="$PROJECT_DIR$/data-tier/src/test/java/wikinet/db/dao/LocalizedPageDaoTest.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/dao/impl/PageDaoImpl.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/impl/PageDaoImpl.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet2db/src/test/java/wikinet/wordnet2db" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/pom.xml" afterPath="$PROJECT_DIR$/common/pom.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/ExtendWordnet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/linguistics" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/impl/CategoriesConnections.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/resources/log4j.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/test/java/wikinet" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/DescriptionVoter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/pom.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters/impl/DescriptionVoter.java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/test/resources" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/test/java/wikinet/extending/impl" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/MappingUtils.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/ConnectionsMaker.java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/resources/log4j.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/test/resources" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/resources" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/extender.iml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/resources/bidirectional-distsim-wsj-0-18.tagger" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/SynsetConsumerService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/test/java/wikinet/jms" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/MainWord.java" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/MeaningResolver.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wiki/src/test/resources/jdbc-test.properties" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/common/src/main/java/wikinet/db/dao/impl/GenericDaoImpl.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/impl/GenericDaoImpl.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/wikinet/testng/SpringDaoTest.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordnet2db/src/main/resources/log4j.properties" afterPath="$PROJECT_DIR$/wordnet2db/src/main/resources/log4j.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/main/java/wikinet/jms/ExtenderGateway.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data-tier/src/test/java/wikinet/db/dao/SpringDaoTest.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/dao/impl/CategoryDaoImpl.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/impl/CategoryDaoImpl.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data-tier/src/test/java/wikinet/db/dao/impl/ArticleDaoImplTest.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki/src/main/resources/spring-wiki-module.xml" afterPath="$PROJECT_DIR$/wiki/src/main/resources/spring-wiki-module.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/pom.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/domain/LocalizedPage.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/domain/LocalizedPage.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/extender/src/test/java/wikinet/extending/impl/MainWordTest.java" afterPath="$PROJECT_DIR$/extender/src/test/java/wikinet/extending/impl/MeaningResolverTest.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/LinksVoter.java" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/impl/LinksVoter.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data-tier/src/test/java/wikinet/db/dao/impl" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/data-tier/src/test/java/wikinet/db/dao/impl/SynsetDaoImplTest.java" afterPath="$PROJECT_DIR$/data-tier/src/test/java/wikinet/db/dao/SynsetDaoTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/test" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet2db/src/test/java/wikinet" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/test/java/wikinet/wiki/dao/impl/LinkedPageDaoImplTest.java" afterPath="$PROJECT_DIR$/data-tier/src/test/java/wikinet/db/dao/LinkedPageDaoTest.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/test/java/wikinet/wiki/dao/impl/CategoryDaoImplTest.java" afterPath="$PROJECT_DIR$/data-tier/src/test/java/wikinet/db/dao/CategoryDaoTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extender/extender.iml" afterPath="$PROJECT_DIR$/extender/extender.iml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/dao/PageDao.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/PageDao.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/domain/LocalizedPagePK.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/domain/LocalizedPagePK.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki/src/main/resources/log4j.properties" afterPath="$PROJECT_DIR$/wiki/src/main/resources/log4j.properties" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/impl/CategoriesConnections.java" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/impl/CategoriesConnectionsMakerImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/main/java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/domain/LocalizedArticle.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/DescriptionVoter.java" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/impl/DescriptionVoter.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/domain/Article.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/common/src/main/java/wikinet/db/dao" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/dao/CategoryDao.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/CategoryDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki/src/main/resources/spring-wiki-beans.xml" afterPath="$PROJECT_DIR$/wiki/src/main/resources/spring-wiki-beans.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki/pom.xml" afterPath="$PROJECT_DIR$/wiki/pom.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/main/java/wikinet/jms" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/ExtendWordnet.java" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/impl/ExtenderImpl.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/dao/LinkedPageDao.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/LinkedPageDao.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wiki/src/test/java/wikinet/wiki/dao/impl" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/PageConsumerService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/test/resources" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wikinet.ipr" afterPath="$PROJECT_DIR$/wikinet.ipr" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/resources" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/test/java/wikinet/extending" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/impl/MainWord.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending/impl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/MappingConstants.java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/SynonymousSetVoter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/resources/spring-extender-module.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/extending" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/test" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/WikiGraph.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/CategoriesVoter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data-tier/src/main/resources/jdbc.properties" afterPath="$PROJECT_DIR$/data-tier/src/main/resources/jdbc.properties" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/GraphVoter.java" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/impl/GraphVoter.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/dao" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/dao/impl/LocalizedPageDaoImpl.java" afterPath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/impl/LocalizedPageDaoImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki/src/test/resources/log4j.properties" afterPath="$PROJECT_DIR$/wiki/src/test/resources/log4j.properties" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/MappingUtils.java" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/Utils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extender/src/main/resources/spring-extender-beans.xml" afterPath="$PROJECT_DIR$/extender/src/main/resources/spring-extender-beans.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki/wiki.iml" afterPath="$PROJECT_DIR$/wiki/wiki.iml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/data-tier/src/test/java/wikinet/db/dao/impl/WordDaoImplTest.java" afterPath="$PROJECT_DIR$/data-tier/src/test/java/wikinet/db/dao/WordDaoTest.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/data-tier/src/test/java/wikinet/db/dao/impl/ConnectionDaoImplTest.java" afterPath="$PROJECT_DIR$/data-tier/src/test/java/wikinet/db/dao/ConnectionDaoTest.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/SynsetMapper.java" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/impl/DefaultMapper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wikinet.iws" afterPath="$PROJECT_DIR$/wikinet.iws" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/MappingConstants.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/resources/spring-mapper-beans.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/ExtendWordnet.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/linguistics/Utils.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/test/java/wikinet" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wordnet-extending/src/main/java/wikinet/mapping/voters/impl/SynonymousSetVoter.java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extender/src" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/LinksVoter.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/Manager.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/ArticleDao.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wiki/src/main/java/wikinet/wiki/domain" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jms/src/test/java/wikinet/jms/MapperGatewayTest.java" />
     </list>
     <list id="862462b5-8fcf-4e99-a946-226690d84910" name="Revert: " comment="Revert:" />
-    <ignored path="wikinet.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path="wikinet.iws" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="true" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,8 +260,8 @@
       <property name="field_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByClasses" value="true" />
       <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="field_breakpoints_viewId" value="TABLE" />
+      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByMethods" value="false" />
     </ui_properties>
   </component>
@@ -250,37 +275,10 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ContextFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/ContextFactory.java">
+      <file leaf-file-name="PageConsumerService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/PageConsumerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="13" selection-start="254" selection-end="254" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extender/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ExtendWordnet.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/ExtendWordnet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="52" selection-start="608" selection-end="625" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainWord.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/MainWord.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="21" selection-start="526" selection-end="534" vertical-scroll-proportion="0.0">
+            <state line="28" column="28" selection-start="671" selection-end="671" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -288,61 +286,95 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Utils.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/Utils.java">
+      <file leaf-file-name="spring-w2db-mudule.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wordnet2db/src/main/resources/spring-w2db-mudule.xml">
+          <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="13" selection-start="115" selection-end="115" vertical-scroll-proportion="0.0">
+            <state line="12" column="0" selection-start="813" selection-end="813" vertical-scroll-proportion="-4.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="log4j.properties" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extender/src/main/resources/log4j.properties">
+        <entry file="file://$PROJECT_DIR$/wordnet2db/src/main/resources/log4j.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0">
+            <state line="6" column="38" selection-start="263" selection-end="263" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="spring-extender-module.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extender/src/main/resources/spring-extender-module.xml">
+      <file leaf-file-name="WordNet2DB.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/WordNet2DB.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+            <state line="13" column="0" selection-start="202" selection-end="202" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
-          <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-            <state />
+        </entry>
+      </file>
+      <file leaf-file-name="DescriptionVoter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/impl/DescriptionVoter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="29" selection-start="421" selection-end="421" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="spring-extender-beans.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="DefaultMapper.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/impl/DefaultMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="78" column="35" selection-start="2124" selection-end="2124" vertical-scroll-proportion="0.29041916">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="spring-extender-beans.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/extender/src/main/resources/spring-extender-beans.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="25" selection-start="1055" selection-end="1055" vertical-scroll-proportion="0.3709428">
-              <folding />
-            </state>
-          </provider>
           <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
             <state />
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CategoriesConnections.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/impl/CategoriesConnections.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="13" selection-start="310" selection-end="310" vertical-scroll-proportion="0.0">
+            <state line="21" column="33" selection-start="1235" selection-end="1235" vertical-scroll-proportion="-7.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConnectionsMaker.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/ConnectionsMaker.java">
+      <file leaf-file-name="spring-mapper-beans.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mapper/src/main/resources/spring-mapper-beans.xml">
+          <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="33" selection-start="197" selection-end="213" vertical-scroll-proportion="0.0">
+            <state line="33" column="0" selection-start="1731" selection-end="1923" vertical-scroll-proportion="-11.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExtenderImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/impl/ExtenderImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="13" selection-start="477" selection-end="477" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CategoriesConnectionsMakerImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/impl/CategoriesConnectionsMakerImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="13" selection-start="256" selection-end="256" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -358,22 +390,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/ExtendWordnet.java" />
-        <option value="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/Utils.java" />
-        <option value="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/WikiGraph.java" />
-        <option value="$PROJECT_DIR$/mapper/src/main/resources/log4j.properties" />
-        <option value="$PROJECT_DIR$/extender/pom.xml" />
-        <option value="$PROJECT_DIR$/mapper/pom.xml" />
-        <option value="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/CategoriesVoter.java" />
-        <option value="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/DescriptionVoter.java" />
-        <option value="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/LinksVoter.java" />
-        <option value="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/SynonymousSetVoter.java" />
-        <option value="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/SynsetMapper.java" />
-        <option value="$PROJECT_DIR$/mapper/src/main/resources/spring-mapper-beans.xml" />
-        <option value="$PROJECT_DIR$/mapper/src/main/resources/spring-mapper-module.xml" />
-        <option value="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/MainWord.java" />
-        <option value="$PROJECT_DIR$/extender/src/main/resources/log4j.properties" />
+        <option value="$PROJECT_DIR$/wiki/src/test/java/wikinet/wiki/parser/impl/PagePrototypeSaverImplTest.java" />
+        <option value="$PROJECT_DIR$/wiki/src/test/resources/spring-wiki-module-test.xml" />
+        <option value="$PROJECT_DIR$/wiki/pom.xml" />
+        <option value="$PROJECT_DIR$/wiki/src/main/resources/spring-wiki-beans.xml" />
+        <option value="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/PageDao.java" />
+        <option value="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/impl/PageDaoImpl.java" />
+        <option value="$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/domain/Page.java" />
+        <option value="$PROJECT_DIR$/extender/src/main/java/wikinet/PageProducerService.java" />
+        <option value="$PROJECT_DIR$/extender/src/main/java/wikinet/PageConsumerService.java" />
+        <option value="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/impl/ExtenderImpl.java" />
+        <option value="$PROJECT_DIR$/extender/src/main/java/wikinet/extending/Extender.java" />
         <option value="$PROJECT_DIR$/extender/src/main/resources/spring-extender-beans.xml" />
+        <option value="$PROJECT_DIR$/wordnet2db/src/main/resources/spring-w2db-mudule.xml" />
+        <option value="$PROJECT_DIR$/wordnet2db/src/main/resources/log4j.properties" />
+        <option value="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/impl/DescriptionVoter.java" />
+        <option value="$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/impl/DefaultMapper.java" />
       </list>
     </option>
   </component>
@@ -415,7 +447,9 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Favorites" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -434,23 +468,165 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wordnet2db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wordnet2db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wordnet2db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wordnet2db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wordnet2db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wordnet2db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wordnet2db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="impl" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikinet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="121" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="84" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="TestNG" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="84" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="35" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="104" />
-    <property name="OverrideImplement.combined" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="TestNG" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="104" />
     <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
@@ -468,36 +644,41 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="99" />
-    <property name="GoToClass.includeLibraries" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth5" value="899" />
+    <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="options.lastSelected" value="project.propSubversion" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder5" value="5" />
+    <property name="options.lastSelected" value="project.propSubversion" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
-    <property name="project.structure.side.proportion" value="0.26206896" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="project.structure.side.proportion" value="0.26206896" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="true" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="wikinet.jms.impl" />
       <recent name="wikinet.wiki.dao.impl" />
       <recent name="wikinet.wiki.parser.impl" />
       <recent name="wikinet.wiki.domain" />
       <recent name="wikinet.db" />
-      <recent name="wikinet.wiki" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="wikinet.jms" />
+      <recent name="wikinet.jms.impl" />
       <recent name="wikinet.wiki.parser.impl" />
       <recent name="wikinet.wiki.dao.simpl" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data-tier/src/main/resources" />
+      <recent name="$PROJECT_DIR$/jms/src/test/resources" />
+      <recent name="$PROJECT_DIR$/jms/src/main/resources" />
       <recent name="$PROJECT_DIR$/extender/src/main/resources" />
       <recent name="$PROJECT_DIR$/mapper/src/main/resources" />
     </key>
@@ -507,120 +688,6 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/extender/src/main/resources" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree">
-    <UpdateInfo date="5/6/10 9:30 PM" ActionInfo="_Update">
-      <UpdatedFiles>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated from server" />
-          <option name="myStatusName" value="Changed on server" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CHANGED_ON_SERVER" />
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Updated" />
-            <option name="myStatusName" value="Changed" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="UPDATED" />
-            <PATH vcs="svn" revision="70">$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/impl/WordNet2DBImpl.java</PATH>
-            <PATH vcs="svn" revision="70">$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/Main.java</PATH>
-            <PATH vcs="svn" revision="70">$PROJECT_DIR$/wordnet2db/src/main/resources/spring-w2db-mudule.xml</PATH>
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Created" />
-            <option name="myStatusName" value="Created" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="CREATED" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Deleted" />
-            <option name="myStatusName" value="Deleted" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="true" />
-            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Restored" />
-            <option name="myStatusName" value="Will be restored" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="RESTORED" />
-          </FILE-GROUP>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Modified" />
-          <option name="myStatusName" value="Modified" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MODIFIED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Skipped" />
-          <option name="myStatusName" value="Skipped" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SKIPPED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with conflicts" />
-          <option name="myStatusName" value="Will be merged with conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_CONFLICTS" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged" />
-          <option name="myStatusName" value="Will be merged" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Not in repository" />
-          <option name="myStatusName" value="Not in repository" />
-          <option name="mySupportsDeletion" value="true" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UNKNOWN" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally added" />
-          <option name="myStatusName" value="Locally added" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_ADDED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally removed" />
-          <option name="myStatusName" value="Locally removed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_REMOVED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Switched" />
-          <option name="myStatusName" value="Switched" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SWITCHED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with property conflicts" />
-          <option name="myStatusName" value="Will be merged with property conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with tree conflicts" />
-          <option name="myStatusName" value="Will be merged with tree conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-        </FILE-GROUP>
-      </UpdatedFiles>
-    </UpdateInfo>
   </component>
   <component name="RunManager" selected="Application.wiki.Main">
     <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
@@ -1064,23 +1131,23 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1441" y="24" width="1442" height="881" extended-state="0" />
-    <editor active="false" />
+    <frame x="0" y="24" width="1440" height="876" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3475452" sideWeight="0.0" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3471295" sideWeight="0.0" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32625994" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24982001" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3257677" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32226834" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32625994" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3183024" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32891247" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.317757" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32827586" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27858177" sideWeight="0.4979253" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299566" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3263839" sideWeight="0.67241377" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3261339" sideWeight="0.6728972" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40697673" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4058745" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32891247" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32883522" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1187,130 +1254,133 @@
     </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/voters/impl/DescriptionVoter.java">
+    <entry file="file://$PROJECT_DIR$/data-tier/src/main/java/wikinet/db/dao/impl/PageDaoImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="13" selection-start="731" selection-end="731" vertical-scroll-proportion="0.0">
+        <state line="14" column="73" selection-start="351" selection-end="351" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mapper/src/main/resources/spring-mapper-beans.xml">
+    <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/PageProducerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="23" selection-start="1719" selection-end="1719" vertical-scroll-proportion="-9.333333">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mapper/src/main/resources/spring-mapper-module.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="660" selection-end="660" vertical-scroll-proportion="-3.0">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mapper/src/main/resources/log4j.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="30" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/MappingUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="29" selection-start="896" selection-end="896" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mapper/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="20" selection-start="535" selection-end="535" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/ContextFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="254" selection-end="254" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/extender/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/extender/src/main/resources/log4j.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/extender/src/main/resources/spring-extender-module.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/impl/CategoriesConnections.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="13" selection-start="310" selection-end="310" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/ConnectionsMaker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="33" selection-start="197" selection-end="213" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/ExtendWordnet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="52" selection-start="608" selection-end="625" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/MainWord.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="21" selection-start="526" selection-end="534" vertical-scroll-proportion="0.0">
+        <state line="23" column="0" selection-start="222" selection-end="507" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/Utils.java">
+    <entry file="file://$PROJECT_DIR$/mapper/src/main/java/wikinet/SynsetConsumerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="13" selection-start="115" selection-end="115" vertical-scroll-proportion="0.0">
+        <state line="29" column="0" selection-start="494" selection-end="628" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/ConnectionsMaker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="17" selection-start="143" selection-end="143" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/MeaningResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="13" selection-start="526" selection-end="526" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/Extender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="4" selection-start="139" selection-end="139" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/impl/CategoriesConnectionsMakerImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="13" selection-start="256" selection-end="256" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/extending/impl/ExtenderImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="13" selection-start="477" selection-end="477" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper/src/main/resources/spring-mapper-beans.xml">
+      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="0" selection-start="1731" selection-end="1923" vertical-scroll-proportion="-11.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/extender/src/main/resources/spring-extender-beans.xml">
+      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="25" selection-start="1055" selection-end="1055" vertical-scroll-proportion="0.3709428">
+        <state line="21" column="33" selection-start="1235" selection-end="1235" vertical-scroll-proportion="-7.0">
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extender/src/main/java/wikinet/PageConsumerService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="28" selection-start="671" selection-end="671" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wordnet2db/src/main/resources/spring-w2db-mudule.xml">
       <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
         <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="0" selection-start="813" selection-end="813" vertical-scroll-proportion="-4.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wordnet2db/src/main/resources/log4j.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="38" selection-start="263" selection-end="263" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wordnet2db/src/main/java/wikinet/wordnet2db/WordNet2DB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="0" selection-start="202" selection-end="202" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/impl/DescriptionVoter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="29" selection-start="421" selection-end="421" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper/src/main/java/wikinet/mapping/impl/DefaultMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="78" column="35" selection-start="2124" selection-end="2124" vertical-scroll-proportion="0.29041916">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

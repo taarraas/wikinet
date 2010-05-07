@@ -92,6 +92,7 @@
         <module>wiki</module>
         <module>mapper</module>
         <module>extender</module>
+        <module>jms</module>
     </modules>
 
 </project>

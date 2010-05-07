@@ -4,10 +4,6 @@
 
     <test name="all">
         <classes>
-            <class name="wikinet.wiki.dao.impl.CategoryDaoImplTest"/>
-            <class name="wikinet.wiki.dao.impl.LinkedPageDaoImplTest"/>
-            <class name="wikinet.wiki.dao.impl.LocalizedPageDaoImplTest"/>
-            <class name="wikinet.wiki.dao.impl.PageDaoImplTest"/>
             <class name="wikinet.wiki.parser.impl.WikiXMLParserTest"/>
             <class name="wikinet.wiki.parser.impl.PageBuilderImplTest"/>
             <class name="wikinet.wiki.parser.impl.PagePrototypeSaverImplTest"/>
