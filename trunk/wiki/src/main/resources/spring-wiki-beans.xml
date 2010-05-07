@@ -3,63 +3,19 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jee="http://www.springframework.org/schema/jee"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
-       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
-       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
-       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
-
-    <bean id="dataSource"
-        class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName" value="${db.driver}" />
-        <property name="url" value="${db.url}" />
-        <property name="username" value="${db.username}" />
-        <property name="password" value="${db.password}" />
-        <property name="initialSize" value="5" />
-        <property name="maxActive" value="10" />
-    </bean>
-
-    <bean id="sessionFactory"
-    class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="annotatedClasses">
-            <list>
-                <value>wikinet.wiki.domain.Page</value>
-                <value>wikinet.wiki.domain.LinkedPage</value>
-                <value>wikinet.wiki.domain.LocalizedPage</value>
-                <value>wikinet.wiki.domain.Category</value>
-            </list>
-        </property>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
-                <prop key="hibernate.query.substitutions">${hibernate.query.substitutions}</prop>
-                <prop key="hibernate.show_sql">${hibernate.showsql}</prop>
-                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
-                <prop key="hibernate.use_sql_comments">${hibernate.use_sql_comments}</prop>
-                <prop key="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</prop>
-            </props>
-        </property>
-    </bean>
-
-    <bean id="genericDao" class="wikinet.db.dao.impl.GenericDaoImpl" abstract="true" >
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <bean id="pageDao" class="wikinet.wiki.dao.impl.PageDaoImpl" parent="genericDao" />
-    <bean id="localizedPageDao" class="wikinet.wiki.dao.impl.LocalizedPageDaoImpl" parent="genericDao" />
-    <bean id="categoryDao" class="wikinet.wiki.dao.impl.CategoryDaoImpl" parent="genericDao" />
-    <bean id="linkedPageDao" class="wikinet.wiki.dao.impl.LinkedPageDaoImpl" parent="genericDao" />
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
     <bean id="pagePrototypeSaver" class="wikinet.wiki.parser.impl.PagePrototypeSaverImpl" autowire="byName" />
+
     <bean id="pageBuilder" class="wikinet.wiki.parser.impl.PageBuilderImpl" />
+
     <bean id="oneThreadPageProcessor" class="wikinet.wiki.parser.impl.OneThreadPageProcessorImpl" >
         <constructor-arg ref="pageBuilder" />
         <constructor-arg ref="pagePrototypeSaver" />
     </bean>
+    
     <bean id="multiThreadPageProcessor" class="wikinet.wiki.parser.impl.MultiThreadPageProcessorImpl" >
         <constructor-arg ref="pageBuilder" />
         <constructor-arg ref="pagePrototypeSaver" />
@@ -67,7 +23,7 @@
     </bean>
 
     <bean id="wikiXMLParser" class="wikinet.wiki.parser.impl.WikiXMLParserImpl">
-        <constructor-arg ref="oneThreadPageProcessor" />
+        <constructor-arg ref="multiThreadPageProcessor" />
    </bean>
 
 </beans>

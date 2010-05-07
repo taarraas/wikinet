@@ -16,5 +16,9 @@ public class SynsetDaoImpl extends GenericDaoImpl<Synset, Long> implements Synse
         return getSession().getNamedQuery("Synset.getConnected")
                .setLong("synsetId", synset.getId()).list();
     }
-    
+
+    @Override
+    public List<Long> findAllId() {
+        return getSession().createQuery("select c.id from Synset c").list();
+    }
 }

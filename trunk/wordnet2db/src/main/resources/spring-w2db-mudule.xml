@@ -9,11 +9,6 @@
 
     <import resource="classpath:spring-dao-module.xml" />
 
-    <bean id="wordNet2DB" class="wikinet.wordnet2db.impl.WordNet2DBImpl">
-        <property name="synsetDao" ref="synsetDao"/>
-        <property name="wordDao" ref="wordDao"/>
-        <property name="connectionDao" ref="connectionDao"/>
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+    <bean id="wordNet2DB" class="wikinet.wordnet2db.impl.WordNet2DBImpl" autowire="byName" />
 
 </beans>

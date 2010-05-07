@@ -46,6 +46,7 @@
     <orderEntry type="library" exported="" name="Maven: jboss:javassist:3.3.ga" level="project" />
     <orderEntry type="library" exported="" name="Maven: jboss:jboss-archive-browsing:5.0.0alpha-200607201-119" level="project" />
     <orderEntry type="module" module-name="common" exported="" />
+    <orderEntry type="module" module-name="data-tier" exported="" />
   </component>
 </module>
 

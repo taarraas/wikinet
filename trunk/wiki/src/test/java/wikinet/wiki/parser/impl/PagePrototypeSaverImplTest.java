@@ -7,15 +7,15 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import wikinet.db.dao.CategoryDao;
+import wikinet.db.dao.LinkedPageDao;
+import wikinet.db.dao.LocalizedPageDao;
+import wikinet.db.dao.PageDao;
+import wikinet.db.domain.Category;
+import wikinet.db.domain.LinkedPage;
+import wikinet.db.domain.LocalizedPage;
+import wikinet.db.domain.Page;
 import wikinet.db.model.Locale;
-import wikinet.wiki.dao.CategoryDao;
-import wikinet.wiki.dao.LinkedPageDao;
-import wikinet.wiki.dao.LocalizedPageDao;
-import wikinet.wiki.dao.PageDao;
-import wikinet.wiki.domain.Category;
-import wikinet.wiki.domain.LinkedPage;
-import wikinet.wiki.domain.LocalizedPage;
-import wikinet.wiki.domain.Page;
 import wikinet.wiki.parser.PageBuilder;
 import wikinet.wiki.parser.PagePrototypeSaver;
 import wikinet.wiki.parser.prototype.PagePrototype;
@@ -23,7 +23,6 @@ import wikinet.wiki.parser.prototype.UniquePagePrototype;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.List;
 
 /**
  * @author shyiko
@@ -51,7 +50,7 @@ public class PagePrototypeSaverImplTest extends AbstractTestNGSpringContextTests
     private PagePrototypeSaver prototypeSaver;
 
     @Autowired
-    protected SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     @AfterMethod(alwaysRun = true)
     public void cleanUp() {
@@ -102,7 +101,6 @@ public class PagePrototypeSaverImplTest extends AbstractTestNGSpringContextTests
         prototypeSaver.save(prototype);
         sessionFactory.getCurrentSession().beginTransaction();
         try {
-            List<Page> pageList = pageDao.findByWord("Abraham Lincoln");
             Page page = pageDao.findByWordAndDisambiguation("Abraham Lincoln", null);
             Assert.assertNotNull(page);
         } finally {
@@ -130,7 +128,7 @@ public class PagePrototypeSaverImplTest extends AbstractTestNGSpringContextTests
         try {
             String s;
             while ((s = reader.readLine()) != null) {
-                sb.append(s + "\n");
+                sb.append(s).append("\n");
             }
         } finally {
             reader.close();

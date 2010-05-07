@@ -49,7 +49,7 @@ public class Synset {
     private List<Word> words = new LinkedList<Word>();
 
     @ManyToMany
-    private Set<Article> articles = new HashSet<Article>();
+    private Set<Page> pages = new HashSet<Page>();
 
     private String lexFileNum;
 
@@ -97,20 +97,20 @@ public class Synset {
         this.words = words;
     }
 
-    public Set<Article> getArticles() {
-        return articles;
+    public Set<Page> getPages() {
+        return pages;
     }
 
-    public void addArticle(Article article) {
-        this.articles.add(article);
+    public void addPage(Page page) {
+        this.pages.add(page);
     }
 
-    public void removeArticle(Article article) {
-        this.articles.remove(article);
+    public void removePage(Page page) {
+        this.pages.remove(page);
     }
 
-    public void setArticle(Set<Article> articles) {
-        this.articles = articles;
+    public void setPages(Set<Page> pages) {
+        this.pages = pages;
     }
 
     public String getLexFileNum() {

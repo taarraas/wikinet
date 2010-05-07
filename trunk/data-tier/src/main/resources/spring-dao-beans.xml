@@ -26,11 +26,13 @@
         <property name="dataSource" ref="dataSource" />
         <property name="annotatedClasses">
             <list>
-                <value>wikinet.db.domain.Article</value>
                 <value>wikinet.db.domain.Connection</value>
-                <value>wikinet.db.domain.LocalizedArticle</value>
                 <value>wikinet.db.domain.Synset</value>
                 <value>wikinet.db.domain.Word</value>
+                <value>wikinet.db.domain.Page</value>
+                <value>wikinet.db.domain.LinkedPage</value>
+                <value>wikinet.db.domain.LocalizedPage</value>
+                <value>wikinet.db.domain.Category</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -52,7 +54,10 @@
 
     <bean id="wordDao" class="wikinet.db.dao.impl.WordDaoImpl" parent="genericDao" />
     <bean id="synsetDao" class="wikinet.db.dao.impl.SynsetDaoImpl" parent="genericDao" />
-    <bean id="articleDao" class="wikinet.db.dao.impl.ArticleDaoImpl" parent="genericDao" />
     <bean id="connectionDao" class="wikinet.db.dao.impl.ConnectionDaoImpl" parent="genericDao" />
+    <bean id="pageDao" class="wikinet.db.dao.impl.PageDaoImpl" parent="genericDao" />
+    <bean id="localizedPageDao" class="wikinet.db.dao.impl.LocalizedPageDaoImpl" parent="genericDao" />
+    <bean id="categoryDao" class="wikinet.db.dao.impl.CategoryDaoImpl" parent="genericDao" />
+    <bean id="linkedPageDao" class="wikinet.db.dao.impl.LinkedPageDaoImpl" parent="genericDao" />
 
 </beans>

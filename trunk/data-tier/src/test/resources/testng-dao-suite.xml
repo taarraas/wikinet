@@ -4,10 +4,13 @@
 
     <test name="all">
         <classes>
-            <class name="wikinet.db.dao.impl.ArticleDaoImplTest"/>
-            <class name="wikinet.db.dao.impl.SynsetDaoImplTest"/>
-            <class name="wikinet.db.dao.impl.WordDaoImplTest"/>
-            <class name="wikinet.db.dao.impl.ConnectionDaoImplTest"/>
+            <class name="wikinet.db.dao.SynsetDaoTest"/>
+            <class name="wikinet.db.dao.WordDaoTest"/>
+            <class name="wikinet.db.dao.ConnectionDaoTest"/>
+            <class name="wikinet.db.dao.CategoryDaoTest"/>
+            <class name="wikinet.db.dao.LinkedPageDaoTest"/>
+            <class name="wikinet.db.dao.LocalizedPageDaoTest"/>
+            <class name="wikinet.db.dao.PageDaoTest"/>
         </classes>
     </test>
 </suite>

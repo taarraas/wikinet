@@ -7,15 +7,15 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
-    <bean id="mappingUtils" class="wikinet.mapping.MappingUtils" />
+    <bean id="utils" class="wikinet.mapping.Utils" />
 
-    <bean id="categoriesVoter" class="wikinet.mapping.voters.impl.CategoriesVoter" autowire="byName" />
-    <bean id="descriptionVoter" class="wikinet.mapping.voters.impl.DescriptionVoter" autowire="byName" />
-    <bean id="graphVoter" class="wikinet.mapping.voters.impl.GraphVoter" autowire="byName" />
-    <bean id="linksVoter" class="wikinet.mapping.voters.impl.LinksVoter" autowire="byName" />
-    <bean id="synonymousSetVoter" class="wikinet.mapping.voters.impl.SynonymousSetVoter" autowire="byName" />
+    <bean id="categoriesVoter" class="wikinet.mapping.impl.CategoriesVoter" autowire="byName" />
+    <bean id="descriptionVoter" class="wikinet.mapping.impl.DescriptionVoter" autowire="byName" />
+    <bean id="graphVoter" class="wikinet.mapping.impl.GraphVoter" autowire="byName" />
+    <bean id="linksVoter" class="wikinet.mapping.impl.LinksVoter" autowire="byName" />
+    <bean id="synonymousSetVoter" class="wikinet.mapping.impl.SynonymousSetVoter" autowire="byName" />
 
-    <bean class="wikinet.mapping.SynsetMapper" abstract="true" autowire="byName" >
+    <bean id="mapper" class="wikinet.mapping.impl.DefaultMapper" abstract="true" autowire="byName" >
         <property name="voters">
             <list>
                 <ref bean="categoriesVoter" />
@@ -28,5 +28,8 @@
         <property name="minTrustLevel" value="0.5" />
         <property name="minTrustDif" value="0.01" />
     </bean>
-    
+
+    <bean id="synsetProducerService" class="wikinet.SynsetProducerService" autowire="byName" />
+    <bean id="synsetConsumerService" class="wikinet.SynsetConsumerService" autowire="byName" />
+
 </beans>
