@@ -1,5 +1,6 @@
 package wikinet.extending.service;
 
+import org.hibernate.SessionFactory;
 import wikinet.Service;
 import wikinet.db.dao.PageDao;
 import wikinet.db.dao.SynsetDao;
@@ -15,6 +16,8 @@ public class PageProducerService implements Service {
 
     private PageDao pageDao;
 
+    private SessionFactory sessionFactory;
+
     public void setExtenderGateway(ExtenderGateway extenderGateway) {
         this.extenderGateway = extenderGateway;
     }
@@ -23,10 +26,19 @@ public class PageProducerService implements Service {
         this.pageDao = pageDao;
     }
 
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public void start() {
-        for (Long pageId : pageDao.findWithoutSynsets()) {
-            extenderGateway.sendPage(pageId);
+        sessionFactory.getCurrentSession().beginTransaction();
+        try {
+            for (Long pageId : pageDao.findWithoutSynsets()) {
+                extenderGateway.sendPage(pageId);
+            }
+        } finally {
+            sessionFactory.getCurrentSession().getTransaction().rollback();
         }
     }
     

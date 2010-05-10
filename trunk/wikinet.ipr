@@ -820,7 +820,7 @@
     </library>
     <library name="Maven: stanford:stanford-postagger:1.0">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/mapper/../libs/stanford-postagger.jar!/" />
+        <root url="jar://$PROJECT_DIR$/extender/../libs/stanford-postagger.jar!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$PROJECT_DIR$/wordnet-extending/../libs/stanford-postagger-javadoc.jar!/" />
