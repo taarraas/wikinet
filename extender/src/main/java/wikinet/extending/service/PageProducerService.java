@@ -1,34 +1,33 @@
-package wikinet;
+package wikinet.extending.service;
 
+import wikinet.Service;
 import wikinet.db.dao.PageDao;
-import wikinet.extending.Extender;
+import wikinet.db.dao.SynsetDao;
 import wikinet.jms.ExtenderGateway;
 
 /**
  * @author shyiko
  * @since May 7, 2010
  */
-public class PageConsumerService implements Service {
+public class PageProducerService implements Service {
 
     private ExtenderGateway extenderGateway;
 
-    private Extender extender;
+    private PageDao pageDao;
 
     public void setExtenderGateway(ExtenderGateway extenderGateway) {
         this.extenderGateway = extenderGateway;
     }
 
-    public void setExtender(Extender extender) {
-        this.extender = extender;
+    public void setPageDao(PageDao pageDao) {
+        this.pageDao = pageDao;
     }
 
     @Override
     public void start() {
-        long pageId;
-        while ((pageId = extenderGateway.receivePage()) != -1) {
-            extender.extend(pageId);
+        for (Long pageId : pageDao.findWithoutSynsets()) {
+            extenderGateway.sendPage(pageId);
         }
-
     }
     
 }

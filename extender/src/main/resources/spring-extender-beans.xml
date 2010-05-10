@@ -7,10 +7,10 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
-    <bean id="categoriesConnectionsMaker" class="wikinet.extending.impl.CategoriesConnectionsMakerImpl" />
+    <bean id="categoriesConnectionsMaker" class="wikinet.extending.CategoriesConnectionsMakerImpl" />
     <bean id="meaningResolver" class="wikinet.extending.MeaningResolver" autowire="byName" />
 
-    <bean class="wikinet.extending.impl.ExtenderImpl" autowire="byName" >
+    <bean class="wikinet.extending.ExtenderImpl" autowire="byName" >
         <property name="connectionsMakers">
             <list>
                 <ref bean="categoriesConnectionsMaker" />
@@ -18,7 +18,7 @@
         </property>
     </bean>
 
-    <bean id="pageProducerService" class="wikinet.PageProducerService" autowire="byName" />
-    <bean id="pageConsumerService" class="wikinet.PageConsumerService" autowire="byName" />
+    <bean id="pageProducerService" class="wikinet.extending.service.PageProducerService" autowire="byName" />
+    <bean id="pageConsumerService" class="wikinet.extending.service.PageConsumerService" autowire="byName" />
 
 </beans>
