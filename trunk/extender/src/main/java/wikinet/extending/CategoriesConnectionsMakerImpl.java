@@ -1,4 +1,4 @@
-package wikinet.extending.impl;
+package wikinet.extending;
 
 import wikinet.db.domain.Page;
 import wikinet.db.domain.Synset;

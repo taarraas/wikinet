@@ -1,4 +1,4 @@
-package wikinet.extending.impl;
+package wikinet.extending;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
