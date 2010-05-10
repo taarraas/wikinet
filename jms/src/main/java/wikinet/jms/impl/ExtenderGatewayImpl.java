@@ -30,6 +30,8 @@ public class ExtenderGatewayImpl implements ExtenderGateway {
 
     @Override
     public void sendPage(final long id) {
+        if (logger.isDebugEnabled())
+            logger.debug("Sending page with id " + id + "...");
         jmsTemplate.send(destination,
           new MessageCreator() {
             public Message createMessage(Session session) throws JMSException {
