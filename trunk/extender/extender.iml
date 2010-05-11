@@ -12,7 +12,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="Maven: log4j:log4j:1.2.9" level="project" />
+    <orderEntry type="library" exported="" name="Maven: log4j:log4j:1.2.16" level="project" />
     <orderEntry type="library" name="Maven: stanford:stanford-postagger:1.0" level="project" />
     <orderEntry type="module" module-name="wiki" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.apache.ant:ant:1.7.1" level="project" />
