@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 /**
  * @author shyiko
@@ -15,6 +16,7 @@ public class ExtenderGatewayTest extends AbstractTestNGSpringContextTests {
     @Autowired
     private ExtenderGateway extenderGateway;
 
+    @Test
     public void testSendReceive() throws Exception {
         extenderGateway.sendPage(1L);
         long value = extenderGateway.receivePage();
