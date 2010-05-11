@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package wikinet.mapping.impl;
+package wikinet.mapping.voter;
 
 import wikinet.db.domain.Synset;
 import wikinet.mapping.SynsetArticleVoter;

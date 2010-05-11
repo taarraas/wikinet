@@ -18,7 +18,7 @@
         </property>
     </bean>
 
-    <bean id="pageProducerService" class="wikinet.extending.service.PageProducerService" autowire="byName" />
-    <bean id="pageConsumerService" class="wikinet.extending.service.PageConsumerService" autowire="byName" />
+    <bean id="pageProducerService" class="wikinet.extending.services.PageProducerService" autowire="byName" />
+    <bean id="pageConsumerService" class="wikinet.extending.services.PageConsumerService" autowire="byName" />
 
 </beans>

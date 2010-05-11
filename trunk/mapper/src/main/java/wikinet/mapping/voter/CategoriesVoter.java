@@ -1,4 +1,4 @@
-package wikinet.mapping.impl;
+package wikinet.mapping.voter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.db.dao.SynsetDao;

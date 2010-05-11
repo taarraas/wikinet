@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package wikinet.mapping.impl;
+package wikinet.mapping.voter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.db.dao.PageDao;

@@ -1,4 +1,4 @@
-package wikinet.mapping.impl;
+package wikinet.mapping.voter;
 
 import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.ling.Sentence;
