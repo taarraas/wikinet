@@ -1,5 +1,6 @@
-package wikinet;
+package wikinet.mapping.service;
 
+import wikinet.Service;
 import wikinet.jms.MapperGateway;
 import wikinet.mapping.Mapper;
 

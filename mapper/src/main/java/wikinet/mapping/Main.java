@@ -1,4 +1,4 @@
-package wikinet.extending;
+package wikinet.mapping;
 
 import org.apache.commons.cli.*;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -16,7 +16,7 @@ public class Main {
     private static void printUsage(Options options) {
         HelpFormatter helpFormatter = new HelpFormatter();
         helpFormatter.setWidth( 80 );
-        helpFormatter.printHelp("extender", options);
+        helpFormatter.printHelp("mapper", options);
     }
 
     public static void main(String[] args) {
@@ -40,8 +40,8 @@ public class Main {
             System.exit(0);
         }
 
-        String bean = mode.equals(CLIENT) ? "pageConsumerService" : "pageProducerService";
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-extender-module.xml");
+        String bean = mode.equals(CLIENT) ? "synsetConsumerService" : "synsetProducerService";
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-mapper-module.xml");
 
         Service service = (Service) context.getBean(bean);
         service.start();

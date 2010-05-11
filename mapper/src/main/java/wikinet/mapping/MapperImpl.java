@@ -1,4 +1,4 @@
-package wikinet.mapping.impl;
+package wikinet.mapping;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.db.dao.SynsetDao;
@@ -15,7 +15,7 @@ import java.util.*;
 /**
  * @author taras, shyiko
  */
-public class DefaultMapper implements Mapper {
+public class MapperImpl implements Mapper {
 
     private double minTrustLevel = 0.6;
     private double minTrustDif =1;
