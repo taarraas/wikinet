@@ -1,5 +1,6 @@
 package wikinet.mapping;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.db.dao.SynsetDao;
 import wikinet.db.domain.Synset;
@@ -20,11 +21,11 @@ public class MapperImpl implements Mapper {
     private double minTrustLevel = 0.6;
     private double minTrustDif =1;
 
-    @Autowired
     private SynsetDao synsetDao;
 
-    @Autowired
     private PageDao pageDao;
+
+    private SessionFactory sessionFactory;
 
     private Collection<SynsetArticleVoter> voters;
 
@@ -34,6 +35,10 @@ public class MapperImpl implements Mapper {
 
     public void setPageDao(PageDao pageDao) {
         this.pageDao = pageDao;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     public void setVoters(Collection<SynsetArticleVoter> voters) {
@@ -80,11 +85,16 @@ public class MapperImpl implements Mapper {
      * @param article
      */
     private void mapSynset(long synsetId, PagePrototype article) {
-        Synset synset = synsetDao.findById(synsetId);
-        String link = null; // TODO:taras
-        Page page = new Page(article.getWord(), article.getDisambiguation());
-        synset.addPage(page);
-        synsetDao.save(synset);
+        sessionFactory.getCurrentSession().beginTransaction();
+        try {
+            Synset synset = synsetDao.findById(synsetId);
+            Page page = new Page(article.getWord(), article.getDisambiguation());
+            synset.addPage(page);
+            synsetDao.save(synset);
+            sessionFactory.getCurrentSession().getTransaction().commit();
+        } finally {
+            sessionFactory.getCurrentSession().getTransaction().rollback();
+        }
     }
 
     /**
@@ -126,13 +136,18 @@ public class MapperImpl implements Mapper {
     }
 
     private double getOverallVote(long synsetId, PagePrototype article) {
-        double total = 0.0;
-        for (SynsetArticleVoter voter : voters) {
-            total = Math.max(voter.getVote(synsetId, article), total);
-            if (total >= 1) {
-                return 1;
+        sessionFactory.getCurrentSession().beginTransaction();
+        try {
+            double total = 0.0;
+            for (SynsetArticleVoter voter : voters) {
+                total = Math.max(voter.getVote(synsetId, article), total);
+                if (total >= 1) {
+                    return 1;
+                }
             }
+            return total;
+        } finally {
+            sessionFactory.getCurrentSession().getTransaction().rollback();
         }
-        return total;
     }
 }

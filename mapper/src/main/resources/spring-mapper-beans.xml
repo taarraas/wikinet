@@ -20,8 +20,8 @@
             <list>
                 <ref bean="categoriesVoter" />
                 <ref bean="descriptionVoter" />
-                <ref bean="graphVoter" />
-                <ref bean="linksVoter" />
+                <!--<ref bean="graphVoter" />-->
+                <!--<ref bean="linksVoter" />-->
                 <ref bean="synonymousSetVoter" />
             </list>
         </property>
