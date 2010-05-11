@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 /**
  * @author shyiko
@@ -15,6 +16,7 @@ public class MapperGatewayTest extends AbstractTestNGSpringContextTests {
     @Autowired
     private MapperGateway mapperGateway;
 
+    @Test
     public void testSendReceive() throws Exception {
         mapperGateway.sendSynset(2L);
         long value = mapperGateway.receiveSynset();
