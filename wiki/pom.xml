@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>wikinet</artifactId>
-        <groupId>code.google.com</groupId>
+        <groupId>org.wikinet</groupId>
         <version>1.0</version>
     </parent>
 
@@ -106,18 +106,27 @@
         </dependency>
         <!-- Project's modules dependencies -->
         <dependency>
-            <groupId>code.google.com</groupId>
+            <groupId>org.wikinet</groupId>
             <artifactId>common</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>code.google.com</groupId>
+            <groupId>org.wikinet</groupId>
             <artifactId>data-tier</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>
     
     <build>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+            <testResource>
+                <directory>../data-tier/src/test/resources</directory>
+            </testResource>
+        </testResources>
+
         <plugins>
 
             <plugin>

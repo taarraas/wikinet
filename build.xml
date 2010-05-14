@@ -1,0 +1,52 @@
+<project name="wikinet" default="default" basedir=".">
+
+    <property name="dist" value="target"/>
+    <property name="tmp" value="target/tmp"/>
+
+    <target name="default" description="Create wikinet release bundle">
+        <delete dir="${dist}" quiet="true"/>
+        <mkdir dir="${dist}"/>
+        <mkdir dir="${tmp}"/>
+
+        <copy todir="${tmp}" overwrite="true">
+            <fileset dir="common/target">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="data-tier/target">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="extender/target">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="jms/target">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="mapper/target">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="wiki/target">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="wordnet2db/target">
+                <include name="**/*.jar"/>
+            </fileset>
+        </copy>
+        <move file="${tmp}/libs" tofile="${tmp}/3rdparty"/>
+
+        <move todir="${tmp}/lib">
+            <fileset dir="${tmp}">
+                <include name="**/*.jar"/>
+                <exclude name="**/3rdparty/*"/>
+            </fileset>
+        </move>
+
+        <copy todir="${tmp}" overwrite="true" includeemptydirs="true">
+            <fileset dir="resources"/>
+        </copy>
+
+        <zip destfile="${dist}/wikinet.zip" update="true">
+            <zipfileset dir="${tmp}"/>
+        </zip>
+    </target>
+        
+</project>

@@ -4,13 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>wikinet</artifactId>
-        <groupId>code.google.com</groupId>
+        <groupId>org.wikinet</groupId>
         <version>1.0</version>
     </parent>
+    
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
-
     <artifactId>wordnet2db</artifactId>
+    <name>wordnet2db</name>
 
     <properties>
         <hibernateVersion>3.2.1.ga</hibernateVersion>
@@ -88,7 +89,7 @@
             <version>${hibernateVersion}</version>
         </dependency>
         <dependency>
-            <groupId>code.google.com</groupId>
+            <groupId>org.wikinet</groupId>
             <artifactId>data-tier</artifactId>
             <version>1.0</version>
         </dependency>
