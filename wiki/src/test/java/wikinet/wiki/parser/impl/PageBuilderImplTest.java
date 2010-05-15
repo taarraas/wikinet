@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import wikinet.db.model.Locale;
 import wikinet.wiki.parser.PageBuilder;
 import wikinet.wiki.parser.PagePrototypeSaver;
+import wikinet.wiki.parser.prototype.CategoryPagePrototype;
 import wikinet.wiki.parser.prototype.PagePrototype;
 import wikinet.wiki.parser.prototype.RedirectPagePrototype;
 import wikinet.wiki.parser.prototype.UniquePagePrototype;
@@ -26,6 +27,24 @@ public class PageBuilderImplTest {
         PageBuilder pb = new PageBuilderImpl();
         PagePrototype prototype = pb.buildPagePrototype(title, text);
         Assert.assertTrue(matcher.matches(prototype));
+    }
+
+    @Test
+    public void testCategoryPage() throws Exception {
+        testImportPage("Category:Page", "sdghm[[Category:Parent1]] and [[Category:Parent2]][[Category:Parent3]]",
+                             new ArgumentMatcher<PagePrototype>() {
+                                 @Override
+                                 public boolean matches(Object o) {
+                                     CategoryPagePrototype pagePrototype = (CategoryPagePrototype) o;
+                                     Assert.assertEquals(pagePrototype.toString(), "Page");
+                                     Set<String> parentCategories = pagePrototype.getParentCategories();
+                                     Assert.assertEquals(parentCategories.size(), 3);
+                                     Assert.assertTrue(parentCategories.contains("Parent1"));
+                                     Assert.assertTrue(parentCategories.contains("Parent2"));
+                                     Assert.assertTrue(parentCategories.contains("Parent3"));
+                                     return true;
+                                 }
+                             });
     }
 
     @Test

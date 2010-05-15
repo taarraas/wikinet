@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import wikinet.db.model.Locale;
 import wikinet.wiki.parser.PageBuilder;
 import wikinet.wiki.parser.ParseException;
+import wikinet.wiki.parser.prototype.CategoryPagePrototype;
 import wikinet.wiki.parser.prototype.PagePrototype;
 import wikinet.wiki.parser.prototype.RedirectPagePrototype;
 import wikinet.wiki.parser.prototype.UniquePagePrototype;
@@ -36,6 +37,20 @@ public class PageBuilderImpl implements PageBuilder {
     @Override
     public PagePrototype buildPagePrototype(String title, String text) {
         text = getUTF8(text);
+
+        if (title.startsWith("Category:")) {
+            CategoryPagePrototype categoryPagePrototype = new CategoryPagePrototype(title.substring(9).trim());
+            try {
+                processCategories(categoryPagePrototype, text);
+            } catch (Exception ex) {
+                if (ex instanceof ParseException)
+                    logger.error("Page \"" + title + "\" : " + ex.getMessage());
+                else
+                    logger.error("Page \"" + title + "\"", ex);
+                return null;
+            }
+            return categoryPagePrototype;
+        }
 
         endLineHasBeenMet = false;
         if (text.indexOf("#REDIRECT [[") != -1) {
@@ -389,6 +404,39 @@ public class PageBuilderImpl implements PageBuilder {
             linkObj.addPosition(start, linkText.length());
         }
         return sb.toString();
+    }
+
+    private void processCategories (final CategoryPagePrototype pagePrototype, String text) {
+        if (text.isEmpty())
+            return;
+        StringBuilder sb = new StringBuilder(text);
+        int start = 0, end;
+        while ((start = sb.indexOf("[", start)) != -1) {
+            end = sb.indexOf("]", start + 1);
+            if (end == -1)
+                break;
+            int includedBracketStart = start;
+            while ((includedBracketStart = sb.indexOf("[", includedBracketStart + 1)) < end) {
+                if (includedBracketStart == -1)
+                    break;
+                end = sb.indexOf("]", end + 1);
+            }
+            if (end == -1) {
+                throw new ParseException("Unrecognizable square brackets structure.");
+            }
+            String str = sb.substring(start + 1, end).trim();
+            if (!str.startsWith("[") || !str.endsWith("]")) {
+                start = end;
+                continue;
+            }
+            str = str.substring(1, str.length() - 1).trim();
+
+            if (str.startsWith("Category:")) {
+                String category = str.substring(9).trim();
+                pagePrototype.addParentCategory(category);
+                start = end + 1;
+            }
+        }
     }
 
     private String normalizePageTitle(String title) {

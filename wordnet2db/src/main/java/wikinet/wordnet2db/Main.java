@@ -1,6 +1,7 @@
 package wikinet.wordnet2db;
 
-import java.io.IOException;
+import org.apache.commons.cli.*;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * @author shyiko
@@ -8,20 +9,36 @@ import java.io.IOException;
  */
 public class Main {
 
+    private static void printUsage(Options options) {
+        HelpFormatter helpFormatter = new HelpFormatter();
+        helpFormatter.setWidth( 80 );
+        helpFormatter.printHelp("wordnet2db", options);
+    }
+
     public static void main(String[] args) {
+        CommandLineParser cmdParser = new BasicParser();
+        Options options = new Options();
+        Option option = new Option("f", "file", true, "wordnet db file");
+        option.setRequired(true);
+        options.addOption(option);
+
+        CommandLine commandLine = null;
         try {
-        if (args.length == 0) {
-            System.out.println("WordNet DB file should be specified as argument.");
+            commandLine = cmdParser.parse(options, args);
+        } catch (ParseException ex) {
+            printUsage(options);
             System.exit(0);
         }
 
-        WordNet2DB wordDao = (WordNet2DB) ContextFactory.getContext().getBean("wordNet2DB");
-        wordDao.importFile(args[0]);
-        System.out.println("Done");
-        } catch (IOException e) {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-w2db-mudule.xml");
+
+        WordNet2DB wordNet2DB = (WordNet2DB) context.getBean("wordNet2DB");
+        try {
+            wordNet2DB.importFile(commandLine.getOptionValue("f"));
+        } catch (Exception e) {
             e.printStackTrace();
+            System.exit(1);
         }
     }
-
 
 }

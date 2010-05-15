@@ -25,5 +25,10 @@ public class CategoryDaoImpl extends GenericDaoImpl<Category, Long> implements C
         return category;
     }
 
+    @Override
+    public void addSubcategory(Category parent, Category subcategory) {
+        getSession().createSQLQuery("insert into Category_Subcategory values (?, ?)")
+                .setLong(0, parent.getId()).setLong(1, subcategory.getId()).executeUpdate();
+    }
 }
 

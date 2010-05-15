@@ -10,6 +10,7 @@ public interface CategoryDao extends GenericDao<Category, Long> {
 
     Category findByName(String name);
     Category saveOrUpdate(String name);
+    void addSubcategory(Category parent, Category subcategory);
 
 }
 

@@ -3,7 +3,9 @@ package wikinet.db.domain;
 import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @NamedQueries(value = {
         @NamedQuery(name = "Category.findByName",
@@ -24,14 +26,14 @@ public class Category {
     @Index(name = "CategoryNameIDX")
     private String name;
 
-    @ManyToOne
-    @JoinTable(name = "Category_Parent",
-        joinColumns = @JoinColumn(name = "category_name", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "parent_category_name", referencedColumnName = "id"))
-    private Category parent;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "Category_Subcategory",
+        joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "subcategory_id", referencedColumnName = "id"))
+    private List<Category> subcategories = new LinkedList<Category>();
 
-    @ManyToMany(mappedBy = "categories")
-    private List<Page> pages;
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+    private List<Page> pages = new LinkedList<Page>();
 
     protected Category() {
     }
@@ -48,12 +50,11 @@ public class Category {
         return name;
     }
 
-    public Category getParent() {
-        return parent;
+    public List<Category> getSubcategories() {
+        return subcategories;
     }
 
-    public void setParent(Category parent) {
-        this.parent = parent;
+    public List<Page> getPages() {
+        return pages;
     }
-    
 }
