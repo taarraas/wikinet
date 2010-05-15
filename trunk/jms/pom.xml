@@ -19,20 +19,10 @@
             <artifactId>log4j</artifactId>
             <version>${log4jVersion}</version>
         </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>5.9</version>
-        </dependency>
         <!-- Spring dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring</artifactId>
-            <version>${springVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
             <version>${springVersion}</version>
         </dependency>
         <dependency>
@@ -45,6 +35,25 @@
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-core</artifactId>
             <version>5.3.1</version>
+        </dependency>
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testngVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${springVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Project's modules dependencies -->
+        <dependency>
+            <groupId>org.wikinet</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 

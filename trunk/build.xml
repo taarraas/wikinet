@@ -1,7 +1,7 @@
 <project name="wikinet" default="default" basedir=".">
 
     <property name="dist" value="target"/>
-    <property name="tmp" value="target/tmp"/>
+    <property name="tmp" value="target/build"/>
 
     <target name="default" description="Create wikinet release bundle">
         <delete dir="${dist}" quiet="true"/>
@@ -43,6 +43,8 @@
         <copy todir="${tmp}" overwrite="true" includeemptydirs="true">
             <fileset dir="resources"/>
         </copy>
+
+        <chmod dir="${tmp}/bin" perm="ugo+rx" includes="**/*.sh"/>
 
         <zip destfile="${dist}/wikinet.zip" update="true">
             <zipfileset dir="${tmp}"/>

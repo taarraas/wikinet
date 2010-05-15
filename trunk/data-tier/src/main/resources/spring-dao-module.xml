@@ -10,11 +10,17 @@
     <import resource="classpath:spring-dao-beans.xml" />
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
+        <property name="order" value="0"/>
         <property name="locations">
             <list>
                 <value>jdbc.properties</value>
             </list>
         </property>
+    </bean>
+
+    <bean class="wikinet.spring.config.BeanPropertyOverrideConfigurer" >
+        <constructor-arg index="0" value="db.properties.file"/>
+        <property name="order" value="1"/>
     </bean>
 
 </beans>

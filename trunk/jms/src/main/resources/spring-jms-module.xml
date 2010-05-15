@@ -7,31 +7,10 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
-    <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-        <property name="brokerURL" value="tcp://localhost:61616"/>
-    </bean>
+    <import resource="classpath:spring-jms-beans.xml" />
 
-    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-        <property name="connectionFactory" ref="connectionFactory" />
-        <property name="receiveTimeout" value="5000" />
-    </bean>
-
-    <bean id="mapperDestination" class="org.apache.activemq.command.ActiveMQQueue">
-        <constructor-arg index="0" value="wikinet.mapping.queue"/>
-    </bean>
-
-    <bean id="extenderDestination" class="org.apache.activemq.command.ActiveMQQueue">
-        <constructor-arg index="0" value="wikinet.extending.queue"/>
-    </bean>
-
-    <bean id="mapperService" class="wikinet.jms.impl.MapperGatewayImpl">
-        <property name="jmsTemplate" ref="jmsTemplate" />
-        <property name="destination" ref="mapperDestination" />
-    </bean>
-
-    <bean id="extenderService" class="wikinet.jms.impl.ExtenderGatewayImpl">
-        <property name="jmsTemplate" ref="jmsTemplate" />
-        <property name="destination" ref="extenderDestination" />
+    <bean class="wikinet.spring.config.BeanPropertyOverrideConfigurer" >
+        <constructor-arg index="0" value="jms.properties.file"/>
     </bean>
 
 </beans>

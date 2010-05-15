@@ -14,6 +14,7 @@ import wikinet.db.domain.LocalizedPage;
 import wikinet.db.domain.Page;
 import wikinet.db.model.Locale;
 import wikinet.wiki.parser.PagePrototypeSaver;
+import wikinet.wiki.parser.prototype.CategoryPagePrototype;
 import wikinet.wiki.parser.prototype.PagePrototype;
 import wikinet.wiki.parser.prototype.RedirectPagePrototype;
 import wikinet.wiki.parser.prototype.UniquePagePrototype;
@@ -106,6 +107,13 @@ public class PagePrototypeSaverImpl implements PagePrototypeSaver {
                 page.setFirstParagraph(pp.getFirstParagraph());
                 page.setText(pp.getText());
                 pageDao.save(page);
+            } else if (pagePrototype instanceof CategoryPagePrototype) {
+                CategoryPagePrototype cpp = (CategoryPagePrototype) pagePrototype;
+                Category cp = categoryDao.saveOrUpdate(cpp.toString());
+                for (String categoryName : cpp.getParentCategories()) {
+                    Category category = categoryDao.saveOrUpdate(categoryName);
+                    categoryDao.addSubcategory(category, cp);
+                }
             } else
                 throw new UnsupportedOperationException();
             session.getTransaction().commit();

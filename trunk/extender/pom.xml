@@ -43,6 +43,13 @@
             <artifactId>jms</artifactId>
             <version>1.0</version>
         </dependency>
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testngVersion}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
