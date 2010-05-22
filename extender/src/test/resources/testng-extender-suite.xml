@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="extender-suite" verbose="1">
+
+    <test name="all">
+        <classes>
+            <class name="wikinet.extending.impl.MeaningResolverTest"/>
+        </classes>
+    </test>
+</suite>
