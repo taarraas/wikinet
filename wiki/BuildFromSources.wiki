@@ -1,4 +1,4 @@
-#summary Building from sources
+#summary Building wikinet from sources
 
 = Requirements =
   # jdk 1.6 (or later)
