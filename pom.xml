@@ -20,7 +20,7 @@
         <springVersion>2.5.6</springVersion>
         <log4jVersion>1.2.16</log4jVersion>
         <mysqlVersion>5.1.12</mysqlVersion>
-        <testngVersion>5.11</testngVersion>
+        <testngVersion>5.9</testngVersion>
     </properties>
     
     <repositories>
