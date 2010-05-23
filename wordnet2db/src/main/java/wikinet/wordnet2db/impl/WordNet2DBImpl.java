@@ -59,11 +59,14 @@ public class WordNet2DBImpl implements WordNet2DB {
         File path = new File(pathToWordnet);
         if (!path.exists())
             throw new FileNotFoundException(pathToWordnet);
+        logger.info("Starting parsing");
         for (String fileName : FILELIST) {
             parseSynsets(new File(path, fileName));
+            logger.info("Synsets type "+fileName+" parsed");
         }
         for (String fileName : FILELIST) {
             parseConnections(new File(path, fileName));
+            logger.info("Connections for synsets type "+fileName+" parsed");
         }
     }
 
@@ -162,9 +165,14 @@ public class WordNet2DBImpl implements WordNet2DB {
     private void parseSynsets(File pathToData) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(pathToData));
         String str;
+        int cnt=0;
         while ((str = br.readLine()) != null) {
             if (str.startsWith("  ")) {
                 continue;
+            }
+            cnt++;
+            if (cnt%1000 == 0) {
+                logger.info(cnt+" synsets of file "+pathToData+" parsed");
             }
             String[] el = str.split(" ");
             long key=Long.parseLong(el[0], 10) + 100000000 * getSegByLetter(el[2]);
@@ -183,9 +191,14 @@ public class WordNet2DBImpl implements WordNet2DB {
     private void parseConnections(File pathToData) throws IOException {
              BufferedReader br = new BufferedReader(new FileReader(pathToData));
         String str;
+        int cnt=0;
         while ((str = br.readLine()) != null) {
             if (str.startsWith("  ")) {
                 continue;
+            }
+            cnt++;
+            if (cnt%1000 == 0) {
+                logger.info(cnt+" synsets of file "+pathToData+" parsed");
             }
             String[] el = str.split(" ");
             long key=Long.parseLong(el[0], 10) + 100000000 * getSegByLetter(el[2]);
