@@ -35,7 +35,7 @@ public class Main {
         WordNet2DB wordNet2DB = (WordNet2DB) context.getBean("wordNet2DB");
         try {
             wordNet2DB.importDirectory(commandLine.getOptionValue("d"));
-        } catch (Exception e) {
+        } catch (Throwable e) {
             e.printStackTrace();
             System.exit(1);
         }
