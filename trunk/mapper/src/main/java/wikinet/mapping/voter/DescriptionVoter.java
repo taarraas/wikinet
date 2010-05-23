@@ -9,9 +9,8 @@ import wikinet.db.dao.PageDao;
 import wikinet.db.dao.SynsetDao;
 import wikinet.db.domain.Page;
 import wikinet.db.domain.Synset;
-import wikinet.mapping.SynsetArticleVoter;
+import wikinet.mapping.Voter;
 import wikinet.mapping.Utils;
-import wikinet.wiki.parser.prototype.PagePrototype;
 
 import java.io.StringReader;
 import java.util.List;
@@ -19,9 +18,9 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * @author taras, shyiko
+ * @author shyiko, taras
  */
-public class DescriptionVoter implements SynsetArticleVoter {
+public class DescriptionVoter implements Voter {
 
     @Autowired
     private SynsetDao synsetDao;
@@ -40,7 +39,7 @@ public class DescriptionVoter implements SynsetArticleVoter {
         this.pageDao = pageDao;
     }
 
-    public void setMappingUtils(Utils utils) {
+    public void setUtils(Utils utils) {
         this.utils = utils;
     }
 
@@ -63,10 +62,21 @@ public class DescriptionVoter implements SynsetArticleVoter {
         WEIGHTS.put("VBS", 0.7);
     }
 
-    Map<String, Double> getWords(String text) {
+    @Override
+    public double getVote(Synset synset, Page page) {
+        String descriptionSynset = synset.getDescription();
+        String descriptionWiki = page.getFirstParagraph();
+        Map<String, Double> synsetWords = getWords(descriptionSynset),
+                wikiWords = getWords(descriptionWiki);
+        double wordsInCommon = utils.sizeOfSet(utils.intersect(synsetWords, wikiWords));
+        //double wordsTotal = utils.union(synsetWords, wikiWords).size();
+        return wordsInCommon/MINIMALWEIGHT*MINIMALLEVEL;
+    }
+
+    private Map<String, Double> getWords(String text) {
         Map<String, Double> ret = new TreeMap<String, Double>();
         List<Sentence<? extends HasWord>> sentences =
-            MaxentTagger.tokenizeText(new StringReader(text));
+                MaxentTagger.tokenizeText(new StringReader(text));
         int cnt=0;
         for (Sentence<? extends HasWord> sentence : sentences) {
             Sentence<TaggedWord> tSentence = MaxentTagger.tagSentence(sentence);
@@ -85,19 +95,6 @@ public class DescriptionVoter implements SynsetArticleVoter {
         ret.remove("is");
         ret.remove("are");
         return ret;
-    }
-    
-    @Override
-    public double getVote(long synsetId, PagePrototype pagePrototype) {
-        Synset synset = synsetDao.findById(synsetId);
-        String descriptionSynset = synset.getDescription();
-        Page page = pageDao.findByWordAndDisambiguation(pagePrototype.getWord(), pagePrototype.getDisambiguation());
-        String descriptionWiki = page.getFirstParagraph();
-        Map<String, Double> synsetWords = getWords(descriptionSynset),
-                wikiWords = getWords(descriptionWiki);
-        double wordsInCommon = utils.sizeOfSet(utils.intersect(synsetWords, wikiWords));
-        //double wordsTotal = utils.union(synsetWords, wikiWords).size();
-        return wordsInCommon/MINIMALWEIGHT*MINIMALLEVEL;
     }
 
 }
