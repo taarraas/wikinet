@@ -1,14 +1,19 @@
 #labels Phase-Design
 = Persistence Layer =
 
-<img src='http://yuml.me/e44274f.jpg'>
+<img src='http://yuml.me/9483833'>
 
 === http://yuml.me class diagram code ===
 
 {{{
-[Word]*<->*[Synset]
+[Word|- word (string) PK]*<->*[Synset|- id (long) PK;- description (string);- type (enum);- lexFileNum (string)]
+[Synset]1<->*[Connection|- connectionType (enum)]
 [Synset]1<->*[Connection]
-[Synset]1<->*[Connection]
-[Synset]1->1[Article]
-[Article]1<->*[LocalizedArticle]
+[Synset]*<->*[Page|- id (long);- word (string);- disambiguation (string);- firstParagraph (string);- text (string)]
+[Page]1<->* redirect[Page]
+[Page]1 have...<->0..*[LinkedPage|- id (long);- startPos (int);- length (int)]
+[Page]1<->0..* point to...[LinkedPage]
+[Page]*<->*[Category|- id (long);- name (string)]
+[Category]*<->parent of *[Category]
+[Page]*<->*[LocalizedPage|- title (string);- locale (enum)]
 }}}
