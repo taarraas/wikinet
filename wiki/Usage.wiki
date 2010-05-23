@@ -12,4 +12,5 @@ This guide assumes you have downloaded and unpacked wikinet bundle (or built it 
   # Run _${WIKINET_HOME}/bin/w2db.sh -d ${WORDNET_HOME}/dict_. 
 
 === Wikipedia import ===
-  # Download http://dumps.wikimedia.org/enwiki/
+  # Download wikipedia pages xml-dump from [http://dumps.wikimedia.org/enwiki]. (Note: File should be named something like enwiki-<date>-pages-articles.xml.bz2 and have size more than 5GB)
+  # Run _${WIKINET_HOME}/bin/wiki.sh -f PATH_TO_FILE/enwiki-<date>-pages-articles.xml.bz2.
