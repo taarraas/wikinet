@@ -14,7 +14,7 @@ public class Word {
     @Id
     private String word;
 
-    @OneToMany(mappedBy = "words")
+    @ManyToMany(mappedBy = "words")
     private Set<Synset> synsets = new HashSet<Synset>();
 
     protected Word() {
