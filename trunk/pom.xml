@@ -21,6 +21,7 @@
         <log4jVersion>1.2.16</log4jVersion>
         <mysqlVersion>5.1.12</mysqlVersion>
         <testngVersion>5.9</testngVersion>
+        <logDirectory>../logs/</logDirectory>
     </properties>
     
     <repositories>
