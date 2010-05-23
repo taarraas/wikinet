@@ -56,14 +56,11 @@ public class WordNet2DBImpl implements WordNet2DB {
 
     @Override
     public void importDirectory(String pathToWordnet) throws IOException {
-    System.out.println("3");
     File path = new File(pathToWordnet);
         if (!path.exists())
             throw new FileNotFoundException(pathToWordnet);
         logger.info("Starting parsing");
-    System.out.println("4");
         for (String fileName : FILELIST) {
-    System.out.println("5");
                 parseSynsets(new File(path, fileName));
             logger.info("Synsets type "+fileName+" parsed");
         }
