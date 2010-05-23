@@ -1,5 +1,4 @@
 #summary Project usage information
-#labels 2.
 
 === Pre-Requirements ===
 This guide assumes you have downloaded and unpacked wikinet bundle (or built it from scratch). Also you need several environment configurations to be made before you can actually use it:<br>
