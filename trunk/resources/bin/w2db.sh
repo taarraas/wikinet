@@ -2,7 +2,7 @@
 
 SERVICE_NAME=wordnet2db
 JVM_ARGS=-Xmx256m
-MAIN_CLASS_NAME=wikinet.wordnet2db
+MAIN_CLASS_NAME=wikinet.wordnet2db.Main
 
 if [ -z "$JDK_HOME" ]; then
     echo ERROR: No JDK found to run wikinet.$SERVICE_NAME. Please validate either JDK_HOME points to valid JDK installation.
@@ -16,6 +16,7 @@ done
 WIKINET_HOME=`pwd`/`dirname "$SCRIPT_LOCATION"`/..
 
 CLASSPATH=$WIKINET_HOME/lib/wordnet2db-1.0.jar
+CLASSPATH=$CLASSPATH:$WIKINET_HOME/lib/common-1.0.jar
 CLASSPATH=$CLASSPATH:$WIKINET_HOME/lib/data-tier-1.0.jar
 CLASSPATH=$CLASSPATH:$WIKINET_HOME/3rdparty/*
 

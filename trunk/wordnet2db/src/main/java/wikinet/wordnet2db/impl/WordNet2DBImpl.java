@@ -12,9 +12,7 @@ import wikinet.db.model.ConnectionType;
 import wikinet.db.model.SynsetType;
 import wikinet.wordnet2db.WordNet2DB;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -57,12 +55,15 @@ public class WordNet2DBImpl implements WordNet2DB {
     }
 
     @Override
-    public void importFile(String pathToWordnet) throws IOException {
-        for (String string : FILELIST) {
-            parseSynsets(pathToWordnet + string);
+    public void importDirectory(String pathToWordnet) throws IOException {
+        File path = new File(pathToWordnet);
+        if (!path.exists())
+            throw new FileNotFoundException(pathToWordnet);
+        for (String fileName : FILELIST) {
+            parseSynsets(new File(path, fileName));
         }
-        for (String string : FILELIST) {
-            parseConnections(pathToWordnet + string);
+        for (String fileName : FILELIST) {
+            parseConnections(new File(path, fileName));
         }
     }
 
@@ -158,7 +159,7 @@ public class WordNet2DBImpl implements WordNet2DB {
         }
     }
 
-    private void parseSynsets(String pathToData) throws IOException {
+    private void parseSynsets(File pathToData) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(pathToData));
         String str;
         while ((str = br.readLine()) != null) {
@@ -179,7 +180,7 @@ public class WordNet2DBImpl implements WordNet2DB {
         }
     }
 
-    private void parseConnections(String pathToData) throws IOException {
+    private void parseConnections(File pathToData) throws IOException {
              BufferedReader br = new BufferedReader(new FileReader(pathToData));
         String str;
         while ((str = br.readLine()) != null) {
