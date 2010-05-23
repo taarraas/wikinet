@@ -30,9 +30,7 @@ public class Main {
             System.exit(0);
         }
 
-        System.out.println("0");
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-w2db-mudule.xml");
-        System.out.println("1");
         WordNet2DB wordNet2DB = (WordNet2DB) context.getBean("wordNet2DB");
         try {
             wordNet2DB.importDirectory(commandLine.getOptionValue("d"));
