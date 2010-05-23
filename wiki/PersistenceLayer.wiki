@@ -1,7 +1,7 @@
 #labels Phase-Design
 = Persistence Layer =
 
-<img src='http://yuml.me/9483833'>
+<img src='http://yuml.me/9483833.jpg'>
 
 === http://yuml.me class diagram code ===
 
