@@ -6,7 +6,7 @@ import wikinet.db.domain.LinkedPage;
 import wikinet.db.domain.Page;
 import wikinet.db.domain.Synset;
 import wikinet.db.domain.Word;
-import wikinet.mapping.SynsetArticleVoter;
+import wikinet.mapping.Voter;
 import wikinet.mapping.Utils;
 import wikinet.db.dao.PageDao;
 import wikinet.wiki.parser.prototype.PagePrototype;
@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * @author taras, shyiko
  */
-public class LinksVoter implements SynsetArticleVoter {
+public class LinksVoter implements Voter {
 
     @Autowired
     private SynsetDao synsetDao;
@@ -42,16 +42,13 @@ public class LinksVoter implements SynsetArticleVoter {
     }
 
     /**
-     * @param synsetId
-     * @param page
      * @return 1 - if synset connected synsets words are same as words being referenced from article,
      *         0 - if synset connected synsets use different words from article links,
      *         count((synset connected synsets words) intersect (article connected articles titles)) /
      *         count((synset connected synsets words) union (article connected articles titles)) otherwise 
      */
     @Override
-    public double getVote(long synsetId, PagePrototype page) {
-        Synset synset = synsetDao.findById(synsetId);
+    public double getVote(Synset synset, Page page) {
         List<Synset> list = synsetDao.getConnected(synset);
         Set<String> connectedSynsetsWords = new HashSet<String>();
         for (Synset syn : list) {

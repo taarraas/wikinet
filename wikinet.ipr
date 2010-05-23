@@ -1035,15 +1035,15 @@
         <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.16/log4j-1.2.16-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.testng:testng:5.11">
+    <library name="Maven: org.testng:testng:5.9">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/testng/testng/5.11/testng-5.11.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/testng/testng/5.9/testng-5.9.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/testng/testng/5.11/testng-5.11-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/testng/testng/5.9/testng-5.9-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/testng/testng/5.11/testng-5.11-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/testng/testng/5.9/testng-5.9-sources.jar!/" />
       </SOURCES>
     </library>
   </component>

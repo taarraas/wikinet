@@ -15,7 +15,10 @@ import java.util.Set;
 
 @NamedQueries({
         @NamedQuery(name = "Synset.getConnected",
-                    query = "select c.secondSynset from Connection c where c.firstSynsetId = :synsetId")
+                    query = "select c.secondSynset from Connection c where c.firstSynsetId = :synsetId"),
+        @NamedQuery(name = "Synset.getConnectedWithConnectionType",
+                    query = "select c.secondSynset from Connection c where c.firstSynsetId = :synsetId " +
+                            "and c.connectionType = :connectionType")
 })
 
 /**

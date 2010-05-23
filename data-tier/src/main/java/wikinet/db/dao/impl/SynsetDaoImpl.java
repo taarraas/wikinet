@@ -2,6 +2,7 @@ package wikinet.db.dao.impl;
 
 import wikinet.db.dao.SynsetDao;
 import wikinet.db.domain.Synset;
+import wikinet.db.model.ConnectionType;
 
 import java.util.List;
 
@@ -15,6 +16,13 @@ public class SynsetDaoImpl extends GenericDaoImpl<Synset, Long> implements Synse
     public List<Synset> getConnected(Synset synset) {
         return getSession().getNamedQuery("Synset.getConnected")
                .setLong("synsetId", synset.getId()).list();
+    }
+
+    @Override
+    public List<Synset> getConnected(Synset synset, ConnectionType connectionType) {
+        return getSession().getNamedQuery("Synset.getConnectedWithConnectionType")
+               .setLong("synsetId", synset.getId())
+               .setString("connectionType", connectionType.toString()).list();
     }
 
     @Override

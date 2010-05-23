@@ -14,7 +14,7 @@ public class Word {
     @Id
     private String word;
 
-    @ManyToMany(mappedBy = "words")
+    @ManyToMany(mappedBy = "words", fetch = FetchType.LAZY)
     private Set<Synset> synsets = new HashSet<Synset>();
 
     protected Word() {

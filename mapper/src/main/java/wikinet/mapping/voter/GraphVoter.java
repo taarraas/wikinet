@@ -5,8 +5,9 @@
 
 package wikinet.mapping.voter;
 
+import wikinet.db.domain.Page;
 import wikinet.db.domain.Synset;
-import wikinet.mapping.SynsetArticleVoter;
+import wikinet.mapping.Voter;
 import wikinet.wiki.parser.prototype.PagePrototype;
 
 import java.util.Set;
@@ -15,16 +16,14 @@ import java.util.Set;
  *
  * @author taras
  */
-public class GraphVoter implements SynsetArticleVoter {
+public class GraphVoter implements Voter {
 
     /**
      * Get synsets linked with Antonym, Hypernym, Instance Hypernym, 
      * Member holonym, Substance holonym, Part holonym connection type
      * and wordsTo == 0
-     * @param synsetId
-     * @return
      */
-    Set<Synset> getLinkedSynsets(long synsetId) {
+    Set<Synset> getLinkedSynsets(Synset synset) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -32,10 +31,8 @@ public class GraphVoter implements SynsetArticleVoter {
      * Get words linked with Antonym, Hypernym, Instance Hypernym,
      * Member holonym, Substance holonym, Part holonym connection type
      * Synset.words[Connection.wordsTo-1];
-     * @param synsetId
-     * @return
      */
-    Set<String> getLinkedWords(long synsetId) {
+    Set<String> getLinkedWords(Synset synset) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -47,16 +44,16 @@ public class GraphVoter implements SynsetArticleVoter {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    int countWordsInArticle(Set<String> words, PagePrototype article) {
+    int countWordsInArticle(Set<String> words, Page page) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public double getVote(long synsetId, PagePrototype article) {
-        Set<String> words = getLinkedWords(synsetId);
-        double wordsInArticle=(double)countWordsInArticle(words, article)/words.size();
+    public double getVote(Synset synset, Page page) {
+        Set<String> words = getLinkedWords(synset);
+        double wordsInArticle=(double)countWordsInArticle(words, page)/words.size();
         
-        Set<Synset> synsets = getLinkedSynsets(synsetId);
+        Set<Synset> synsets = getLinkedSynsets(synset);
         return wordsInArticle;
     }
 

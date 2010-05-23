@@ -1,58 +1,81 @@
 package wikinet.mapping.voter;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.db.dao.SynsetDao;
+import wikinet.db.domain.Category;
+import wikinet.db.domain.Page;
+import wikinet.db.domain.Synset;
+import wikinet.db.domain.Word;
+import wikinet.db.model.ConnectionType;
 import wikinet.mapping.Utils;
-import wikinet.mapping.SynsetArticleVoter;
-import wikinet.wiki.parser.prototype.PagePrototype;
+import wikinet.mapping.Voter;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
- * @author taras, shyiko
+ * @author shyiko, taras
  */
-public class CategoriesVoter implements SynsetArticleVoter {
+public class CategoriesVoter implements Voter {
 
-    private static final int MAXIMUMLEVELWIKI=2,
-            MAXIMUMLEVELWORDNET=1;
-
-    @Autowired
     private SynsetDao synsetDao;
-
-    @Autowired
     private Utils utils;
+    private int wordnetSearchDepth = 1;
+    private int wikiSearchDepth = 2;
 
     public void setSynsetDao(SynsetDao synsetDao) {
         this.synsetDao = synsetDao;
     }
 
-    public void setMappingUtils(Utils utils) {
+    public void setUtils(Utils utils) {
         this.utils = utils;
     }
 
-    //by ";c Domain of synset - TOPIC"
-    private Set<String> getCategories(long synsetId, int deep) {
-        throw new UnsupportedOperationException(); //TODO:shiyko
+    public void setWordnetSearchDepth(int wordnetSearchDepth) {
+        this.wordnetSearchDepth = wordnetSearchDepth;
     }
 
-    private Set<String> getCategories(PagePrototype pagePrototype, int deep) {
-        throw new UnsupportedOperationException(); //TODO:shiyko
+    public void setWikiSearchDepth(int wikiSearchDepth) {
+        this.wikiSearchDepth = wikiSearchDepth;
     }
 
-    /**
-     * Get  ";c Domain of synset - TOPIC" for synset
-     * Get category, category of category, ...(up to MAXIMUMLEVEL) for this article
-     * if there exists coincidence return 1
-     * otherwise return 0
-     * @param synsetId
-     * @param article
-     * @return
-     */
     @Override
-    public double getVote(long synsetId, PagePrototype article) {
-        Set<String> byWordnet = getCategories(synsetId, MAXIMUMLEVELWORDNET);
-        Set<String> byWiki = getCategories(synsetId, MAXIMUMLEVELWIKI);
-        return (utils.intersect(byWordnet, byWiki).size()>=1)?1:0;
+    public double getVote(Synset synset, Page page) {
+        Set<String> byWordnet = getLinkedWords(synset, wordnetSearchDepth);
+        Set<String> byWiki = getCategories(page, wikiSearchDepth);
+        return (utils.intersect(byWordnet, byWiki).size() >= 1) ? 1 : 0;
     }
 
+    private Set<String> getLinkedWords(Synset synset, int deep) {
+        Set<String> result = new HashSet<String>();
+        for (Word word : synset.getWords()) {
+            result.add(word.getWord());
+        }
+        if (deep < 1)
+            return result;
+        List<Synset> list = synsetDao.getConnected(synset, ConnectionType.DOMAIN_OF_SYNSET_TOPIC);
+        for (Synset synset_ : list) {
+            result.addAll(getLinkedWords(synset_, deep - 1));
+        }
+        return result;
+    }
+
+    private Set<String> getCategories(Page page, int deep) {
+        Set<String> result = new HashSet<String>();
+        for (Category category : page.getCategories()) {
+            result.addAll(getCategories(category, deep));
+        }
+        return result;
+    }
+
+    private Set<String> getCategories(Category category, int deep) {
+        Set<String> result = new HashSet<String>();
+        result.add(category.getName());
+        if (deep < 1)
+            return result;
+        for (Category category_ : category.getSubcategories()) {
+            result.addAll(getCategories(category_, deep - 1));
+        }
+        return result;
+    }
 }

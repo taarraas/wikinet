@@ -8,9 +8,10 @@ package wikinet.mapping.voter;
 import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.db.dao.PageDao;
 import wikinet.db.dao.SynsetDao;
+import wikinet.db.domain.Synset;
 import wikinet.db.domain.Word;
 import wikinet.mapping.Utils;
-import wikinet.mapping.SynsetArticleVoter;
+import wikinet.mapping.Voter;
 import wikinet.db.domain.Page;
 import wikinet.wiki.parser.prototype.PagePrototype;
 
@@ -22,7 +23,7 @@ import java.util.Set;
  *
  * @author taras
  */
-public class SynonymousSetVoter implements SynsetArticleVoter{
+public class SynonymousSetVoter implements Voter {
     private static final int MINIMALWORDSCOUNT = 3;
 
     @Autowired
@@ -47,8 +48,8 @@ public class SynonymousSetVoter implements SynsetArticleVoter{
     }
 
     @Override
-    public double getVote(long synsetId, PagePrototype page) {
-        List<Word> fromWordNet = synsetDao.findById(synsetId).getWords();
+    public double getVote(Synset synset, Page page) {
+        List<Word> fromWordNet = synset.getWords();
         Page p = pageDao.findByWordAndDisambiguation(page.getWord(), page.getDisambiguation());
         List<String> a = new LinkedList<String>();
         for (Word word : fromWordNet) {

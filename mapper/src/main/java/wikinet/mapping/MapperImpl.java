@@ -1,15 +1,11 @@
 package wikinet.mapping;
 
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import wikinet.db.dao.SynsetDao;
 import wikinet.db.domain.Synset;
 import wikinet.db.domain.Word;
-import wikinet.mapping.Mapper;
-import wikinet.mapping.SynsetArticleVoter;
 import wikinet.db.dao.PageDao;
 import wikinet.db.domain.Page;
-import wikinet.wiki.parser.prototype.PagePrototype;
 
 import java.util.*;
 
@@ -19,7 +15,7 @@ import java.util.*;
 public class MapperImpl implements Mapper {
 
     private double minTrustLevel = 0.6;
-    private double minTrustDif =1;
+    private double minTrustDif = 1;
 
     private SynsetDao synsetDao;
 
@@ -27,7 +23,7 @@ public class MapperImpl implements Mapper {
 
     private SessionFactory sessionFactory;
 
-    private Collection<SynsetArticleVoter> voters;
+    private Collection<Voter> voters;
 
     public void setSynsetDao(SynsetDao synsetDao) {
         this.synsetDao = synsetDao;
@@ -41,7 +37,7 @@ public class MapperImpl implements Mapper {
         this.sessionFactory = sessionFactory;
     }
 
-    public void setVoters(Collection<SynsetArticleVoter> voters) {
+    public void setVoters(Collection<Voter> voters) {
         this.voters = voters;
     }
 
@@ -60,9 +56,9 @@ public class MapperImpl implements Mapper {
      * @return true, if mapped to wiki article
      */
     public boolean map(long synsetId) {
-        Map<PagePrototype, Double> bestRelatedArticles = getBestRelatedArticles(synsetId);
-        Iterator<Map.Entry<PagePrototype,Double>> it = bestRelatedArticles.entrySet().iterator();
-        Map.Entry<PagePrototype, Double> first = it.next();
+        Map<Page, Double> bestRelatedArticles = getBestRelatedArticles(synsetId);
+        Iterator<Map.Entry<Page, Double>> it = bestRelatedArticles.entrySet().iterator();
+        Map.Entry<Page, Double> first = it.next();
         if (first.getValue() < minTrustLevel) {
             return false;
         }
@@ -70,7 +66,7 @@ public class MapperImpl implements Mapper {
             mapSynset(synsetId, first.getKey());
             return true;
         }
-        Map.Entry<PagePrototype, Double> second = it.next();
+        Map.Entry<Page, Double> second = it.next();
         if (first.getValue() - second.getValue() < minTrustDif) {
             return false;
         }
@@ -84,7 +80,7 @@ public class MapperImpl implements Mapper {
      * @param synsetId
      * @param article
      */
-    private void mapSynset(long synsetId, PagePrototype article) {
+    private void mapSynset(long synsetId, Page article) {
         sessionFactory.getCurrentSession().beginTransaction();
         try {
             Synset synset = synsetDao.findById(synsetId);
@@ -101,32 +97,32 @@ public class MapperImpl implements Mapper {
      * @param synsetId
      * @return sorted collection of pairs article name and it's mark. The first one is with best mark
      */
-    private Map<PagePrototype, Double> getBestRelatedArticles(long synsetId) {
+    private Map<Page, Double> getBestRelatedArticles(long synsetId) {
         Synset synset = synsetDao.findById(synsetId);
-        Set<PagePrototype> articles = new TreeSet<PagePrototype>();
+        Set<Page> articles = new TreeSet<Page>();
         for (Word word : synset.getWords()) {
             List<Page> list = pageDao.findByWord(word.getWord());
             for (Page page : list) {
-                articles.add(new PagePrototype(page.getWord(), page.getDisambiguation()));
+                articles.add(new Page(page.getWord(), page.getDisambiguation()));
             }
 
         }
-        Map<PagePrototype, Double> map = new HashMap<PagePrototype, Double>();
-        for (PagePrototype pagePrototype : articles) {
+        Map<Page, Double> map = new HashMap<Page, Double>();
+        for (Page pagePrototype : articles) {
             map.put(pagePrototype, getOverallVote(synsetId, pagePrototype));
         }
 
-        SortedMap<PagePrototype, Double> sortedMap = new TreeMap<PagePrototype, Double>(new Comparator<PagePrototype>() {
+        SortedMap<Page, Double> sortedMap = new TreeMap<Page, Double>(new Comparator<Page>() {
 
-            private Map<PagePrototype, Double> map;
+            private Map<Page, Double> map;
 
-            public Comparator<? super PagePrototype> setMap(Map<PagePrototype, Double> map) {
+            public Comparator<? super Page> setMap(Map<Page, Double> map) {
                 this.map = map;
                 return this;
             }
 
             @Override
-            public int compare(PagePrototype o1, PagePrototype o2) {
+            public int compare(Page o1, Page o2) {
                 return -1 * map.get(o1).compareTo(map.get(o2));
             }
 
@@ -135,12 +131,13 @@ public class MapperImpl implements Mapper {
         return sortedMap;
     }
 
-    private double getOverallVote(long synsetId, PagePrototype article) {
+    private double getOverallVote(long synsetId, Page page) {
         sessionFactory.getCurrentSession().beginTransaction();
+        Synset synset = synsetDao.findById(synsetId);
         try {
             double total = 0.0;
-            for (SynsetArticleVoter voter : voters) {
-                total = Math.max(voter.getVote(synsetId, article), total);
+            for (Voter voter : voters) {
+                total = Math.max(voter.getVote(synset, page), total);
                 if (total >= 1) {
                     return 1;
                 }
