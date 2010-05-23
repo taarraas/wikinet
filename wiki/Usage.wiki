@@ -5,3 +5,6 @@ This guide assumes you have downloaded and unpacked wikinet bundle (or built it 
   # You must have Ubuntu or any other Linux OS. (As a matter of fact it's not a strict requirement and wikinet should work fine under Windows or Mac OS. But it hasn't been tested using such environments and thus only .sh files are provided)
   # You should download Apache ActiveMQ from [http://activemq.apache.org], unpack it and run ${ACTIVEMQ_HOME_DIR}/bin/activemq, assuming ${ACTIVEMQ_HOME_DIR} points to ActiveMQ home directory. This step is necessary only for wikinet extender and mapper modules.
   # Also you need JRE (Java Runtime Environment) version 1.6 or later.
+
+=== Importing wordnet synsets ===
+  # Download wordnet from [http://wordnet.princeton.edu] and unpack it.
