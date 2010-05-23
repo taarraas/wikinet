@@ -8,6 +8,7 @@ import wikinet.wiki.parser.prototype.PagePrototype;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author shyiko
@@ -56,7 +57,12 @@ public class MultiThreadPageProcessorImpl implements PageProcessor {
         public void run() {
             try {
                 while (true) {
-                    pagePrototypeSaver.save(queue.take());
+                    PagePrototype prototype = queue.poll(30L, TimeUnit.SECONDS);
+                    if (prototype == null) {
+                        logger.info("No activity at processing queue for 30 seconds. Multi-tread consumer stopped.");
+                        return;
+                    }
+                    pagePrototypeSaver.save(prototype);
                 }
             } catch (InterruptedException ex) {
                 logger.debug(ex);
