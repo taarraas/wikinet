@@ -60,4 +60,8 @@
     <bean id="categoryDao" class="wikinet.db.dao.impl.CategoryDaoImpl" parent="genericDao" />
     <bean id="linkedPageDao" class="wikinet.db.dao.impl.LinkedPageDaoImpl" parent="genericDao" />
 
+    <bean id="dBController" class="wikinet.db.MySQLDBController">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
 </beans>

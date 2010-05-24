@@ -24,6 +24,6 @@
 
     <bean id="wikiXMLParser" class="wikinet.wiki.parser.impl.WikiXMLParserImpl">
         <constructor-arg ref="multiThreadPageProcessor" />
-   </bean>
+    </bean>
 
 </beans>
