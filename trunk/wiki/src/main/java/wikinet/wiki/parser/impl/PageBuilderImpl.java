@@ -30,12 +30,18 @@ public class PageBuilderImpl implements PageBuilder {
     private static final String[] NAMESPACES_TO_SKIP =
             {"Media:", "Special:", "main:", "Talk:", "User:", "User talk:", "Meta:",
             "Meta talk:", "File:", "File talk:", "MediaWiki:", "MediaWiki talk:", "Template:", "Template talk:",
-            "Help:", "Help talk:", "Category talk:", "Portal:", "Portal talk:", "media:", "Image:"};
+            "Help:", "Help talk:", "Category talk:", "Portal:", "Portal talk:", "media:", "Image:", "Wikipedia:"};
 
     private boolean endLineHasBeenMet = false;
 
     @Override
     public PagePrototype buildPagePrototype(String title, String text) {
+        if (!isPageTitleValid(title)) {
+            if (logger.isDebugEnabled())
+                logger.debug("Page \"" + title + "\" skipped (wrong page title).");
+            return null;
+        }
+
         text = getUTF8(text);
 
         if (title.startsWith("Category:")) {
@@ -56,6 +62,14 @@ public class PageBuilderImpl implements PageBuilder {
         if (text.indexOf("#REDIRECT [[") != -1) {
             int pos = text.indexOf("[[");
             String redirectedPageTitle = text.substring(pos + 2, text.indexOf("]]", pos + 2)).trim();
+
+            if (!isPageTitleValid(redirectedPageTitle)) {
+                if (logger.isDebugEnabled())
+                    logger.debug("Page \"" + title + "\" skipped " +
+                            "(wrong redirected page title \"" + redirectedPageTitle + "\").");
+                return null;
+            }
+
             return new RedirectPagePrototype(title, new PagePrototype(redirectedPageTitle));
         }
 
@@ -458,6 +472,21 @@ public class PageBuilderImpl implements PageBuilder {
             len--;
         }
         return (len > -1) ? text.substring(0, len + 1) : text;
+    }
+
+    private boolean isPageTitleValid(String title) {
+        for (String s : NAMESPACES_TO_SKIP) {
+            if (title.startsWith(s))
+                return false;
+        }
+        int p = title.lastIndexOf(")");
+        if (p != -1) {
+            if (!title.substring(p + 1).trim().isEmpty())
+                return false;
+        }
+        if (title.trim().isEmpty())
+            return false;
+        return true;
     }
 
     public static String getUTF8(String str) {
