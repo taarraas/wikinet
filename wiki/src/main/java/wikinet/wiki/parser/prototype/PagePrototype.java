@@ -21,6 +21,10 @@ public class PagePrototype implements Comparable<PagePrototype> {
                 word = title;
         } else
             word = title;
+        if (!word.isEmpty()) {
+            word = Character.toUpperCase(word.charAt(0)) + word.substring(1);
+            word = word.replace("_", " ");
+        }
     }
 
     public PagePrototype(String word, String disambiguation) {

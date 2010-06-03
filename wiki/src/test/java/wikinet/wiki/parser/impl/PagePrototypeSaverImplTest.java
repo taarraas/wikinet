@@ -81,7 +81,7 @@ public class PagePrototypeSaverImplTest extends AbstractTestNGSpringContextTests
         prototypeSaver.save(uniquePagePrototype);
         sessionFactory.getCurrentSession().beginTransaction();
         try {
-            Page page = pageDao.findByWordAndDisambiguation("title", "x");
+            Page page = pageDao.findByWordAndDisambiguation("Title", "x");
             Assert.assertNotNull(page);
             Assert.assertEquals(page.getCategories().size(), 1);
             Assert.assertEquals(page.getLinkedPages().size(), 1);
