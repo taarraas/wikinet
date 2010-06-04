@@ -425,31 +425,13 @@ public class PageBuilderImpl implements PageBuilder {
             return;
         StringBuilder sb = new StringBuilder(text);
         int start = 0, end;
-        while ((start = sb.indexOf("[", start)) != -1) {
-            end = sb.indexOf("]", start + 1);
+        while ((start = sb.indexOf("[[Category:", start)) != -1) {
+            end = sb.indexOf("]", start + 11);
             if (end == -1)
                 break;
-            int includedBracketStart = start;
-            while ((includedBracketStart = sb.indexOf("[", includedBracketStart + 1)) < end) {
-                if (includedBracketStart == -1)
-                    break;
-                end = sb.indexOf("]", end + 1);
-            }
-            if (end == -1) {
-                throw new ParseException("Unrecognizable square brackets structure.");
-            }
-            String str = sb.substring(start + 1, end).trim();
-            if (!str.startsWith("[") || !str.endsWith("]")) {
-                start = end;
-                continue;
-            }
-            str = str.substring(1, str.length() - 1).trim();
-
-            if (str.startsWith("Category:")) {
-                String category = str.substring(9).trim();
-                pagePrototype.addParentCategory(category);
-                start = end + 1;
-            }
+            String category = sb.substring(start + 11, end).trim();
+            pagePrototype.addParentCategory(category);
+            start = end;
         }
     }
 
