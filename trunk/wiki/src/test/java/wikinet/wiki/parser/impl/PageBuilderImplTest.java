@@ -49,7 +49,7 @@ public class PageBuilderImplTest {
 
     @Test
     public void testNowikiAndPre() throws Exception {
-        testImportPage("", "<tag>text <nowiki>hello <tag></nowiki> text\ntext <pre>hello <tag></pre> text",
+        testImportPage("Page", "<tag>text <nowiki>hello <tag></nowiki> text\ntext <pre>hello <tag></pre> text",
                              new ArgumentMatcher<PagePrototype>() {
                                  @Override
                                  public boolean matches(Object o) {
@@ -59,7 +59,7 @@ public class PageBuilderImplTest {
                                      return true;
                                  }
                              });
-        testImportPage("", "text <nowiki><pre>hello <tag></pre></nowiki> text\ntext <pre><nowiki>hello <tag></nowiki></pre> text\n" +
+        testImportPage("Page", "text <nowiki><pre>hello <tag></pre></nowiki> text\ntext <pre><nowiki>hello <tag></nowiki></pre> text\n" +
                                  "text <nowiki>hello <tag></nowiki><pre><tag2></pre> text",
                              new ArgumentMatcher<PagePrototype>() {
                                  @Override
@@ -75,7 +75,7 @@ public class PageBuilderImplTest {
 
     @Test
     public void testRefAndMath() throws Exception {
-        testImportPage("", ".&lt;ref name=&quot;definition&quot;&gt;/ref&gt;.\na<tag>b c<math>\\sin</math> ''d''",
+        testImportPage("Page", ".&lt;ref name=&quot;definition&quot;&gt;/ref&gt;.\na<tag>b c<math>\\sin</math> ''d''",
                              new ArgumentMatcher<PagePrototype>() {
                                  @Override
                                  public boolean matches(Object o) {
@@ -89,7 +89,7 @@ public class PageBuilderImplTest {
 
     @Test
     public void testCurlyBrackets() {
-        testImportPage("", "This template takes two parameters, and\n" +
+        testImportPage("Page", "This template takes two parameters, and\n" +
                                  "creates underlined text with a hover box\n" +
                                  "for many modern browsers supporting CSS:\n" +
                                  "\n" +
@@ -114,7 +114,7 @@ public class PageBuilderImplTest {
 
     @Test
     public void testSquareBracketsSimple() throws Exception {
-        testImportPage("", "Here's a link to a page named [[Official position]] with [[official position]].\n" +
+        testImportPage("Page", "Here's a link to a page named [[Official position]] with [[official position]].\n" +
                                  "You can even say [[xxx]]s\n" +
                                  "and the link will show up correctly.",
                              new ArgumentMatcher<PagePrototype>() {
@@ -134,7 +134,7 @@ public class PageBuilderImplTest {
 
     @Test
     public void testSquareBracketsWithSections() throws Exception {
-        testImportPage("", "You can link to a page section by its title:" +
+        testImportPage("Page", "You can link to a page section by its title:" +
                                  "* [[Doxygen#Doxygen Examples]].\n" +
                                  "If multiple sections have the same title, add\n" +
                                  "a number. [[#Example section 3]] goes to the\n" +
@@ -164,7 +164,7 @@ public class PageBuilderImplTest {
 
     @Test
     public void testSquareBracketsWithPipes() throws Exception {
-        testImportPage("", "You can make a link point to a different place " +
+        testImportPage("Page", "You can make a link point to a different place " +
                                  "with a [[Help:Piped link|piped link]]. Put the link " +
                                  "target first, then the pipe character \"|\", then " +
                                  "the link text. [[Boston, Massachusetts|]] " +
@@ -213,7 +213,7 @@ public class PageBuilderImplTest {
 
     @Test
     public void testSquareBracketsWithUrls() throws Exception {
-        testImportPage("",
+        testImportPage("Page",
                 "You can make an external link just by typing a URL:\n" +
                 "http://www.nupedia.com\n" +
                 "You can give it a title:\n" +
@@ -244,7 +244,7 @@ public class PageBuilderImplTest {
 
     @Test
     public void testSquareBracketsWithMailto() throws Exception {
-        testImportPage("",
+        testImportPage("Page",
                 "mailto:someone@example.com or [mailto:someone@example.com someone]",
                 new ArgumentMatcher<PagePrototype>() {
                     @Override
@@ -259,7 +259,7 @@ public class PageBuilderImplTest {
 
     @Test
     public void testSquareBracketsWithCategories() throws Exception {
-        testImportPage("",
+        testImportPage("Page",
                 "[[Help:Category|Category links]] do not show up in line " +
                 "but instead at page bottom\n" +
                 "''and cause the page to be listed in the category.''\n" +
@@ -280,7 +280,7 @@ public class PageBuilderImplTest {
 
     @Test
     public void testSquareBracketsWithCategoriesLinks() throws Exception {
-        testImportPage("",
+        testImportPage("Page",
                 "Add an extra colon to ''link'' to a category in line " +
                 "without causing the page to be listed in the category: " +
                 "[[:Category:English documentation]]",
@@ -301,7 +301,7 @@ public class PageBuilderImplTest {
 
     @Test
     public void testSquareBracketsWithDates() throws Exception {
-        testImportPage("",
+        testImportPage("Page",
                 "The Wiki reformats linked dates to match the reader's\n" +
                 "date preferences. These three dates will show up the\n" +
                 "same if you choose a format in your\n" +
@@ -326,7 +326,7 @@ public class PageBuilderImplTest {
                         return true;
                     }
                 });
-        testImportPage("", "[[1969]]",
+        testImportPage("Page", "[[1969]]",
                 new ArgumentMatcher<PagePrototype>() {
                     @Override
                     public boolean matches(Object o) {
@@ -341,7 +341,7 @@ public class PageBuilderImplTest {
 
     @Test
     public void testSquareBracketsWithLocales() throws Exception {
-        testImportPage("",
+        testImportPage("Page",
                 "The Wiki reformats linked dates to match the reader's " +
                 "date [[pl:Anarchizm]] [[uk:Анархізм]]",
                 new ArgumentMatcher<PagePrototype>() {
@@ -379,7 +379,7 @@ public class PageBuilderImplTest {
 
     @Test
     public void testProcessTextWithLongRef() throws Exception {
-        testImportPage("",
+        testImportPage("Page",
                        "{{for|the anthology of anarchist writings|Anarchism: A Documentary History of Libertarian Ideas}}\n" +
                         "{{redirect|Anarchist|the fictional character|Anarchist (comics)}}\n" +
                         "{{redirect|Anarchists}}\n" +
