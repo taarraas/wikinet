@@ -47,7 +47,7 @@ public class PageBuilderImpl implements PageBuilder {
         if (title.startsWith("Category:")) {
             CategoryPagePrototype categoryPagePrototype = new CategoryPagePrototype(title.substring(9).trim());
             try {
-                processCategories(categoryPagePrototype, text);
+                parseCategoryPage(categoryPagePrototype, text);
             } catch (Exception ex) {
                 if (ex instanceof ParseException)
                     logger.error("Page \"" + title + "\" : " + ex.getMessage());
@@ -75,7 +75,7 @@ public class PageBuilderImpl implements PageBuilder {
 
         UniquePagePrototype pagePrototype = new UniquePagePrototype(title);
         try {
-            processText(pagePrototype, text);
+            parseUniquePage(pagePrototype, text);
         } catch (Exception ex) {
             if (ex instanceof ParseException)
                 logger.error("Page \"" + pagePrototype + "\" : " + ex.getMessage());
@@ -86,8 +86,23 @@ public class PageBuilderImpl implements PageBuilder {
         return pagePrototype;
     }
 
-    private void processText(final UniquePagePrototype pagePrototype, String text) {
-        //StringBuilder sb = new StringBuilder();
+    private void parseCategoryPage(final CategoryPagePrototype pagePrototype, String text) {
+        if (text.isEmpty())
+            return;
+        StringBuilder sb = new StringBuilder(text);
+        int start = 0, end;
+        while ((start = sb.indexOf("[[Category:", start)) != -1) {
+            end = sb.indexOf("]", start + 11);
+            if (end == -1)
+                break;
+            String category = sb.substring(start + 11, end);
+            category = cleanFromTrash(category);
+            pagePrototype.addParentCategory(category);
+            start = end;
+        }
+    }
+    
+    private void parseUniquePage(final UniquePagePrototype pagePrototype, String text) {
         Matcher nowikiMatcher = NOWIKI.matcher(text);
         Matcher preMatcher = PRE.matcher(text);
         int index = 0;
@@ -312,6 +327,7 @@ public class PageBuilderImpl implements PageBuilder {
             // category
             if (str.startsWith("Category:")) {
                 String category = str.substring(9).trim();
+                category = cleanFromTrash(category);
                 pagePrototype.addCategory(category);
                 sb.replace(start, end + 1, "");
                 continue;
@@ -420,19 +436,26 @@ public class PageBuilderImpl implements PageBuilder {
         return sb.toString();
     }
 
-    private void processCategories (final CategoryPagePrototype pagePrototype, String text) {
-        if (text.isEmpty())
-            return;
-        StringBuilder sb = new StringBuilder(text);
-        int start = 0, end;
-        while ((start = sb.indexOf("[[Category:", start)) != -1) {
-            end = sb.indexOf("]", start + 11);
-            if (end == -1)
-                break;
-            String category = sb.substring(start + 11, end).trim();
-            pagePrototype.addParentCategory(category);
-            start = end;
-        }
+    private String cleanFromTrash(String title) {
+        String result = removePipe(title);
+        result = removeSharp(result);
+        return result.trim();
+    }
+
+    private String removePipe(String title) {
+        String result = title;
+        int pos = title.indexOf("|");
+        if (pos != -1)
+            result = result.substring(0, pos);
+        return result;
+    }
+
+    private String removeSharp(String title) {
+        String result = title;
+        int pos = title.indexOf("#");
+        if (pos != -1)
+            result = result.substring(0, pos);
+        return result;
     }
 
     private String normalizePageTitle(String title) {
