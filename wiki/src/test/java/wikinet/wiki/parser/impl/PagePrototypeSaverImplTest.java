@@ -76,8 +76,8 @@ public class PagePrototypeSaverImplTest extends AbstractTestNGSpringContextTests
         uniquePagePrototype.addCategory("category");
         uniquePagePrototype.addLink("link").addPosition(1, 2);
         uniquePagePrototype.addLocalizedPage(Locale.POL, "linkp");
-        uniquePagePrototype.appendFirstParagraph("fp");
-        uniquePagePrototype.appendText("tp");
+        uniquePagePrototype.setFirstParagraph("fp");
+        uniquePagePrototype.setText("tp");
         prototypeSaver.save(uniquePagePrototype);
         sessionFactory.getCurrentSession().beginTransaction();
         try {

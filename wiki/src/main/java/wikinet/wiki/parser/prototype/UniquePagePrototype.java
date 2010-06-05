@@ -18,7 +18,7 @@ public class UniquePagePrototype extends PagePrototype {
 
     private String firstParagraph;
 
-    private StringBuilder text;
+    private String text;
 
     public UniquePagePrototype(String title) {
         super(title);
@@ -51,32 +51,24 @@ public class UniquePagePrototype extends PagePrototype {
         return localizedPages;
     }
 
-    public String getLocalizedPage(Locale locale) {
-        return localizedPages.get(locale);
-    }
-
     public void addLocalizedPage(Locale locale, String localizedPageTitle) {
         this.localizedPages.put(locale, localizedPageTitle);
     }
 
     public String getText() {
-        return text == null ? null : text.toString();
-    }
-
-    public void appendText(String text) {
-        if (this.text == null)
-            this.text = new StringBuilder();
-        this.text.append(text);
+        return text;
     }
 
     public String getFirstParagraph() {
         return firstParagraph;
     }
 
-    public void appendFirstParagraph(String firstParagraph) {
-        if (this.firstParagraph == null)
-            this.firstParagraph = "";
-        this.firstParagraph += firstParagraph;
+    public void setFirstParagraph(String firstParagraph) {
+        this.firstParagraph = firstParagraph;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public static class Link {
