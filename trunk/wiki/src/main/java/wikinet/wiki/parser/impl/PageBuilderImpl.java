@@ -23,16 +23,23 @@ public class PageBuilderImpl implements PageBuilder {
 
     private static final Pattern NOWIKI = Pattern.compile("(<nowiki>).*?(</ ?nowiki>)");
     private static final Pattern PRE = Pattern.compile("(<pre>).*?(</ ?pre>)");
-    private static final Pattern PATTERN_MATH = Pattern.compile("(<math).*?(/[ ]*math>)", Pattern.DOTALL);
-    private static final Pattern PATTERN_REF = Pattern.compile("(<ref([^>])*?/>)|((<ref).*?(/[ ]*ref>))", Pattern.DOTALL);
-    private static final Pattern PATTERN_HTML_TAGS = Pattern.compile("(<).*?(>)", Pattern.DOTALL);
+
+    private static final Pattern[] REGEX_PATTERNS_TO_REMOVE = {
+            Pattern.compile("(<math).*?(/[ ]*math>)", Pattern.DOTALL),
+            Pattern.compile("[']{2,5}"),
+            Pattern.compile("[~]{3,5}"),
+            Pattern.compile("[-]{4}"),
+            Pattern.compile("[=]{2,4}.*?[=]{2,4}"),
+            Pattern.compile("(<ref([^>])*?/>)|((<ref).*?(/[ ]*ref>))", Pattern.DOTALL),
+            Pattern.compile("(<).*?(>)", Pattern.DOTALL)
+    };
 
     private static final String[] NAMESPACES_TO_SKIP =
             {"Media:", "Special:", "main:", "Talk:", "User:", "User talk:", "Meta:",
             "Meta talk:", "File:", "File talk:", "MediaWiki:", "MediaWiki talk:", "Template:", "Template talk:",
             "Help:", "Help talk:", "Category talk:", "Portal:", "Portal talk:", "media:", "Image:", "Wikipedia:"};
 
-    private boolean endLineHasBeenMet = false;
+//    private boolean endLineHasBeenMet = false;
 
     @Override
     public PagePrototype buildPagePrototype(String title, String text) {
@@ -42,6 +49,7 @@ public class PageBuilderImpl implements PageBuilder {
             return null;
         }
 
+        title = getWithFirstCharInUpperCase(title.trim());
         text = getUTF8(text);
 
         if (title.startsWith("Category:")) {
@@ -58,7 +66,6 @@ public class PageBuilderImpl implements PageBuilder {
             return categoryPagePrototype;
         }
 
-        endLineHasBeenMet = false;
         if (text.indexOf("#REDIRECT [[") != -1) {
             int pos = text.indexOf("[[");
             String redirectedPageTitle = text.substring(pos + 2, text.indexOf("]]", pos + 2)).trim();
@@ -70,6 +77,7 @@ public class PageBuilderImpl implements PageBuilder {
                 return null;
             }
 
+            redirectedPageTitle = getWithFirstCharInUpperCase(redirectedPageTitle);
             return new RedirectPagePrototype(title, new PagePrototype(redirectedPageTitle));
         }
 
@@ -102,7 +110,8 @@ public class PageBuilderImpl implements PageBuilder {
         }
     }
     
-    private void parseUniquePage(final UniquePagePrototype pagePrototype, String text) {
+    private void parseUniquePage(UniquePagePrototype pagePrototype, String text) {
+        StringBuilder buffer = new StringBuilder();
         Matcher nowikiMatcher = NOWIKI.matcher(text);
         Matcher preMatcher = PRE.matcher(text);
         int index = 0;
@@ -111,7 +120,8 @@ public class PageBuilderImpl implements PageBuilder {
             int prepos = preMatcher.find(index) ? preMatcher.start() : -1;
             if (nowikipos == -1 && prepos == -1) {
                 if (index == 0) {
-                    processTextBlock(pagePrototype, text, true);
+                    processTextBlock(pagePrototype, buffer, text, true);
+                    processPageData(pagePrototype, buffer);
                     return;
                 }
                 break;
@@ -132,80 +142,39 @@ public class PageBuilderImpl implements PageBuilder {
                 throw new ParseException("Unrecognizable <nowiki> / <pre> structure.");
             }
 
-            processTextBlock(pagePrototype, text.substring(index, startGroup), false);
+            processTextBlock(pagePrototype, buffer, text.substring(index, startGroup), false);
             String between = group.substring(group.indexOf(">") + 1, group.lastIndexOf("<"));
-            if (!endLineHasBeenMet)
-                pagePrototype.appendFirstParagraph(between);
-            else
-                pagePrototype.appendText(between);
+            buffer.append(between);
             index = endGroup;
         } while(true);
-        processTextBlock(pagePrototype, text.substring(index), true);
+        processTextBlock(pagePrototype, buffer, text.substring(index), true);
+        processPageData(pagePrototype, buffer);
     }
 
-    private void processTextBlock(final UniquePagePrototype pagePrototype, String block, boolean trimEnd) {
-        // removing all mathematical formulas
-        block = PATTERN_MATH.matcher(block).replaceAll("");
-        // removing basic text formatting
-        block = block.replaceAll("[']{2,5}", "");
-        block = block.replaceAll("[~]{3,5}", "");
-        block = block.replaceAll("[-]{4}", "");
-        block = block.replaceAll("[=]{2,4}.*?[=]{2,4}", "");
-        // replacing html entities
+    private void processPageData(UniquePagePrototype pagePrototype, StringBuilder buffer) {
+        String data = trim(buffer);
+        int nlp = data.indexOf("\n");
+        if (nlp == -1) {
+            pagePrototype.setFirstParagraph(data);
+        } else {
+            pagePrototype.setFirstParagraph(data.substring(0, nlp));
+            pagePrototype.setText(data.substring(nlp + 1));
+        }
+    }
+
+    private void processTextBlock(UniquePagePrototype pagePrototype, StringBuilder buffer, String block, boolean trimEnd) {
         block = block.replace("&lt;", "<");
         block = block.replace("&gt;", ">");
         block = block.replace("&apos;", "'");
         block = block.replace("&quot;", "\"");
         block = block.replace("&amp;", "&");
-        // removing unusual constructions
-        block = PATTERN_REF.matcher(block).replaceAll("");
-        // removing all html tags
-        block = PATTERN_HTML_TAGS.matcher(block).replaceAll("");
-
-        // todo: templates
-
+        for (Pattern pattern : REGEX_PATTERNS_TO_REMOVE) {
+            block = pattern.matcher(block).replaceAll("");
+        }
         block = processCurlyBrackets(pagePrototype, block);
-        
-        // remove spaces and new lines repeat
-        StringBuilder sb = new StringBuilder(block);
-        int i = 0, j;
-        while ((i = sb.indexOf("\n", i)) != -1) {
-            j = sb.indexOf("\n", i+1);
-            if (j == -1)
-                break;
-            if (sb.substring(i + 1, j).trim().isEmpty())
-                sb.replace(i, j, "");
-            else
-                i = j;
-        }
-        if (sb.length() == 0)
-            return;
-        if (sb.charAt(0) == '\n')
-            sb.replace(0, 1, "");
-        block = sb.toString();
-
-        if (!endLineHasBeenMet) {
-            i = block.indexOf("\n");
-            if (i == -1)
-                i = block.length();
-            else
-                endLineHasBeenMet = true;
-            String fp = block.substring(0, i);
-            if (!fp.trim().isEmpty()) {
-                String pp = processSquareBrackets(pagePrototype, fp, true);
-                if (trimEnd)
-                    pp = trimEnd(pp);
-                pagePrototype.appendFirstParagraph(pp);
-            }
-            if (i == block.length())
-                return;
-            block = block.substring(i + 1);
-        }
-
-        block = processSquareBrackets(pagePrototype, block, false);
-        if (trimEnd)
-            block = trimEnd(block);
-        pagePrototype.appendText(block);
+        block = removeDuplicatedWhitespaces(block);
+        block = processSquareBrackets(pagePrototype, block);
+        buffer.append(block);
     }
 
     private String processCurlyBrackets(final PagePrototype pagePrototype, String text) {
@@ -238,7 +207,7 @@ public class PageBuilderImpl implements PageBuilder {
      * @param text Text outside &lt;nowiki&gt; tag
      * @return text without square brackets compounds
      */
-    private String processSquareBrackets(final UniquePagePrototype pagePrototype, String text, boolean addLinks) {
+    private String processSquareBrackets(final UniquePagePrototype pagePrototype, String text) {
         if (text.isEmpty())
             return "";
         StringBuilder sb = new StringBuilder(text);
@@ -271,13 +240,11 @@ public class PageBuilderImpl implements PageBuilder {
                 continue;
             }
             if (!str.startsWith("[") || !str.endsWith("]")) {
-//                logger.warn("Page \"" + pagePrototype.getTitle() + "\". Unrecognizable square brackets structure \"[" + str + "]\"");
                 sb.replace(start, end + 1, str);
                 start = end;
                 continue;
             }
             str = str.substring(1, str.length() - 1).trim();
-//            end++;
 
             for (Locale locale : Locale.values()) {
                 if (str.startsWith(locale.getText() + ":")) {
@@ -293,10 +260,10 @@ public class PageBuilderImpl implements PageBuilder {
             for (String namespacePrefix : NAMESPACES_TO_SKIP) {
                 String pr = prefix + namespacePrefix;
                 if (str.startsWith(pr)) {
-                    // skip parsing for now, just replace with empty string
+/*
                     str = str.substring(pr.length());
                     String replacement = "";
-                    int pipePos, odd = 0, pp = str.length();
+                    int pipePos, odd, pp = str.length();
                     do {
                         odd = 0;
                         pipePos = str.lastIndexOf("|", pp);
@@ -316,10 +283,8 @@ public class PageBuilderImpl implements PageBuilder {
                     if (replacement.isEmpty()) {
                         replacement = str.substring(0, pipePos);
                     }
-                    sb.replace(start, end + 1, replacement);
-                    //start += replacement.length(); // here shouldn't be any increment,
-                    // otherwise nested costructions may occure (like [File:a|b[]])
-                    //sb.replace(start, end + 1, "");
+*/
+                    sb.replace(start, end + 1, "");
                     continue root_cycle;
                 }
             }
@@ -423,10 +388,10 @@ public class PageBuilderImpl implements PageBuilder {
                 continue;
             }
 
-            if (!addLinks)
+            if (start > getFirstParagraphEndPosition(sb))
                 continue;
 
-            String title = normalizePageTitle(link);
+            String title = getWithFirstCharInUpperCase(link);
             UniquePagePrototype.Link linkObj = pagePrototype.getLink(title);
             if (linkObj == null) {
                 linkObj = pagePrototype.addLink(title);
@@ -434,6 +399,48 @@ public class PageBuilderImpl implements PageBuilder {
             linkObj.addPosition(start, linkText.length());
         }
         return sb.toString();
+    }
+
+    private int getFirstParagraphEndPosition(StringBuilder sb) {
+        return getFirstParagraphEndPosition(sb, 0);
+    }
+
+    private int getFirstParagraphEndPosition(StringBuilder sb, int startIndex) {
+        int pos = sb.indexOf("\n", startIndex);
+        if (pos == -1)
+            return sb.length();
+        for (int i = startIndex; i < pos; i++) {
+            if (!Character.isWhitespace(sb.charAt(i))) {
+                return pos;
+            }
+        }
+        return getFirstParagraphEndPosition(sb, pos + 1);
+    }
+
+    public String trim(StringBuilder sb) {
+        int len = sb.length();
+        int st = 0;
+        while ((st < len) && (sb.charAt(st) <= ' ')) {
+            st++;
+        }
+        while ((st < len) && (sb.charAt(len - 1) <= ' ')) {
+            len--;
+        }
+        return ((st > 0) || (len < sb.length())) ? sb.substring(st, len) : sb.toString();
+    }
+
+
+    private String removeDuplicatedWhitespaces(String text) {
+        StringBuilder result = new StringBuilder();
+        char c, prev = (char) -1;
+        for (int i = 0; i < text.length(); i++) {
+            c = text.charAt(i);
+            if ((c == '\n' && prev != '\n') || !Character.isWhitespace(c) || !Character.isWhitespace(prev)) {
+                result.append(c);
+                prev = c;
+            }
+        }
+        return result.toString();
     }
 
     private String cleanFromTrash(String title) {
@@ -458,25 +465,9 @@ public class PageBuilderImpl implements PageBuilder {
         return result;
     }
 
-    private String normalizePageTitle(String title) {
+    private String getWithFirstCharInUpperCase(String title) {
         title = title.trim();
         return Character.toUpperCase(title.charAt(0)) + title.substring(1);
-    }
-
-    private String trimBegin(String text) {
-        int len = text.length(), i = 0;
-        while ((i < len) && (text.charAt(i) <= ' ')) {
-            i++;
-        }
-        return (i < len) ? text.substring(i) : text;
-    }
-
-    private String trimEnd(String text) {
-        int len = text.length() - 1;
-        while ((len > -1) && (text.charAt(len) <= ' ')) {
-            len--;
-        }
-        return (len > -1) ? text.substring(0, len + 1) : text;
     }
 
     private boolean isPageTitleValid(String title) {

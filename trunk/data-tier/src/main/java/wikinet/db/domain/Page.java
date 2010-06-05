@@ -193,4 +193,13 @@ public class Page {
         result = 31 * result + (disambiguation != null ? disambiguation.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Page{" +
+                "id=" + id +
+                ", word='" + word + '\'' +
+                ", disambiguation='" + disambiguation + '\'' +
+                '}';
+    }
 }

@@ -1,5 +1,6 @@
 package wikinet.db.dao.impl;
 
+import org.apache.log4j.Logger;
 import wikinet.db.dao.PageDao;
 import wikinet.db.domain.Category;
 import wikinet.db.domain.LinkedPage;
@@ -13,6 +14,8 @@ import java.util.List;
  * @since Mar 30, 2010
  */
 public class PageDaoImpl extends GenericDaoImpl<Page, Long> implements PageDao {
+
+    private static final Logger logger = Logger.getLogger(PageDaoImpl.class);
 
     @Override
     public List<Page> findByWord(String word) {
@@ -47,8 +50,15 @@ public class PageDaoImpl extends GenericDaoImpl<Page, Long> implements PageDao {
 
     @Override
     public void addRedirect(Page page, Page redirect) {
-        getSession().createSQLQuery("insert into Page_Redirect values (?, ?)")
+        boolean notExist = getSession().createSQLQuery("select page_id from Page_Redirect where page_id = ? and redirect_page_id = ?")
+                .setLong(0, page.getId()).setLong(1, redirect.getId()).uniqueResult() == null;
+        if (notExist) {
+            logger.debug(redirect + " redirects to " + page);
+            getSession().createSQLQuery("insert into Page_Redirect values (?, ?)")
                 .setLong(0, page.getId()).setLong(1, redirect.getId()).executeUpdate();
+        } else {
+            logger.warn(redirect + " already exists as redirect for " + page);
+        }
     }
 
     @Override

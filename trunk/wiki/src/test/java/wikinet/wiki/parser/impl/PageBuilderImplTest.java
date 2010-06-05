@@ -74,6 +74,26 @@ public class PageBuilderImplTest {
     }
 
     @Test
+    public void testSquereBracketsAtTheBeginning() throws Exception {
+        testImportPage("PageSB", "{{Redirect|Mapmaker}}\n" +
+                "{{Redirect|Cartographer|the album by [[E.S. Posthumus]]|Cartographer (album)}}\n" +
+                "\n\n\n" +
+                "[[File:Mediterranean chart fourteenth century2.jpg|right|thumb|250px|The oldest original cartographic artifact in the [[Library of Congress]]: a [[nautical chart]] of the [[Mediterranean Sea]].  Second quarter of the fourteenth century.]]\n" +
+                "\n" +
+                "'''Cartography''' (in [[Greek language|Greek]] ''chartis'' = map and ''graphein'' = write) is the study and practice of making [[map]]s (also can be called mapping). Combining science, [[aesthetics]], and technique, cartography builds on the premise that reality can be modeled in ways that communicate spatial information effectively. ",
+                             new ArgumentMatcher<PagePrototype>() {
+                                 @Override
+                                 public boolean matches(Object o) {
+                                     UniquePagePrototype pagePrototype = (UniquePagePrototype) o;
+                                     Assert.assertEquals(pagePrototype.getFirstParagraph(), "Cartography (in Greek chartis = map and graphein = write) is the study and practice of making maps (also can be called mapping). Combining science, aesthetics, and technique, cartography builds on the premise that reality can be modeled in ways that communicate spatial information effectively.");
+                                     Assert.assertNull(pagePrototype.getText());
+                                     Assert.assertEquals(pagePrototype.getLinks().size(), 3);
+                                     return true;
+                                 }
+                             });
+    }
+
+    @Test
     public void testRefAndMath() throws Exception {
         testImportPage("Page", ".&lt;ref name=&quot;definition&quot;&gt;/ref&gt;.\na<tag>b c<math>\\sin</math> ''d''",
                              new ArgumentMatcher<PagePrototype>() {
@@ -179,7 +199,7 @@ public class PageBuilderImplTest {
                                      UniquePagePrototype pagePrototype = (UniquePagePrototype) o;
                                      Assert.assertEquals(pagePrototype.getFirstParagraph(),
                                               "You can make a link point to a different place " +
-                                              "with a piped link. Put the link " +
+                                              "with a . Put the link " +
                                               "target first, then the pipe character \"|\", then " +
                                               "the link text. Boston, Massachusetts " +
                                               "* Cities in Morocco");
@@ -259,20 +279,21 @@ public class PageBuilderImplTest {
 
     @Test
     public void testSquareBracketsWithCategories() throws Exception {
-        testImportPage("Page",
+        testImportPage("PageSBWC",
                 "[[Help:Category|Category links]] do not show up in line " +
                 "but instead at page bottom\n" +
-                "''and cause the page to be listed in the category.''\n" +
+                "''and [[cause]] the page to be listed in the category.''\n" +
                 "[[Category:English documentation]]",
                 new ArgumentMatcher<PagePrototype>() {
                     @Override
                     public boolean matches(Object o) {
                         UniquePagePrototype pagePrototype = (UniquePagePrototype) o;
-                        Assert.assertEquals(pagePrototype.getFirstParagraph(), "Category links do not show up in line " +
+                        Assert.assertEquals(pagePrototype.getFirstParagraph(), "do not show up in line " +
                                                                                "but instead at page bottom");
                         Assert.assertEquals(pagePrototype.getText(), "and cause the page to be listed in the category.");
                         Assert.assertEquals(pagePrototype.getCategories().size(), 1);
                         Assert.assertEquals(pagePrototype.getCategories().iterator().next(), "English documentation");
+                        Assert.assertEquals(pagePrototype.getLinks().size(), 0);
                         return true;
                     }
                 });
@@ -318,7 +339,7 @@ public class PageBuilderImplTest {
                         Assert.assertEquals(pagePrototype.getText(),
                                 "date preferences. These three dates will show up the\n" +
                                         "same if you choose a format in your\n" +
-                                        "Preferences:\n" +
+                                        ":\n" +
                                         "* 1969-07-20\n" +
                                         "* July 20 1969\n" +
                                         "* 20 July 1969\n" +
