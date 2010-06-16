@@ -10,7 +10,7 @@
     <bean id="categoriesConnectionsMaker" class="wikinet.extending.CategoriesConnectionsMakerImpl" />
     <bean id="meaningResolver" class="wikinet.extending.MeaningResolver" autowire="byName" />
 
-    <bean class="wikinet.extending.ExtenderImpl" autowire="byName" >
+    <bean id="extender" class="wikinet.extending.ExtenderImpl" autowire="byName" >
         <property name="connectionsMakers">
             <list>
                 <ref bean="categoriesConnectionsMaker" />
@@ -18,7 +18,7 @@
         </property>
     </bean>
 
-    <bean id="pageProducerService" class="wikinet.extending.services.PageProducerService" autowire="byName" />
-    <bean id="pageConsumerService" class="wikinet.extending.services.PageConsumerService" autowire="byName" />
+    <bean id="pageProducerService" class="wikinet.extending.service.PageProducerService" autowire="byName" />
+    <bean id="pageConsumerService" class="wikinet.extending.service.PageConsumerService" autowire="byName" />
 
 </beans>
