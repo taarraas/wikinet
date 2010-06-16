@@ -24,7 +24,7 @@ import java.util.Set;
  * @author taras
  */
 public class SynonymousSetVoter implements Voter {
-    private static final int MINIMALWORDSCOUNT = 3;
+    private static final int MINIMALWORDSCOUNT = 2;
 
     @Autowired
     private SynsetDao synsetDao;
@@ -32,8 +32,7 @@ public class SynonymousSetVoter implements Voter {
     @Autowired
     private PageDao pageDao;
 
-    @Autowired
-    private Utils utils;
+    private Utils utils=new Utils();
 
     public void setSynsetDao(SynsetDao synsetDao) {
         this.synsetDao = synsetDao;
@@ -50,20 +49,19 @@ public class SynonymousSetVoter implements Voter {
     @Override
     public double getVote(Synset synset, Page page) {
         List<Word> fromWordNet = synset.getWords();
-        Page p = pageDao.findByWordAndDisambiguation(page.getWord(), page.getDisambiguation());
         List<String> a = new LinkedList<String>();
         for (Word word : fromWordNet) {
             a.add(word.getWord());
         }
-        Set<Page> fromWiki = p.getRedirects();
+        Set<Page> fromWiki = page.getRedirects();
         List<String> b = new LinkedList<String>();
         for (Page pg : fromWiki) {
             b.add(pg.getWord());
         }
         int cnt = utils.intersect(a, b).size();
         if (cnt >= MINIMALWORDSCOUNT
-                || fromWordNet.size()<MINIMALWORDSCOUNT
-                || fromWiki.size() < MINIMALWORDSCOUNT) {
+                || (fromWordNet.size() <= MINIMALWORDSCOUNT
+                && fromWiki.size() <= MINIMALWORDSCOUNT)) {
             return 1;
         } else {
             return 0;

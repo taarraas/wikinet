@@ -9,9 +9,11 @@ import wikinet.db.dao.PageDao;
 import wikinet.db.dao.SynsetDao;
 import wikinet.db.domain.Page;
 import wikinet.db.domain.Synset;
+import wikinet.db.domain.Word;
 import wikinet.mapping.Voter;
 import wikinet.mapping.Utils;
 
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +23,13 @@ import java.util.TreeMap;
  * @author shyiko, taras
  */
 public class DescriptionVoter implements Voter {
-
+    static {
+        try {
+            new MaxentTagger("/home/taras/j2dev/wikinet/libs/left3words-wsj-0-18.tagger");
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
     @Autowired
     private SynsetDao synsetDao;
 
@@ -68,8 +76,10 @@ public class DescriptionVoter implements Voter {
         String descriptionWiki = page.getFirstParagraph();
         Map<String, Double> synsetWords = getWords(descriptionSynset),
                 wikiWords = getWords(descriptionWiki);
+        for (Word word:synset.getWords()) {
+            synsetWords.remove(word.getWord());
+        }
         double wordsInCommon = utils.sizeOfSet(utils.intersect(synsetWords, wikiWords));
-        //double wordsTotal = utils.union(synsetWords, wikiWords).size();
         return wordsInCommon/MINIMALWEIGHT*MINIMALLEVEL;
     }
 
