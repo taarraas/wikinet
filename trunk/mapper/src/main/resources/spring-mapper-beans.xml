@@ -15,7 +15,7 @@
     <bean id="linksVoter" class="wikinet.mapping.voter.LinksVoter" autowire="byName" />
     <bean id="synonymousSetVoter" class="wikinet.mapping.voter.SynonymousSetVoter" autowire="byName" />
 
-    <bean id="mapper" class="wikinet.mapping.MapperImpl" abstract="true" autowire="byName" >
+    <bean id="mapper" class="wikinet.mapping.MapperImpl" autowire="byName" >
         <property name="voters">
             <list>
                 <ref bean="categoriesVoter" />
