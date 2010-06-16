@@ -20,7 +20,7 @@ public class CategoriesVoter implements Voter {
 
     private SynsetDao synsetDao;
     private Utils utils;
-    private int wordnetSearchDepth = 1;
+    private int wordnetSearchDepth = 2;
     private int wikiSearchDepth = 2;
 
     public void setSynsetDao(SynsetDao synsetDao) {
@@ -48,12 +48,16 @@ public class CategoriesVoter implements Voter {
 
     private Set<String> getLinkedWords(Synset synset, int deep) {
         Set<String> result = new HashSet<String>();
-        for (Word word : synset.getWords()) {
-            result.add(word.getWord());
+        if (deep!=wordnetSearchDepth) {
+            for (Word word : synset.getWords()) {
+                result.add(word.getWord());
+            }
         }
-        if (deep < 1)
+        if (deep < 1) {
             return result;
+        }
         List<Synset> list = synsetDao.getConnected(synset, ConnectionType.DOMAIN_OF_SYNSET_TOPIC);
+        list.addAll(synsetDao.getConnected(synset, ConnectionType.HYPERNYM));
         for (Synset synset_ : list) {
             result.addAll(getLinkedWords(synset_, deep - 1));
         }
@@ -63,7 +67,8 @@ public class CategoriesVoter implements Voter {
     private Set<String> getCategories(Page page, int deep) {
         Set<String> result = new HashSet<String>();
         for (Category category : page.getCategories()) {
-            result.addAll(getCategories(category, deep));
+            result.add(category.getName());
+            result.addAll(getCategories(category, deep-1));
         }
         return result;
     }
