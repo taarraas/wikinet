@@ -24,12 +24,12 @@
         <constructor-arg index="0" value="wikinet.extending.queue"/>
     </bean>
 
-    <bean id="mapperService" class="wikinet.jms.impl.MapperGatewayImpl">
+    <bean id="mapperGateway" class="wikinet.jms.impl.MapperGatewayImpl">
         <property name="jmsTemplate" ref="jmsTemplate" />
         <property name="destination" ref="mapperDestination" />
     </bean>
 
-    <bean id="extenderService" class="wikinet.jms.impl.ExtenderGatewayImpl">
+    <bean id="extenderGateway" class="wikinet.jms.impl.ExtenderGatewayImpl">
         <property name="jmsTemplate" ref="jmsTemplate" />
         <property name="destination" ref="extenderDestination" />
     </bean>
