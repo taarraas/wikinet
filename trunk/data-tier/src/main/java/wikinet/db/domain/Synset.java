@@ -2,12 +2,9 @@ package wikinet.db.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.IndexColumn;
-import org.hibernate.lob.ClobImpl;
-import wikinet.db.Utils;
 import wikinet.db.model.SynsetType;
 
 import javax.persistence.*;
-import java.sql.Clob;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,9 +31,10 @@ public class Synset {
     private long id;
     transient long idPreInit;
 
+    @Lob
     @Column(nullable = false)
     @Basic(fetch = FetchType.LAZY)
-    private Clob description;
+    private String description;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -60,13 +58,13 @@ public class Synset {
     }
 
     public Synset(String description, SynsetType type) {
-        this.description = new ClobImpl(description);
+        this.description = description;
         this.type = type;
     }
 
     public Synset(long id, String description, SynsetType type) {
         this.idPreInit = id;
-        this.description = new ClobImpl(description);
+        this.description = description;
         this.type = type;
     }
 
@@ -75,9 +73,7 @@ public class Synset {
     }
 
     public String getDescription() {
-        if (description == null)
-            return null;
-        return Utils.getInstance().getStringFromClob(description);
+        return description;
     }
 
     public SynsetType getType() {

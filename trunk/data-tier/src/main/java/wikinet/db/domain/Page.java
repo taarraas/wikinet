@@ -1,11 +1,8 @@
 package wikinet.db.domain;
 
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.Index;
-import wikinet.db.Utils;
 
 import javax.persistence.*;
-import java.sql.Clob;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,15 +42,16 @@ public class Page {
     @Column(length = 120)
     private String disambiguation;
 
-    @Column(columnDefinition = "text")
+    @Lob
     private String firstParagraph;
 
     /**
      * Text without first paragraph
      */
+    @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "mediumtext") 
-    private Clob text;
+    @Column(length = 16777215) // use mediumtext column definition in mysql
+    private String text;
 
     /**
      * All pages that redirect to this one
@@ -127,14 +125,11 @@ public class Page {
     }
 
     public String getText() {
-        return Utils.getInstance().getStringFromClob(text);
+        return text;
     }
 
     public void setText(String text) {
-        if (text == null)
-            this.text = null;
-        else
-            this.text = Hibernate.createClob(text);
+        this.text = text;
     }
 
     public void addRedirect(Page redirect) {
