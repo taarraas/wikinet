@@ -13,7 +13,7 @@
   # Checkout sources<br>svn checkout http://wikinet.googlecode.com/svn/trunk/ wikinet
   # Change working directory to wikinet<br>cd wikinet
   # Clean up build directories if any<br>mvn clean
-  # Build project<br>mvn package<br>NOTE: if you don't have activemq running or you just want to skip tests use "mvn package -Dmaven.test.skip=true" instead. Otherwise you should create "wikinet_dev" database using mysql like this:<br>mysql --user=root --password=<br>CREATE DATABASE wikinet_dev CHARACTER SET utf8 COLLATE utf8_bin;
+  # Build project<br>mvn package<br>NOTE: if you don't have activemq running or you just want to skip tests use "mvn package -Dmaven.test.skip=true" instead.
   # Assemble modules and create wikinet zip-archive<br>ant
 
 Now you should get wikinet.zip in wikinet/target directory.
