@@ -5,9 +5,7 @@
   # maven
   # ant
   # activemq (optional)
-  # mysql (optional)
   
-
 = Steps =
 
   # Checkout sources<br>svn checkout http://wikinet.googlecode.com/svn/trunk/ wikinet
