@@ -2,6 +2,8 @@ package wikinet.db.domain;
 
 import wikinet.db.model.ConnectionType;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.io.Serializable;
 
 /**
@@ -14,6 +16,7 @@ public class ConnectionPK implements Serializable {
 
     private long secondSynsetId;
 
+    @Enumerated(EnumType.STRING)
     private ConnectionType connectionType;
 
     private int wordsFrom;

@@ -26,7 +26,6 @@ public class Connection {
     private long secondSynsetId;
 
     @Id
-    @Enumerated(EnumType.STRING)
     private ConnectionType connectionType;
 
     @Id

@@ -22,7 +22,7 @@ public class SynsetDaoImpl extends GenericDaoImpl<Synset, Long> implements Synse
     public List<Synset> getConnected(Synset synset, ConnectionType connectionType) {
         return getSession().getNamedQuery("Synset.getConnectedWithConnectionType")
                .setLong("synsetId", synset.getId())
-               .setLong("connectionType", connectionType.ordinal()).list();
+               .setString("connectionType", connectionType.toString()).list();
     }
 
     @Override

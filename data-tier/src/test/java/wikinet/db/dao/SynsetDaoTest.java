@@ -86,6 +86,7 @@ public class SynsetDaoTest extends SpringDaoTest {
         synsetDao.save(synset2);
         assertEquals(synsetDao.findAll().size(), 2);
         synset = synsetDao.findById(synset.getId());
+        assertEquals(synset.getDescription(), "desc");
         List<Word> words = synset.getWords();
         assertEquals(words.get(0).getWord(), "word");
         assertEquals(words.get(1).getWord(), "word2");
