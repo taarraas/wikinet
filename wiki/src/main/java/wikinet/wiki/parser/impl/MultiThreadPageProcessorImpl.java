@@ -1,7 +1,7 @@
 package wikinet.wiki.parser.impl;
 
 import org.apache.log4j.Logger;
-import wikinet.wiki.parser.PageBuilder;
+import wikinet.wiki.parser.PagePrototypeBuilder;
 import wikinet.wiki.parser.PageProcessor;
 import wikinet.wiki.parser.PagePrototypeSaver;
 import wikinet.wiki.parser.prototype.PagePrototype;
@@ -18,12 +18,12 @@ public class MultiThreadPageProcessorImpl implements PageProcessor {
 
     private static Logger logger = Logger.getLogger(MultiThreadPageProcessorImpl.class);
 
-    private PageBuilder pageBuilder;
+    private PagePrototypeBuilder pagePrototypeBuilder;
     private BlockingQueue<PagePrototype> blockingQueue;
     private Thread consumer;
 
-    public MultiThreadPageProcessorImpl(PageBuilder pageBuilder, PagePrototypeSaver pagePrototypeSaver, int queueCapacity) {
-        this.pageBuilder = pageBuilder;
+    public MultiThreadPageProcessorImpl(PagePrototypeBuilder pagePrototypeBuilder, PagePrototypeSaver pagePrototypeSaver, int queueCapacity) {
+        this.pagePrototypeBuilder = pagePrototypeBuilder;
         this.blockingQueue = new LinkedBlockingQueue<PagePrototype>(queueCapacity);
         this.consumer = new Thread(new Consumer(blockingQueue, pagePrototypeSaver));
         this.consumer.start();
@@ -31,7 +31,7 @@ public class MultiThreadPageProcessorImpl implements PageProcessor {
 
     @Override
     public void process(String title, String text) {
-        PagePrototype prototype = pageBuilder.buildPagePrototype(title, text);
+        PagePrototype prototype = pagePrototypeBuilder.build(title, text);
         if (prototype != null) {
             try {
                 blockingQueue.put(prototype);

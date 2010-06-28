@@ -6,8 +6,8 @@ import wikinet.wiki.parser.prototype.PagePrototype;
  * @author shyiko
  * @since Mar 30, 2010
  */
-public interface PageBuilder {
+public interface PagePrototypeBuilder {
 
-    PagePrototype buildPagePrototype(String title, String text);
+    PagePrototype build(String title, String text);
 
 }

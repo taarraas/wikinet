@@ -1,8 +1,9 @@
 package wikinet.wiki.parser.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import wikinet.db.model.Locale;
-import wikinet.wiki.parser.PageBuilder;
+import wikinet.wiki.parser.PagePrototypeBuilder;
 import wikinet.wiki.parser.ParseException;
 import wikinet.wiki.parser.prototype.CategoryPagePrototype;
 import wikinet.wiki.parser.prototype.PagePrototype;
@@ -17,9 +18,9 @@ import java.util.regex.Pattern;
  * @author shyiko
  * @since Mar 30, 2010
  */
-public class PageBuilderImpl implements PageBuilder {
+public class PagePrototypeBuilderImpl implements PagePrototypeBuilder {
 
-    private static Logger logger = Logger.getLogger(PageBuilderImpl.class);
+    private static Logger logger = Logger.getLogger(PagePrototypeBuilderImpl.class);
 
     private static final Pattern NOWIKI = Pattern.compile("(<nowiki>).*?(</ ?nowiki>)");
     private static final Pattern PRE = Pattern.compile("(<pre>).*?(</ ?pre>)");
@@ -39,10 +40,8 @@ public class PageBuilderImpl implements PageBuilder {
             "Meta talk:", "File:", "File talk:", "MediaWiki:", "MediaWiki talk:", "Template:", "Template talk:",
             "Help:", "Help talk:", "Category talk:", "Portal:", "Portal talk:", "media:", "Image:", "Wikipedia:"};
 
-//    private boolean endLineHasBeenMet = false;
-
     @Override
-    public PagePrototype buildPagePrototype(String title, String text) {
+    public PagePrototype build(String title, String text) {
         if (!isPageTitleValid(title)) {
             if (logger.isDebugEnabled())
                 logger.debug("Page \"" + title + "\" skipped (wrong page title).");
@@ -120,7 +119,7 @@ public class PageBuilderImpl implements PageBuilder {
             int prepos = preMatcher.find(index) ? preMatcher.start() : -1;
             if (nowikipos == -1 && prepos == -1) {
                 if (index == 0) {
-                    processTextBlock(pagePrototype, buffer, text, true);
+                    processTextBlock(pagePrototype, buffer, text);
                     processPageData(pagePrototype, buffer);
                     return;
                 }
@@ -142,12 +141,12 @@ public class PageBuilderImpl implements PageBuilder {
                 throw new ParseException("Unrecognizable <nowiki> / <pre> structure.");
             }
 
-            processTextBlock(pagePrototype, buffer, text.substring(index, startGroup), false);
+            processTextBlock(pagePrototype, buffer, text.substring(index, startGroup));
             String between = group.substring(group.indexOf(">") + 1, group.lastIndexOf("<"));
             buffer.append(between);
             index = endGroup;
         } while(true);
-        processTextBlock(pagePrototype, buffer, text.substring(index), true);
+        processTextBlock(pagePrototype, buffer, text.substring(index));
         processPageData(pagePrototype, buffer);
     }
 
@@ -162,12 +161,16 @@ public class PageBuilderImpl implements PageBuilder {
         }
     }
 
-    private void processTextBlock(UniquePagePrototype pagePrototype, StringBuilder buffer, String block, boolean trimEnd) {
+    private void processTextBlock(UniquePagePrototype pagePrototype, StringBuilder buffer, String block) {
         block = block.replace("&lt;", "<");
         block = block.replace("&gt;", ">");
         block = block.replace("&apos;", "'");
         block = block.replace("&quot;", "\"");
         block = block.replace("&amp;", "&");
+/*
+        StringUtils.replaceEach(block, new String[] {"'''''", "''''", "'''", "''", "~~~~~", "~~~~", "~~~", "----"},
+                new String[] {"", "", "", "", "", "", "", ""});
+*/
         for (Pattern pattern : REGEX_PATTERNS_TO_REMOVE) {
             block = pattern.matcher(block).replaceAll("");
         }

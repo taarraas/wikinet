@@ -16,7 +16,7 @@ import wikinet.db.domain.LinkedPage;
 import wikinet.db.domain.LocalizedPage;
 import wikinet.db.domain.Page;
 import wikinet.db.model.Locale;
-import wikinet.wiki.parser.PageBuilder;
+import wikinet.wiki.parser.PagePrototypeBuilder;
 import wikinet.wiki.parser.PagePrototypeSaver;
 import wikinet.wiki.parser.prototype.PagePrototype;
 import wikinet.wiki.parser.prototype.UniquePagePrototype;
@@ -44,7 +44,7 @@ public class PagePrototypeSaverImplTest extends AbstractTestNGSpringContextTests
     private PageDao pageDao;
 
     @Autowired
-    private PageBuilder pageBuilder;
+    private PagePrototypeBuilder pagePrototypeBuilder;
 
     @Autowired
     private PagePrototypeSaver prototypeSaver;
@@ -96,7 +96,7 @@ public class PagePrototypeSaverImplTest extends AbstractTestNGSpringContextTests
     @Test
     public void testSaveComplexPage() throws Exception {
         PagePrototype prototype =
-                pageBuilder.buildPagePrototype("Abraham Lincoln",
+                pagePrototypeBuilder.build("Abraham Lincoln",
                         getComplexText("src/test/resources/wiki-complex-text-long.log"));
         prototypeSaver.save(prototype);
         sessionFactory.getCurrentSession().beginTransaction();
@@ -110,7 +110,7 @@ public class PagePrototypeSaverImplTest extends AbstractTestNGSpringContextTests
 
     @Test
     public void testSaveLongComplexPage() throws Exception {
-        PagePrototype prototype = pageBuilder.buildPagePrototype("Anarchism",
+        PagePrototype prototype = pagePrototypeBuilder.build("Anarchism",
                 getComplexText("src/test/resources/wiki-complex-text.log"));
         prototypeSaver.save(prototype);
         sessionFactory.getCurrentSession().beginTransaction();
