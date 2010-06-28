@@ -66,59 +66,84 @@ public class PagePrototypeSaverImpl implements PagePrototypeSaver {
 
     @Override
     public void save(PagePrototype pagePrototype) {
+        if (pagePrototype instanceof RedirectPagePrototype) {
+            saveRedirectPagePrototype((RedirectPagePrototype) pagePrototype);
+        } else if (pagePrototype instanceof UniquePagePrototype) {
+            saveUniquePagePrototype((UniquePagePrototype) pagePrototype);
+        } else if (pagePrototype instanceof CategoryPagePrototype) {
+            saveCategoryPagePrototype((CategoryPagePrototype) pagePrototype);
+        } else
+            throw new UnsupportedOperationException();
+    }
+
+    private void saveRedirectPagePrototype(RedirectPagePrototype pp) {
+        PagePrototype rp = pp.getRedirectedPage();
+        if (!validate(pp) || !validate(rp))
+            return;
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         try {
-            if (pagePrototype instanceof RedirectPagePrototype) {
-                RedirectPagePrototype pp = (RedirectPagePrototype) pagePrototype;
-                PagePrototype rp = pp.getRedirectedPage();
-                if (!validate(pp) || !validate(rp))
-                    return;
-                Page thisPage = pageDao.saveOrUpdate(pp.getWord(), pp.getDisambiguation());
-                Page redirectedPage = pageDao.saveOrUpdate(rp.getWord(), rp.getDisambiguation());
-                pageDao.addRedirect(redirectedPage, thisPage);
-            } else if (pagePrototype instanceof UniquePagePrototype) {
-                UniquePagePrototype pp = (UniquePagePrototype) pagePrototype;
-                if (!validate(pp))
-                    return;
-                Page page = pageDao.saveOrUpdate(pp.getWord(), pp.getDisambiguation());
-
-                for (UniquePagePrototype.Link link : pp.getLinks()) {
-                    PagePrototype p = new PagePrototype(link.getText());
-                    if (!validate(p))
-                        continue;
-                    Page linkedPage = pageDao.saveOrUpdate(p.getWord(), p.getDisambiguation());
-                    for (Map.Entry<Integer, Integer> entry : link.getPos().entrySet()) {
-                        LinkedPage linkedPageEntity = new LinkedPage(entry.getKey(), entry.getValue(), linkedPage);
-                        linkedPageDao.save(linkedPageEntity);
-                        pageDao.addLinkedPage(page, linkedPageEntity);
-                    }
-                }
-
-                for (String categoryName : pp.getCategories()) {
-                    Category category = categoryDao.saveOrUpdate(categoryName);
-                    pageDao.addCategory(page, category);
-                }
-                for (Map.Entry<Locale, String> entry : pp.getLocalizedPages().entrySet()) {
-                    LocalizedPage localizedPage = localizedPageDao.saveOrUpdate(entry.getValue(), entry.getKey());
-                    pageDao.addLocalizedPage(page, localizedPage);
-                }
-
-                page.setFirstParagraph(pp.getFirstParagraph());
-                page.setText(pp.getText());
-                pageDao.save(page);
-            } else if (pagePrototype instanceof CategoryPagePrototype) {
-                CategoryPagePrototype cpp = (CategoryPagePrototype) pagePrototype;
-                Category cp = categoryDao.saveOrUpdate(cpp.toString());
-                for (String categoryName : cpp.getParentCategories()) {
-                    Category category = categoryDao.saveOrUpdate(categoryName);
-                    categoryDao.addSubcategory(category, cp);
-                }
-            } else
-                throw new UnsupportedOperationException();
+            Page thisPage = pageDao.saveOrUpdate(pp.getWord(), pp.getDisambiguation());
+            Page redirectedPage = pageDao.saveOrUpdate(rp.getWord(), rp.getDisambiguation());
+            pageDao.addRedirect(redirectedPage, thisPage);
             session.getTransaction().commit();
         } catch (Exception ex) {
-            logger.error(pagePrototype, ex);
+            logger.error(pp, ex);
+            session.getTransaction().rollback();
+        }
+    }
+
+    private void saveUniquePagePrototype(UniquePagePrototype pp) {
+        if (!validate(pp))
+            return;
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        try {
+            Page page = pageDao.saveOrUpdate(pp.getWord(), pp.getDisambiguation());
+
+            for (UniquePagePrototype.Link link : pp.getLinks()) {
+                PagePrototype p = new PagePrototype(link.getText());
+                if (!validate(p))
+                    continue;
+                Page linkedPage = pageDao.saveOrUpdate(p.getWord(), p.getDisambiguation());
+                for (Map.Entry<Integer, Integer> entry : link.getPos().entrySet()) {
+                    LinkedPage linkedPageEntity = new LinkedPage(entry.getKey(), entry.getValue(), linkedPage);
+                    linkedPageDao.save(linkedPageEntity);
+                    pageDao.addLinkedPage(page, linkedPageEntity);
+                }
+            }
+
+            for (String categoryName : pp.getCategories()) {
+                Category category = categoryDao.saveOrUpdate(categoryName);
+                pageDao.addCategory(page, category);
+            }
+            for (Map.Entry<Locale, String> entry : pp.getLocalizedPages().entrySet()) {
+                LocalizedPage localizedPage = localizedPageDao.saveOrUpdate(entry.getValue(), entry.getKey());
+                pageDao.addLocalizedPage(page, localizedPage);
+            }
+
+            page.setFirstParagraph(pp.getFirstParagraph());
+            page.setText(pp.getText());
+            pageDao.save(page);
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            logger.error(pp, ex);
+            session.getTransaction().rollback();
+        }
+    }
+
+    private void saveCategoryPagePrototype(CategoryPagePrototype pp) {
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        try {
+            Category cp = categoryDao.saveOrUpdate(pp.toString());
+            for (String categoryName : pp.getParentCategories()) {
+                Category category = categoryDao.saveOrUpdate(categoryName);
+                categoryDao.addSubcategory(category, cp);
+            }
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            logger.error(pp, ex);
             session.getTransaction().rollback();
         }
     }

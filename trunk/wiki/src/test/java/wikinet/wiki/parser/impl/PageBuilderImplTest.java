@@ -4,7 +4,7 @@ import org.mockito.ArgumentMatcher;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import wikinet.db.model.Locale;
-import wikinet.wiki.parser.PageBuilder;
+import wikinet.wiki.parser.PagePrototypeBuilder;
 import wikinet.wiki.parser.PagePrototypeSaver;
 import wikinet.wiki.parser.prototype.CategoryPagePrototype;
 import wikinet.wiki.parser.prototype.PagePrototype;
@@ -13,7 +13,6 @@ import wikinet.wiki.parser.prototype.UniquePagePrototype;
 
 import java.util.*;
 
-import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.*;
 
 /**
@@ -24,8 +23,8 @@ public class PageBuilderImplTest {
 
     public void testImportPage(String title, String text, ArgumentMatcher<PagePrototype> matcher) {
         PagePrototypeSaver prototypeSaverMock = mock(PagePrototypeSaver.class);
-        PageBuilder pb = new PageBuilderImpl();
-        PagePrototype prototype = pb.buildPagePrototype(title, text);
+        PagePrototypeBuilder pb = new PagePrototypeBuilderImpl();
+        PagePrototype prototype = pb.build(title, text);
         Assert.assertTrue(matcher.matches(prototype));
     }
 
